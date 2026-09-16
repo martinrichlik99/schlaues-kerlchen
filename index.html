@@ -7,11 +7,20 @@
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; touch-action: manipulation; }
   html, body { height: 100%; }
+  html {
+    background: #0c0716;
+  }
+  html::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    background: radial-gradient(circle at 20% 0%, #2a1a4a 0%, #150c28 45%, #0c0716 100%);
+  }
   body {
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-    background: radial-gradient(circle at 20% 0%, #2a1a4a 0%, #150c28 45%, #0c0716 100%);
     color: #f2eefc;
-    min-height: 100vh;
+    min-height: 100%;
     display: flex;
     justify-content: center;
   }
@@ -34,12 +43,22 @@
   .kategorie-kachel {
     display: flex; align-items: center; justify-content: space-between;
     background: linear-gradient(135deg, rgba(255,138,92,0.18), rgba(255,92,158,0.12));
-    border: 1px solid rgba(255,138,92,0.35); border-radius: 18px; padding: 18px 20px;
-    cursor: pointer; margin-top: 6px;
+    border: 1px solid rgba(255,138,92,0.35); border-radius: 16px; padding: 14px;
+    cursor: pointer;
   }
-  .kategorie-kachel .name { font-size: 17px; font-weight: 700; }
-  .kategorie-kachel .anzahl { font-size: 12px; color: #d8c9ff; margin-top: 2px; }
-  .kategorie-kachel .pfeil { font-size: 22px; color: #ff8a5c; }
+  .kategorie-kachel .name { font-size: 14.5px; font-weight: 700; line-height: 1.25; }
+  .kategorie-kachel .anzahl { font-size: 10.5px; color: #d8c9ff; margin-top: 2px; }
+  .kategorie-kachel .pfeil { font-size: 18px; color: #ff8a5c; flex-shrink: 0; margin-left: 6px; }
+  .kachel-gemischt {
+    background: linear-gradient(135deg, rgba(139,92,246,0.22), rgba(34,211,238,0.14));
+    border: 1px solid rgba(139,92,246,0.4);
+    padding: 18px 20px; margin-top: 6px;
+  }
+  .kachel-gemischt .name { font-size: 17px; }
+  .kachel-gemischt .anzahl { font-size: 12px; }
+  .kachel-gemischt .pfeil { font-size: 22px; color: #a78bfa; }
+  .trennlinie { border: none; border-top: 1px solid rgba(255,255,255,0.08); margin: 4px 0 12px; }
+  #kategorien-liste { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
   .bald { margin-top: 12px; font-size: 12px; color: #8677a8; text-align: center; }
 
   /* Quiz */
@@ -92,8 +111,15 @@
       <div class="stat"><b id="stat-quote">0%</b><span>Trefferquote</span></div>
     </div>
 
+    <div class="kategorie-kachel kachel-gemischt" id="kachel-alle">
+      <div>
+        <div class="name">🎲 Gemischt</div>
+        <div class="anzahl" id="anzahl-alle">wird geladen …</div>
+      </div>
+      <div class="pfeil">→</div>
+    </div>
+    <hr class="trennlinie">
     <div id="kategorien-liste"></div>
-    <div class="bald">Weitere Kategorien folgen</div>
   </div>
 
   <div id="quiz-blatt">
@@ -313,9 +339,25 @@
     document.getElementById("ende-blatt").style.display = name === "ende" ? "flex" : "none";
   }
 
+  function alleFragenGemischt() {
+    var alle = [];
+    var namen = Object.keys(fragenNachKategorie);
+    for (var i = 0; i < namen.length; i++) {
+      var liste = fragenNachKategorie[namen[i]];
+      for (var j = 0; j < liste.length; j++) { alle.push(liste[j]); }
+    }
+    return alle;
+  }
+
+  function aktualisiereAlleAnzahl() {
+    var gesamt = alleFragenGemischt().length;
+    var el = document.getElementById("anzahl-alle");
+    if (el) { el.textContent = gesamt + " Fragen aus allen Kategorien"; }
+  }
+
   function starteQuiz(kategorieId) {
     var id = kategorieId || aktiveKategorieId;
-    var fragen = fragenNachKategorie[id];
+    var fragen = id === "alle" ? alleFragenGemischt() : fragenNachKategorie[id];
     if (!fragen || fragen.length === 0) {
       zeigeFehler("Fragen sind noch nicht geladen.");
       return;
@@ -383,6 +425,7 @@
             if (!Array.isArray(daten)) { throw new Error("Unerwartetes Format"); }
             fragenNachKategorie[kat.id] = daten;
             setzeKategorieAnzahl(kat.id, daten.length + " Fragen");
+            aktualisiereAlleAnzahl();
           })
           .catch(function () {
             zeigeFehler("Fragen für " + kat.name + " konnten nicht geladen werden.");
@@ -392,6 +435,7 @@
     }
   }
 
+  document.getElementById("kachel-alle").addEventListener("click", function () { starteQuiz("alle"); });
   document.getElementById("antwort-zeigen-btn").addEventListener("click", zeigeAntwort);
   document.getElementById("nicht-gewusst-btn").addEventListener("click", function () { bewerte(false); });
   document.getElementById("gewusst-btn").addEventListener("click", function () { bewerte(true); });
