@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>Schlaues Kerlchen</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; touch-action: manipulation; }
+  html, body { height: 100%; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    background: radial-gradient(circle at 20% 0%, #2a1a4a 0%, #150c28 45%, #0c0716 100%);
+    color: #f2eefc;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+  }
+  #app { width: 100%; max-width: 480px; min-height: 100vh; display: flex; flex-direction: column; padding: 20px 18px calc(20px + env(safe-area-inset-bottom)); }
+
+  .kopf { display: flex; align-items: center; justify-content: space-between; margin-bottom: 18px; }
+  .logo { font-size: 20px; font-weight: 800; letter-spacing: -0.02em; }
+  .logo span { background: linear-gradient(90deg, #ff8a5c, #ff5c9e); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .streak { font-size: 13px; color: #cbb8f0; background: rgba(255,255,255,0.06); padding: 6px 10px; border-radius: 20px; }
+
+  .karte { background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.08); border-radius: 20px; padding: 22px; }
+
+  /* Start */
+  #start-blatt .titel { font-size: 26px; font-weight: 800; margin-bottom: 6px; }
+  #start-blatt .untertitel { font-size: 14px; color: #b7aad6; margin-bottom: 20px; }
+  .stat-reihe { display: flex; gap: 10px; margin-bottom: 20px; }
+  .stat { flex: 1; background: rgba(255,255,255,0.05); border-radius: 14px; padding: 12px; text-align: center; }
+  .stat b { display: block; font-size: 20px; }
+  .stat span { font-size: 11px; color: #b7aad6; }
+  .kategorie-kachel {
+    display: flex; align-items: center; justify-content: space-between;
+    background: linear-gradient(135deg, rgba(255,138,92,0.18), rgba(255,92,158,0.12));
+    border: 1px solid rgba(255,138,92,0.35); border-radius: 18px; padding: 18px 20px;
+    cursor: pointer; margin-top: 6px;
+  }
+  .kategorie-kachel .name { font-size: 17px; font-weight: 700; }
+  .kategorie-kachel .anzahl { font-size: 12px; color: #d8c9ff; margin-top: 2px; }
+  .kategorie-kachel .pfeil { font-size: 22px; color: #ff8a5c; }
+  .bald { margin-top: 12px; font-size: 12px; color: #8677a8; text-align: center; }
+
+  /* Quiz */
+  #quiz-blatt { display: none; flex: 1; flex-direction: column; }
+  .fortschritt-leiste { height: 6px; background: rgba(255,255,255,0.08); border-radius: 6px; overflow: hidden; margin-bottom: 18px; }
+  .fortschritt-leiste i { display: block; height: 100%; background: linear-gradient(90deg, #ff8a5c, #ff5c9e); }
+  .frage-zaehler { font-size: 12px; color: #b7aad6; margin-bottom: 10px; }
+  .frage-text { font-size: 20px; font-weight: 700; line-height: 1.4; margin-bottom: 18px; }
+  .antwort-kurz { font-size: 18px; font-weight: 800; color: #ff9d73; margin-bottom: 10px; }
+  .erklaerung-text { font-size: 15px; line-height: 1.55; color: #ddd4f5; }
+  .vorlesen-btn {
+    display: inline-flex; align-items: center; gap: 6px; background: rgba(255,255,255,0.08);
+    border: none; color: #f2eefc; font-size: 13px; padding: 8px 14px; border-radius: 20px;
+    margin-top: 14px; cursor: pointer;
+  }
+  .knopf-reihe { display: flex; gap: 10px; margin-top: 20px; }
+  .knopf { flex: 1; border: none; border-radius: 16px; padding: 16px; font-size: 15px; font-weight: 700; cursor: pointer; }
+  .knopf-primaer { background: linear-gradient(90deg, #ff8a5c, #ff5c9e); color: #1c0f2e; }
+  .knopf-schwach { background: rgba(255,255,255,0.05); font-size: 13px; color: #cbb8f0; }
+  .knopf-nein { background: rgba(255,92,120,0.16); color: #ff8ba0; }
+  .knopf-ja { background: rgba(90,220,170,0.18); color: #7be8bd; }
+  .zurueck-link { margin-top: auto; padding-top: 18px; text-align: center; font-size: 13px; color: #8677a8; cursor: pointer; }
+
+  /* Ende */
+  #ende-blatt { display: none; flex: 1; flex-direction: column; align-items: center; justify-content: center; text-align: center; }
+  #ende-blatt .zahl { font-size: 44px; font-weight: 800; }
+  #ende-blatt .zeile { font-size: 14px; color: #b7aad6; margin-top: 6px; margin-bottom: 24px; }
+
+  .fehler-toast {
+    position: fixed; left: 16px; right: 16px; bottom: 16px; max-width: 448px; margin: 0 auto;
+    background: #4a1420; border: 1px solid #ff5c78; color: #ffd7de; padding: 12px 16px;
+    border-radius: 12px; font-size: 13px; display: none; z-index: 20;
+  }
+</style>
+</head>
+<body>
+<div id="app">
+  <div class="kopf">
+    <div class="logo">Schlaues <span>Kerlchen</span></div>
+    <div class="streak" id="streak-anzeige">🔥 0 Tage</div>
+  </div>
+
+  <div id="start-blatt">
+    <div class="titel">Wie schlau bist du heute?</div>
+    <div class="untertitel">Allgemeinwissen, ausführlich erklärt — mit Vorlesefunktion.</div>
+
+    <div class="stat-reihe">
+      <div class="stat"><b id="stat-gewusst">0</b><span>Gewusst</span></div>
+      <div class="stat"><b id="stat-beantwortet">0</b><span>Beantwortet</span></div>
+      <div class="stat"><b id="stat-quote">0%</b><span>Trefferquote</span></div>
+    </div>
+
+    <div class="kategorie-kachel" id="kachel-geschichte">
+      <div>
+        <div class="name">📜 Geschichte</div>
+        <div class="anzahl" id="geschichte-anzahl">wird geladen …</div>
+      </div>
+      <div class="pfeil">→</div>
+    </div>
+    <div class="bald">Weitere Kategorien folgen</div>
+  </div>
+
+  <div id="quiz-blatt">
+    <div class="fortschritt-leiste"><i id="fortschritt-fuellung" style="width:0%"></i></div>
+    <div class="frage-zaehler" id="frage-zaehler">Frage 1 von 50</div>
+    <div class="karte">
+      <div class="frage-text" id="frage-text"></div>
+      <div id="antwort-bereich" style="display:none">
+        <div class="antwort-kurz" id="antwort-kurz-text"></div>
+        <div class="erklaerung-text" id="erklaerung-text"></div>
+      </div>
+      <button class="vorlesen-btn" id="vorlesen-btn" type="button">🔊 Vorlesen</button>
+    </div>
+
+    <div id="frage-knoepfe" class="knopf-reihe">
+      <button class="knopf knopf-primaer" id="antwort-zeigen-btn" type="button">Antwort zeigen</button>
+    </div>
+    <div id="bewertung-knoepfe" class="knopf-reihe" style="display:none">
+      <button class="knopf knopf-nein" id="nicht-gewusst-btn" type="button">✗ Nicht gewusst</button>
+      <button class="knopf knopf-ja" id="gewusst-btn" type="button">✓ Gewusst</button>
+    </div>
+
+    <div class="zurueck-link" id="quiz-abbrechen">Zurück zur Startseite</div>
+  </div>
+
+  <div id="ende-blatt">
+    <div class="zahl" id="ende-zahl">0 / 0</div>
+    <div class="zeile">Fragen gewusst</div>
+    <div class="knopf-reihe" style="width:100%">
+      <button class="knopf knopf-schwach" id="ende-zurueck-btn" type="button">Zur Startseite</button>
+      <button class="knopf knopf-primaer" id="ende-nochmal-btn" type="button">Nochmal</button>
+    </div>
+  </div>
+</div>
+<div class="fehler-toast" id="fehler-toast"></div>
+
+<script>
+(function () {
+  "use strict";
+
+  var SPEICHER_SCHLUESSEL = "sk_fortschritt_v1";
+  var fragenGeschichte = [];
+  var quizFragen = [];
+  var quizIndex = 0;
+  var quizGewusst = 0;
+  var antwortSichtbar = false;
+
+  function esc(wert) {
+    if (wert === null || wert === undefined) { return ""; }
+    return String(wert)
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#39;");
+  }
+
+  function localISODate(d) {
+    var jahr = d.getFullYear();
+    var monat = String(d.getMonth() + 1).padStart(2, "0");
+    var tag = String(d.getDate()).padStart(2, "0");
+    return jahr + "-" + monat + "-" + tag;
+  }
+
+  function zeigeFehler(text) {
+    var toast = document.getElementById("fehler-toast");
+    toast.textContent = text;
+    toast.style.display = "block";
+    window.setTimeout(function () { toast.style.display = "none"; }, 4000);
+  }
+
+  function leererFortschritt() {
+    return { kategorien: {}, streak: { anzahl: 0, letzterTag: "" } };
+  }
+
+  function ladeFortschritt() {
+    var roh;
+    try {
+      roh = localStorage.getItem(SPEICHER_SCHLUESSEL);
+    } catch (e) {
+      zeigeFehler("Speicher nicht lesbar — Fortschritt wird diese Sitzung nicht gemerkt.");
+      return leererFortschritt();
+    }
+    if (!roh) { return leererFortschritt(); }
+    var daten;
+    try {
+      daten = JSON.parse(roh);
+    } catch (e) {
+      zeigeFehler("Gespeicherter Fortschritt war beschädigt — neu gestartet.");
+      return leererFortschritt();
+    }
+    if (!daten || typeof daten !== "object") { return leererFortschritt(); }
+    if (!daten.kategorien || typeof daten.kategorien !== "object") { daten.kategorien = {}; }
+    if (!daten.streak || typeof daten.streak !== "object") { daten.streak = { anzahl: 0, letzterTag: "" }; }
+    if (typeof daten.streak.anzahl !== "number") { daten.streak.anzahl = 0; }
+    if (typeof daten.streak.letzterTag !== "string") { daten.streak.letzterTag = ""; }
+    return daten;
+  }
+
+  function speichereSicher(daten) {
+    try {
+      localStorage.setItem(SPEICHER_SCHLUESSEL, JSON.stringify(daten));
+    } catch (e) {
+      zeigeFehler("Fortschritt konnte nicht gespeichert werden (Speicher voll?).");
+    }
+  }
+
+  var fortschritt = ladeFortschritt();
+
+  function kategorieZaehler(name) {
+    if (!fortschritt.kategorien[name] || typeof fortschritt.kategorien[name] !== "object") {
+      fortschritt.kategorien[name] = { gewusst: 0, nichtGewusst: 0 };
+    }
+    if (typeof fortschritt.kategorien[name].gewusst !== "number") { fortschritt.kategorien[name].gewusst = 0; }
+    if (typeof fortschritt.kategorien[name].nichtGewusst !== "number") { fortschritt.kategorien[name].nichtGewusst = 0; }
+    return fortschritt.kategorien[name];
+  }
+
+  function gesamtZaehler() {
+    var gewusst = 0;
+    var beantwortet = 0;
+    var namen = Object.keys(fortschritt.kategorien);
+    for (var i = 0; i < namen.length; i++) {
+      var k = fortschritt.kategorien[namen[i]];
+      gewusst += k.gewusst || 0;
+      beantwortet += (k.gewusst || 0) + (k.nichtGewusst || 0);
+    }
+    return { gewusst: gewusst, beantwortet: beantwortet };
+  }
+
+  function aktualisiereStartAnzeige() {
+    var g = gesamtZaehler();
+    document.getElementById("stat-gewusst").textContent = String(g.gewusst);
+    document.getElementById("stat-beantwortet").textContent = String(g.beantwortet);
+    var quote = g.beantwortet > 0 ? Math.round((g.gewusst / g.beantwortet) * 100) : 0;
+    document.getElementById("stat-quote").textContent = quote + "%";
+    document.getElementById("streak-anzeige").textContent = "🔥 " + (fortschritt.streak.anzahl || 0) + " Tage";
+    var anzahlFeld = document.getElementById("geschichte-anzahl");
+    if (fragenGeschichte.length > 0) {
+      anzahlFeld.textContent = fragenGeschichte.length + " Fragen";
+    } else {
+      anzahlFeld.textContent = "konnte nicht geladen werden";
+    }
+  }
+
+  function vermerkeStreakHeute() {
+    var heute = localISODate(new Date());
+    if (fortschritt.streak.letzterTag === heute) { return; }
+    var gestern = new Date();
+    gestern.setDate(gestern.getDate() - 1);
+    if (fortschritt.streak.letzterTag === localISODate(gestern)) {
+      fortschritt.streak.anzahl = (fortschritt.streak.anzahl || 0) + 1;
+    } else {
+      fortschritt.streak.anzahl = 1;
+    }
+    fortschritt.streak.letzterTag = heute;
+    speichereSicher(fortschritt);
+  }
+
+  function mische(liste) {
+    var ergebnis = liste.slice();
+    for (var i = ergebnis.length - 1; i > 0; i--) {
+      var j = Math.floor(Math.random() * (i + 1));
+      var tausch = ergebnis[i];
+      ergebnis[i] = ergebnis[j];
+      ergebnis[j] = tausch;
+    }
+    return ergebnis;
+  }
+
+  function vorlesen(text) {
+    if (!("speechSynthesis" in window)) {
+      zeigeFehler("Vorlesen wird von diesem Browser nicht unterstützt.");
+      return;
+    }
+    window.speechSynthesis.cancel();
+    var u = new SpeechSynthesisUtterance(text);
+    u.lang = "de-DE";
+    window.speechSynthesis.speak(u);
+  }
+
+  function zeigeBlatt(name) {
+    document.getElementById("start-blatt").style.display = name === "start" ? "block" : "none";
+    document.getElementById("quiz-blatt").style.display = name === "quiz" ? "flex" : "none";
+    document.getElementById("ende-blatt").style.display = name === "ende" ? "flex" : "none";
+  }
+
+  function starteQuiz() {
+    if (fragenGeschichte.length === 0) {
+      zeigeFehler("Fragen sind noch nicht geladen.");
+      return;
+    }
+    quizFragen = mische(fragenGeschichte);
+    quizIndex = 0;
+    quizGewusst = 0;
+    zeigeBlatt("quiz");
+    renderFrage();
+  }
+
+  function renderFrage() {
+    antwortSichtbar = false;
+    var frage = quizFragen[quizIndex];
+    document.getElementById("frage-zaehler").textContent = "Frage " + (quizIndex + 1) + " von " + quizFragen.length;
+    document.getElementById("fortschritt-fuellung").style.width = Math.round((quizIndex / quizFragen.length) * 100) + "%";
+    document.getElementById("frage-text").innerHTML = esc(frage.frage);
+    document.getElementById("antwort-kurz-text").innerHTML = esc(frage.antwortKurz);
+    document.getElementById("erklaerung-text").innerHTML = esc(frage.erklaerung);
+    document.getElementById("antwort-bereich").style.display = "none";
+    document.getElementById("frage-knoepfe").style.display = "flex";
+    document.getElementById("bewertung-knoepfe").style.display = "none";
+  }
+
+  function zeigeAntwort() {
+    antwortSichtbar = true;
+    document.getElementById("antwort-bereich").style.display = "block";
+    document.getElementById("frage-knoepfe").style.display = "none";
+    document.getElementById("bewertung-knoepfe").style.display = "flex";
+  }
+
+  function bewerte(warGewusst) {
+    var frage = quizFragen[quizIndex];
+    var zaehler = kategorieZaehler(frage.kategorie);
+    if (warGewusst) {
+      zaehler.gewusst += 1;
+      quizGewusst += 1;
+    } else {
+      zaehler.nichtGewusst += 1;
+    }
+    speichereSicher(fortschritt);
+    vermerkeStreakHeute();
+
+    quizIndex += 1;
+    if (quizIndex >= quizFragen.length) {
+      document.getElementById("fortschritt-fuellung").style.width = "100%";
+      document.getElementById("ende-zahl").textContent = quizGewusst + " / " + quizFragen.length;
+      zeigeBlatt("ende");
+      aktualisiereStartAnzeige();
+    } else {
+      renderFrage();
+    }
+  }
+
+  function ladeFragen() {
+    fetch("daten/geschichte.json")
+      .then(function (antwort) {
+        if (!antwort.ok) { throw new Error("HTTP " + antwort.status); }
+        return antwort.json();
+      })
+      .then(function (daten) {
+        if (!Array.isArray(daten)) { throw new Error("Unerwartetes Format"); }
+        fragenGeschichte = daten;
+        aktualisiereStartAnzeige();
+      })
+      .catch(function () {
+        zeigeFehler("Fragen konnten nicht geladen werden.");
+        aktualisiereStartAnzeige();
+      });
+  }
+
+  document.getElementById("kachel-geschichte").addEventListener("click", starteQuiz);
+  document.getElementById("antwort-zeigen-btn").addEventListener("click", zeigeAntwort);
+  document.getElementById("nicht-gewusst-btn").addEventListener("click", function () { bewerte(false); });
+  document.getElementById("gewusst-btn").addEventListener("click", function () { bewerte(true); });
+  document.getElementById("quiz-abbrechen").addEventListener("click", function () { zeigeBlatt("start"); aktualisiereStartAnzeige(); });
+  document.getElementById("ende-zurueck-btn").addEventListener("click", function () { zeigeBlatt("start"); aktualisiereStartAnzeige(); });
+  document.getElementById("ende-nochmal-btn").addEventListener("click", starteQuiz);
+  document.getElementById("vorlesen-btn").addEventListener("click", function () {
+    var frage = quizFragen[quizIndex];
+    if (!frage) { return; }
+    var text = frage.frage;
+    if (antwortSichtbar) { text += ". " + frage.antwortKurz + ". " + frage.erklaerung; }
+    vorlesen(text);
+  });
+
+  aktualisiereStartAnzeige();
+  ladeFragen();
+  zeigeBlatt("start");
+})();
+</script>
+</body>
+</html>
