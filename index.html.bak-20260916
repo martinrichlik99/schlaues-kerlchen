@@ -92,7 +92,13 @@
       <div class="stat"><b id="stat-quote">0%</b><span>Trefferquote</span></div>
     </div>
 
-    <div id="kategorien-liste"></div>
+    <div class="kategorie-kachel" id="kachel-geschichte">
+      <div>
+        <div class="name">📜 Geschichte</div>
+        <div class="anzahl" id="geschichte-anzahl">wird geladen …</div>
+      </div>
+      <div class="pfeil">→</div>
+    </div>
     <div class="bald">Weitere Kategorien folgen</div>
   </div>
 
@@ -135,11 +141,7 @@
   "use strict";
 
   var SPEICHER_SCHLUESSEL = "sk_fortschritt_v1";
-  var KATEGORIEN = [
-    { id: "geschichte", name: "Geschichte", icon: "📜", datei: "daten/geschichte.json" }
-  ];
-  var fragenNachKategorie = {};
-  var aktiveKategorieId = null;
+  var fragenGeschichte = [];
   var quizFragen = [];
   var quizIndex = 0;
   var quizGewusst = 0;
@@ -235,28 +237,11 @@
     var quote = g.beantwortet > 0 ? Math.round((g.gewusst / g.beantwortet) * 100) : 0;
     document.getElementById("stat-quote").textContent = quote + "%";
     document.getElementById("streak-anzeige").textContent = "🔥 " + (fortschritt.streak.anzahl || 0) + " Tage";
-  }
-
-  function setzeKategorieAnzahl(kategorieId, text) {
-    var el = document.getElementById("anzahl-" + kategorieId);
-    if (el) { el.textContent = text; }
-  }
-
-  function renderKategorienListe() {
-    var container = document.getElementById("kategorien-liste");
-    var html = "";
-    for (var i = 0; i < KATEGORIEN.length; i++) {
-      var kat = KATEGORIEN[i];
-      html += '<div class="kategorie-kachel" id="kachel-' + kat.id + '">' +
-        '<div><div class="name">' + kat.icon + ' ' + esc(kat.name) + '</div>' +
-        '<div class="anzahl" id="anzahl-' + kat.id + '">wird geladen …</div></div>' +
-        '<div class="pfeil">→</div></div>';
-    }
-    container.innerHTML = html;
-    for (var j = 0; j < KATEGORIEN.length; j++) {
-      (function (kategorieId) {
-        document.getElementById("kachel-" + kategorieId).addEventListener("click", function () { starteQuiz(kategorieId); });
-      })(KATEGORIEN[j].id);
+    var anzahlFeld = document.getElementById("geschichte-anzahl");
+    if (fragenGeschichte.length > 0) {
+      anzahlFeld.textContent = fragenGeschichte.length + " Fragen";
+    } else {
+      anzahlFeld.textContent = "konnte nicht geladen werden";
     }
   }
 
@@ -302,15 +287,12 @@
     document.getElementById("ende-blatt").style.display = name === "ende" ? "flex" : "none";
   }
 
-  function starteQuiz(kategorieId) {
-    var id = kategorieId || aktiveKategorieId;
-    var fragen = fragenNachKategorie[id];
-    if (!fragen || fragen.length === 0) {
+  function starteQuiz() {
+    if (fragenGeschichte.length === 0) {
       zeigeFehler("Fragen sind noch nicht geladen.");
       return;
     }
-    aktiveKategorieId = id;
-    quizFragen = mische(fragen);
+    quizFragen = mische(fragenGeschichte);
     quizIndex = 0;
     quizGewusst = 0;
     zeigeBlatt("quiz");
@@ -361,32 +343,29 @@
   }
 
   function ladeFragen() {
-    for (var i = 0; i < KATEGORIEN.length; i++) {
-      (function (kat) {
-        fetch(kat.datei)
-          .then(function (antwort) {
-            if (!antwort.ok) { throw new Error("HTTP " + antwort.status); }
-            return antwort.json();
-          })
-          .then(function (daten) {
-            if (!Array.isArray(daten)) { throw new Error("Unerwartetes Format"); }
-            fragenNachKategorie[kat.id] = daten;
-            setzeKategorieAnzahl(kat.id, daten.length + " Fragen");
-          })
-          .catch(function () {
-            zeigeFehler("Fragen für " + kat.name + " konnten nicht geladen werden.");
-            setzeKategorieAnzahl(kat.id, "konnte nicht geladen werden");
-          });
-      })(KATEGORIEN[i]);
-    }
+    fetch("daten/geschichte.json")
+      .then(function (antwort) {
+        if (!antwort.ok) { throw new Error("HTTP " + antwort.status); }
+        return antwort.json();
+      })
+      .then(function (daten) {
+        if (!Array.isArray(daten)) { throw new Error("Unerwartetes Format"); }
+        fragenGeschichte = daten;
+        aktualisiereStartAnzeige();
+      })
+      .catch(function () {
+        zeigeFehler("Fragen konnten nicht geladen werden.");
+        aktualisiereStartAnzeige();
+      });
   }
 
+  document.getElementById("kachel-geschichte").addEventListener("click", starteQuiz);
   document.getElementById("antwort-zeigen-btn").addEventListener("click", zeigeAntwort);
   document.getElementById("nicht-gewusst-btn").addEventListener("click", function () { bewerte(false); });
   document.getElementById("gewusst-btn").addEventListener("click", function () { bewerte(true); });
   document.getElementById("quiz-abbrechen").addEventListener("click", function () { zeigeBlatt("start"); aktualisiereStartAnzeige(); });
   document.getElementById("ende-zurueck-btn").addEventListener("click", function () { zeigeBlatt("start"); aktualisiereStartAnzeige(); });
-  document.getElementById("ende-nochmal-btn").addEventListener("click", function () { starteQuiz(); });
+  document.getElementById("ende-nochmal-btn").addEventListener("click", starteQuiz);
   document.getElementById("vorlesen-btn").addEventListener("click", function () {
     var frage = quizFragen[quizIndex];
     if (!frage) { return; }
@@ -395,7 +374,6 @@
     vorlesen(text);
   });
 
-  renderKategorienListe();
   aktualisiereStartAnzeige();
   ladeFragen();
   zeigeBlatt("start");
