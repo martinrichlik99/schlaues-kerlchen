@@ -70,7 +70,7 @@
   .bald { margin-top: 12px; font-size: 12px; color: #8677a8; text-align: center; }
 
   /* Quiz */
-  #quiz-blatt { display: none; flex: 1; flex-direction: column; padding-bottom: 76px; }
+  #quiz-blatt { display: none; flex: 1; flex-direction: column; }
   .fortschritt-leiste { height: 6px; background: rgba(255,255,255,0.08); border-radius: 6px; overflow: hidden; margin-bottom: 18px; }
   .fortschritt-leiste i { display: block; height: 100%; background: linear-gradient(90deg, #ff8a5c, #ff5c9e); }
   .frage-zaehler { font-size: 12px; color: #b7aad6; margin-bottom: 10px; }
@@ -78,13 +78,9 @@
   .antwort-kurz { font-size: 18px; font-weight: 800; color: #ff9d73; margin-bottom: 10px; }
   .erklaerung-text { font-size: 15px; line-height: 1.55; color: #ddd4f5; }
   .vorlesen-btn {
-    position: fixed; left: 50%; bottom: calc(18px + env(safe-area-inset-bottom));
-    transform: translateX(-50%); z-index: 15;
-    display: inline-flex; align-items: center; gap: 8px;
-    background: linear-gradient(90deg, #ff8a5c, #ff5c9e);
-    border: none; color: #1c0f2e; font-size: 14px; font-weight: 700;
-    padding: 14px 26px; border-radius: 30px; cursor: pointer;
-    box-shadow: 0 6px 20px rgba(0,0,0,0.4);
+    display: inline-flex; align-items: center; gap: 6px; background: rgba(255,255,255,0.08);
+    border: none; color: #f2eefc; font-size: 13px; padding: 8px 14px; border-radius: 20px;
+    margin-top: 14px; cursor: pointer;
   }
   .knopf-reihe { display: flex; gap: 10px; margin-top: 20px; }
   .knopf { flex: 1; border: none; border-radius: 16px; padding: 16px; font-size: 15px; font-weight: 700; cursor: pointer; }
@@ -193,11 +189,8 @@
     { id: "literatur", name: "Literatur", icon: "📚", datei: "daten/literatur.json" },
     { id: "philosophie", name: "Philosophie", icon: "🦉", datei: "daten/philosophie.json" },
     { id: "technologie", name: "Technologie", icon: "💻", datei: "daten/technologie.json" },
-    { id: "oesterreich", name: "Österreich", icon: "🇦🇹", datei: "daten/oesterreich.json" },
-    { id: "laender", name: "Länder & Hauptstädte", icon: "🗺️", datei: "daten/laender-hauptstaedte.json" }
+    { id: "oesterreich", name: "Österreich", icon: "🇦🇹", datei: "daten/oesterreich.json" }
   ];
-  // Länder & Hauptstädte bewusst NICHT Teil der wöchentlichen Automations-Routine (Martins Wunsch 2026-09-18) —
-  // Kategorie ist eine feste Faktenliste (alle 193 UN-Mitgliedstaaten + Vatikanstadt), keine Trivia-Fragen.
   var fragenNachKategorie = {};
   var aktiveKategorieId = null;
   var quizFragen = [];
@@ -411,32 +404,15 @@
     return ergebnis;
   }
 
-  var vorleseWachTimer = null;
-
-  function haltVorlesenWach() {
-    vorleseWachTimer = window.setTimeout(function () {
-      if (window.speechSynthesis.speaking) {
-        window.speechSynthesis.pause();
-        window.speechSynthesis.resume();
-        haltVorlesenWach();
-      }
-    }, 10000);
-  }
-
   function vorlesen(text) {
     if (!("speechSynthesis" in window)) {
       zeigeFehler("Vorlesen wird von diesem Browser nicht unterstützt.");
       return;
     }
     window.speechSynthesis.cancel();
-    if (vorleseWachTimer) { window.clearTimeout(vorleseWachTimer); vorleseWachTimer = null; }
     var u = new SpeechSynthesisUtterance(text);
     u.lang = "de-DE";
-    u.onend = function () {
-      if (vorleseWachTimer) { window.clearTimeout(vorleseWachTimer); vorleseWachTimer = null; }
-    };
     window.speechSynthesis.speak(u);
-    haltVorlesenWach();
   }
 
   function zeigeBlatt(name) {
@@ -558,7 +534,8 @@
   document.getElementById("vorlesen-btn").addEventListener("click", function () {
     var frage = quizFragen[quizIndex];
     if (!frage) { return; }
-    var text = antwortSichtbar ? (frage.antwortKurz + ". " + frage.erklaerung) : frage.frage;
+    var text = frage.frage;
+    if (antwortSichtbar) { text += ". " + frage.antwortKurz + ". " + frage.erklaerung; }
     vorlesen(text);
   });
 

@@ -1,0 +1,1748 @@
+[
+  {
+    "id": "lh001",
+    "kategorie": "Länder & Hauptstädte",
+    "frage": "Wie heißt die Hauptstadt von Afghanistan?",
+    "antwortKurz": "Kabul",
+    "erklaerung": "Kabul ist die Hauptstadt von Afghanistan. Das Land liegt in Asien (Südasien).",
+    "schwierigkeit": "mittel",
+    "quelle": "geodaten"
+  },
+  {
+    "id": "lh002",
+    "kategorie": "Länder & Hauptstädte",
+    "frage": "Wie heißt die Hauptstadt von Albanien?",
+    "antwortKurz": "Tirana",
+    "erklaerung": "Tirana ist die Hauptstadt von Albanien. Das Land liegt in Europa (Südosteuropa).",
+    "schwierigkeit": "mittel",
+    "quelle": "geodaten"
+  },
+  {
+    "id": "lh003",
+    "kategorie": "Länder & Hauptstädte",
+    "frage": "Wie heißt die Hauptstadt von Algerien?",
+    "antwortKurz": "Algier",
+    "erklaerung": "Algier ist die Hauptstadt von Algerien. Das Land liegt in Afrika (Nordafrika).",
+    "schwierigkeit": "mittel",
+    "quelle": "geodaten"
+  },
+  {
+    "id": "lh004",
+    "kategorie": "Länder & Hauptstädte",
+    "frage": "Wie heißt die Hauptstadt von Andorra?",
+    "antwortKurz": "Andorra la Vella",
+    "erklaerung": "Andorra la Vella ist die Hauptstadt von Andorra. Das Land liegt in Europa (Südeuropa).",
+    "schwierigkeit": "schwer",
+    "quelle": "geodaten"
+  },
+  {
+    "id": "lh005",
+    "kategorie": "Länder & Hauptstädte",
+    "frage": "Wie heißt die Hauptstadt von Angola?",
+    "antwortKurz": "Luanda",
+    "erklaerung": "Luanda ist die Hauptstadt von Angola. Das Land liegt in Afrika (Mittelafrika).",
+    "schwierigkeit": "mittel",
+    "quelle": "geodaten"
+  },
+  {
+    "id": "lh006",
+    "kategorie": "Länder & Hauptstädte",
+    "frage": "Wie heißt die Hauptstadt von Antigua und Barbuda?",
+    "antwortKurz": "Saint John's",
+    "erklaerung": "Saint John's ist die Hauptstadt von Antigua und Barbuda. Das Land liegt in Amerika (Karibik).",
+    "schwierigkeit": "schwer",
+    "quelle": "geodaten"
+  },
+  {
+    "id": "lh007",
+    "kategorie": "Länder & Hauptstädte",
+    "frage": "Wie heißt die Hauptstadt von Argentinien?",
+    "antwortKurz": "Buenos Aires",
+    "erklaerung": "Buenos Aires ist die Hauptstadt von Argentinien. Das Land liegt in Amerika (Südamerika).",
+    "schwierigkeit": "mittel",
+    "quelle": "geodaten"
+  },
+  {
+    "id": "lh008",
+    "kategorie": "Länder & Hauptstädte",
+    "frage": "Wie heißt die Hauptstadt von Armenien?",
+    "antwortKurz": "Jerewan",
+    "erklaerung": "Jerewan ist die Hauptstadt von Armenien. Das Land liegt in Asien (Westasien).",
+    "schwierigkeit": "mittel",
+    "quelle": "geodaten"
+  },
+  {
+    "id": "lh009",
+    "kategorie": "Länder & Hauptstädte",
+    "frage": "Wie heißt die Hauptstadt von Aserbaidschan?",
+    "antwortKurz": "Baku",
+    "erklaerung": "Baku ist die Hauptstadt von Aserbaidschan. Das Land liegt in Asien (Westasien).",
+    "schwierigkeit": "mittel",
+    "quelle": "geodaten"
+  },
+  {
+    "id": "lh010",
+    "kategorie": "Länder & Hauptstädte",
+    "frage": "Wie heißt die Hauptstadt von Australien?",
+    "antwortKurz": "Canberra",
+    "erklaerung": "Canberra ist die Hauptstadt von Australien. Das Land liegt in Ozeanien (Australien und Neuseeland).",
+    "schwierigkeit": "leicht",
+    "quelle": "geodaten"
+  },
+  {
+    "id": "lh011",
+    "kategorie": "Länder & Hauptstädte",
+    "frage": "Wie heißt die Hauptstadt von Bahamas?",
+    "antwortKurz": "Nassau",
+    "erklaerung": "Nassau ist die Hauptstadt von Bahamas. Das Land liegt in Amerika (Karibik).",
+    "schwierigkeit": "mittel",
+    "quelle": "geodaten"
+  },
+  {
+    "id": "lh012",
+    "kategorie": "Länder & Hauptstädte",
+    "frage": "Wie heißt die Hauptstadt von Bahrain?",
+    "antwortKurz": "Manama",
+    "erklaerung": "Manama ist die Hauptstadt von Bahrain. Das Land liegt in Asien (Westasien).",
+    "schwierigkeit": "mittel",
+    "quelle": "geodaten"
+  },
+  {
+    "id": "lh013",
+    "kategorie": "Länder & Hauptstädte",
+    "frage": "Wie heißt die Hauptstadt von Bangladesch?",
+    "antwortKurz": "Dhaka",
+    "erklaerung": "Dhaka ist die Hauptstadt von Bangladesch. Das Land liegt in Asien (Südasien).",
+    "schwierigkeit": "mittel",
+    "quelle": "geodaten"
+  },
+  {
+    "id": "lh014",
+    "kategorie": "Länder & Hauptstädte",
+    "frage": "Wie heißt die Hauptstadt von Barbados?",
+    "antwortKurz": "Bridgetown",
+    "erklaerung": "Bridgetown ist die Hauptstadt von Barbados. Das Land liegt in Amerika (Karibik).",
+    "schwierigkeit": "mittel",
+    "quelle": "geodaten"
+  },
+  {
+    "id": "lh015",
+    "kategorie": "Länder & Hauptstädte",
+    "frage": "Wie heißt die Hauptstadt von Belarus?",
+    "antwortKurz": "Minsk",
+    "erklaerung": "Minsk ist die Hauptstadt von Belarus. Das Land liegt in Europa (Osteuropa).",
+    "schwierigkeit": "mittel",
+    "quelle": "geodaten"
+  },
+  {
+    "id": "lh016",
+    "kategorie": "Länder & Hauptstädte",
+    "frage": "Wie heißt die Hauptstadt von Belgien?",
+    "antwortKurz": "Brüssel",
+    "erklaerung": "Brüssel ist die Hauptstadt von Belgien. Das Land liegt in Europa (Westeuropa).",
+    "schwierigkeit": "leicht",
+    "quelle": "geodaten"
+  },
+  {
+    "id": "lh017",
+    "kategorie": "Länder & Hauptstädte",
+    "frage": "Wie heißt die Hauptstadt von Belize?",
+    "antwortKurz": "Belmopan",
+    "erklaerung": "Belmopan ist die Hauptstadt von Belize. Das Land liegt in Amerika (Mittelamerika).",
+    "schwierigkeit": "mittel",
+    "quelle": "geodaten"
+  },
+  {
+    "id": "lh018",
+    "kategorie": "Länder & Hauptstädte",
+    "frage": "Wie heißt die Hauptstadt von Benin?",
+    "antwortKurz": "Porto-Novo",
+    "erklaerung": "Porto-Novo ist die Hauptstadt von Benin. Das Land liegt in Afrika (Westafrika).",
+    "schwierigkeit": "mittel",
+    "quelle": "geodaten"
+  },
+  {
+    "id": "lh019",
+    "kategorie": "Länder & Hauptstädte",
+    "frage": "Wie heißt die Hauptstadt von Bhutan?",
+    "antwortKurz": "Thimphu",
+    "erklaerung": "Thimphu ist die Hauptstadt von Bhutan. Das Land liegt in Asien (Südasien).",
+    "schwierigkeit": "schwer",
+    "quelle": "geodaten"
+  },
+  {
+    "id": "lh020",
+    "kategorie": "Länder & Hauptstädte",
+    "frage": "Wie heißt die Hauptstadt von Bolivien?",
+    "antwortKurz": "Sucre",
+    "erklaerung": "Sucre ist die Hauptstadt von Bolivien. Das Land liegt in Amerika (Südamerika). Regierungssitz ist jedoch La Paz — mit rund 3.600 m Höhe die höchstgelegene Regierungssitz-Stadt der Welt.",
+    "schwierigkeit": "mittel",
+    "quelle": "geodaten"
+  },
+  {
+    "id": "lh021",
+    "kategorie": "Länder & Hauptstädte",
+    "frage": "Wie heißt die Hauptstadt von Bosnien und Herzegowina?",
+    "antwortKurz": "Sarajevo",
+    "erklaerung": "Sarajevo ist die Hauptstadt von Bosnien und Herzegowina. Das Land liegt in Europa (Südosteuropa).",
+    "schwierigkeit": "mittel",
+    "quelle": "geodaten"
+  },
+  {
+    "id": "lh022",
+    "kategorie": "Länder & Hauptstädte",
+    "frage": "Wie heißt die Hauptstadt von Botswana?",
+    "antwortKurz": "Gaborone",
+    "erklaerung": "Gaborone ist die Hauptstadt von Botswana. Das Land liegt in Afrika (Südafrika (Region)).",
+    "schwierigkeit": "mittel",
+    "quelle": "geodaten"
+  },
+  {
+    "id": "lh023",
+    "kategorie": "Länder & Hauptstädte",
+    "frage": "Wie heißt die Hauptstadt von Brasilien?",
+    "antwortKurz": "Brasília",
+    "erklaerung": "Brasília ist die Hauptstadt von Brasilien. Das Land liegt in Amerika (Südamerika).",
+    "schwierigkeit": "leicht",
+    "quelle": "geodaten"
+  },
+  {
+    "id": "lh024",
+    "kategorie": "Länder & Hauptstädte",
+    "frage": "Wie heißt die Hauptstadt von Brunei?",
+    "antwortKurz": "Bandar Seri Begawan",
+    "erklaerung": "Bandar Seri Begawan ist die Hauptstadt von Brunei. Das Land liegt in Asien (Südostasien).",
+    "schwierigkeit": "schwer",
+    "quelle": "geodaten"
+  },
+  {
+    "id": "lh025",
+    "kategorie": "Länder & Hauptstädte",
+    "frage": "Wie heißt die Hauptstadt von Bulgarien?",
+    "antwortKurz": "Sofia",
+    "erklaerung": "Sofia ist die Hauptstadt von Bulgarien. Das Land liegt in Europa (Südosteuropa).",
+    "schwierigkeit": "mittel",
+    "quelle": "geodaten"
+  },
+  {
+    "id": "lh026",
+    "kategorie": "Länder & Hauptstädte",
+    "frage": "Wie heißt die Hauptstadt von Burkina Faso?",
+    "antwortKurz": "Ouagadougou",
+    "erklaerung": "Ouagadougou ist die Hauptstadt von Burkina Faso. Das Land liegt in Afrika (Westafrika).",
+    "schwierigkeit": "mittel",
+    "quelle": "geodaten"
+  },
+  {
+    "id": "lh027",
+    "kategorie": "Länder & Hauptstädte",
+    "frage": "Wie heißt die Hauptstadt von Burundi?",
+    "antwortKurz": "Gitega",
+    "erklaerung": "Gitega ist die Hauptstadt von Burundi. Das Land liegt in Afrika (Ostafrika).",
+    "schwierigkeit": "mittel",
+    "quelle": "geodaten"
+  },
+  {
+    "id": "lh028",
+    "kategorie": "Länder & Hauptstädte",
+    "frage": "Wie heißt die Hauptstadt von Chile?",
+    "antwortKurz": "Santiago",
+    "erklaerung": "Santiago ist die Hauptstadt von Chile. Das Land liegt in Amerika (Südamerika).",
+    "schwierigkeit": "mittel",
+    "quelle": "geodaten"
+  },
+  {
+    "id": "lh029",
+    "kategorie": "Länder & Hauptstädte",
+    "frage": "Wie heißt die Hauptstadt von China?",
+    "antwortKurz": "Peking",
+    "erklaerung": "Peking ist die Hauptstadt von China. Das Land liegt in Asien (Ostasien).",
+    "schwierigkeit": "leicht",
+    "quelle": "geodaten"
+  },
+  {
+    "id": "lh030",
+    "kategorie": "Länder & Hauptstädte",
+    "frage": "Wie heißt die Hauptstadt von Costa Rica?",
+    "antwortKurz": "San José",
+    "erklaerung": "San José ist die Hauptstadt von Costa Rica. Das Land liegt in Amerika (Mittelamerika).",
+    "schwierigkeit": "mittel",
+    "quelle": "geodaten"
+  },
+  {
+    "id": "lh031",
+    "kategorie": "Länder & Hauptstädte",
+    "frage": "Wie heißt die Hauptstadt von Demokratische Republik Kongo?",
+    "antwortKurz": "Kinshasa",
+    "erklaerung": "Kinshasa ist die Hauptstadt von Demokratische Republik Kongo. Das Land liegt in Afrika (Mittelafrika).",
+    "schwierigkeit": "mittel",
+    "quelle": "geodaten"
+  },
+  {
+    "id": "lh032",
+    "kategorie": "Länder & Hauptstädte",
+    "frage": "Wie heißt die Hauptstadt von Deutschland?",
+    "antwortKurz": "Berlin",
+    "erklaerung": "Berlin ist die Hauptstadt von Deutschland. Das Land liegt in Europa (Westeuropa).",
+    "schwierigkeit": "leicht",
+    "quelle": "geodaten"
+  },
+  {
+    "id": "lh033",
+    "kategorie": "Länder & Hauptstädte",
+    "frage": "Wie heißt die Hauptstadt von Dominica?",
+    "antwortKurz": "Roseau",
+    "erklaerung": "Roseau ist die Hauptstadt von Dominica. Das Land liegt in Amerika (Karibik).",
+    "schwierigkeit": "schwer",
+    "quelle": "geodaten"
+  },
+  {
+    "id": "lh034",
+    "kategorie": "Länder & Hauptstädte",
+    "frage": "Wie heißt die Hauptstadt von Dominikanische Republik?",
+    "antwortKurz": "Santo Domingo",
+    "erklaerung": "Santo Domingo ist die Hauptstadt von Dominikanische Republik. Das Land liegt in Amerika (Karibik).",
+    "schwierigkeit": "mittel",
+    "quelle": "geodaten"
+  },
+  {
+    "id": "lh035",
+    "kategorie": "Länder & Hauptstädte",
+    "frage": "Wie heißt die Hauptstadt von Dschibuti?",
+    "antwortKurz": "Djibouti",
+    "erklaerung": "Djibouti ist die Hauptstadt von Dschibuti. Das Land liegt in Afrika (Ostafrika).",
+    "schwierigkeit": "schwer",
+    "quelle": "geodaten"
+  },
+  {
+    "id": "lh036",
+    "kategorie": "Länder & Hauptstädte",
+    "frage": "Wie heißt die Hauptstadt von Dänemark?",
+    "antwortKurz": "Kopenhagen",
+    "erklaerung": "Kopenhagen ist die Hauptstadt von Dänemark. Das Land liegt in Europa (Nordeuropa).",
+    "schwierigkeit": "leicht",
+    "quelle": "geodaten"
+  },
+  {
+    "id": "lh037",
+    "kategorie": "Länder & Hauptstädte",
+    "frage": "Wie heißt die Hauptstadt von Ecuador?",
+    "antwortKurz": "Quito",
+    "erklaerung": "Quito ist die Hauptstadt von Ecuador. Das Land liegt in Amerika (Südamerika).",
+    "schwierigkeit": "mittel",
+    "quelle": "geodaten"
+  },
+  {
+    "id": "lh038",
+    "kategorie": "Länder & Hauptstädte",
+    "frage": "Wie heißt die Hauptstadt von El Salvador?",
+    "antwortKurz": "San Salvador",
+    "erklaerung": "San Salvador ist die Hauptstadt von El Salvador. Das Land liegt in Amerika (Mittelamerika).",
+    "schwierigkeit": "mittel",
+    "quelle": "geodaten"
+  },
+  {
+    "id": "lh039",
+    "kategorie": "Länder & Hauptstädte",
+    "frage": "Wie heißt die Hauptstadt von Elfenbeinküste?",
+    "antwortKurz": "Yamoussoukro",
+    "erklaerung": "Yamoussoukro ist die Hauptstadt von Elfenbeinküste. Das Land liegt in Afrika (Westafrika). Wirtschaftlich wichtiger und größte Stadt ist jedoch Abidjan.",
+    "schwierigkeit": "mittel",
+    "quelle": "geodaten"
+  },
+  {
+    "id": "lh040",
+    "kategorie": "Länder & Hauptstädte",
+    "frage": "Wie heißt die Hauptstadt von Eritrea?",
+    "antwortKurz": "Asmara",
+    "erklaerung": "Asmara ist die Hauptstadt von Eritrea. Das Land liegt in Afrika (Ostafrika).",
+    "schwierigkeit": "schwer",
+    "quelle": "geodaten"
+  },
+  {
+    "id": "lh041",
+    "kategorie": "Länder & Hauptstädte",
+    "frage": "Wie heißt die Hauptstadt von Estland?",
+    "antwortKurz": "Tallinn",
+    "erklaerung": "Tallinn ist die Hauptstadt von Estland. Das Land liegt in Europa (Nordeuropa).",
+    "schwierigkeit": "mittel",
+    "quelle": "geodaten"
+  },
+  {
+    "id": "lh042",
+    "kategorie": "Länder & Hauptstädte",
+    "frage": "Wie heißt die Hauptstadt von Eswatini?",
+    "antwortKurz": "Lobamba",
+    "erklaerung": "Lobamba ist die Hauptstadt von Eswatini. Das Land liegt in Afrika (Südafrika (Region)).",
+    "schwierigkeit": "schwer",
+    "quelle": "geodaten"
+  },
+  {
+    "id": "lh043",
+    "kategorie": "Länder & Hauptstädte",
+    "frage": "Wie heißt die Hauptstadt von Fidschi?",
+    "antwortKurz": "Suva",
+    "erklaerung": "Suva ist die Hauptstadt von Fidschi. Das Land liegt in Ozeanien (Melanesien).",
+    "schwierigkeit": "schwer",
+    "quelle": "geodaten"
+  },
+  {
+    "id": "lh044",
+    "kategorie": "Länder & Hauptstädte",
+    "frage": "Wie heißt die Hauptstadt von Finnland?",
+    "antwortKurz": "Helsinki",
+    "erklaerung": "Helsinki ist die Hauptstadt von Finnland. Das Land liegt in Europa (Nordeuropa).",
+    "schwierigkeit": "leicht",
+    "quelle": "geodaten"
+  },
+  {
+    "id": "lh045",
+    "kategorie": "Länder & Hauptstädte",
+    "frage": "Wie heißt die Hauptstadt von Frankreich?",
+    "antwortKurz": "Paris",
+    "erklaerung": "Paris ist die Hauptstadt von Frankreich. Das Land liegt in Europa (Westeuropa).",
+    "schwierigkeit": "leicht",
+    "quelle": "geodaten"
+  },
+  {
+    "id": "lh046",
+    "kategorie": "Länder & Hauptstädte",
+    "frage": "Wie heißt die Hauptstadt von Gabun?",
+    "antwortKurz": "Libreville",
+    "erklaerung": "Libreville ist die Hauptstadt von Gabun. Das Land liegt in Afrika (Mittelafrika).",
+    "schwierigkeit": "mittel",
+    "quelle": "geodaten"
+  },
+  {
+    "id": "lh047",
+    "kategorie": "Länder & Hauptstädte",
+    "frage": "Wie heißt die Hauptstadt von Gambia?",
+    "antwortKurz": "Banjul",
+    "erklaerung": "Banjul ist die Hauptstadt von Gambia. Das Land liegt in Afrika (Westafrika).",
+    "schwierigkeit": "mittel",
+    "quelle": "geodaten"
+  },
+  {
+    "id": "lh048",
+    "kategorie": "Länder & Hauptstädte",
+    "frage": "Wie heißt die Hauptstadt von Georgien?",
+    "antwortKurz": "Tiflis",
+    "erklaerung": "Tiflis ist die Hauptstadt von Georgien. Das Land liegt in Asien (Westasien).",
+    "schwierigkeit": "mittel",
+    "quelle": "geodaten"
+  },
+  {
+    "id": "lh049",
+    "kategorie": "Länder & Hauptstädte",
+    "frage": "Wie heißt die Hauptstadt von Ghana?",
+    "antwortKurz": "Accra",
+    "erklaerung": "Accra ist die Hauptstadt von Ghana. Das Land liegt in Afrika (Westafrika).",
+    "schwierigkeit": "mittel",
+    "quelle": "geodaten"
+  },
+  {
+    "id": "lh050",
+    "kategorie": "Länder & Hauptstädte",
+    "frage": "Wie heißt die Hauptstadt von Grenada?",
+    "antwortKurz": "St. George's",
+    "erklaerung": "St. George's ist die Hauptstadt von Grenada. Das Land liegt in Amerika (Karibik).",
+    "schwierigkeit": "schwer",
+    "quelle": "geodaten"
+  },
+  {
+    "id": "lh051",
+    "kategorie": "Länder & Hauptstädte",
+    "frage": "Wie heißt die Hauptstadt von Griechenland?",
+    "antwortKurz": "Athen",
+    "erklaerung": "Athen ist die Hauptstadt von Griechenland. Das Land liegt in Europa (Südeuropa).",
+    "schwierigkeit": "leicht",
+    "quelle": "geodaten"
+  },
+  {
+    "id": "lh052",
+    "kategorie": "Länder & Hauptstädte",
+    "frage": "Wie heißt die Hauptstadt von Guatemala?",
+    "antwortKurz": "Guatemala-Stadt",
+    "erklaerung": "Guatemala-Stadt ist die Hauptstadt von Guatemala. Das Land liegt in Amerika (Mittelamerika).",
+    "schwierigkeit": "mittel",
+    "quelle": "geodaten"
+  },
+  {
+    "id": "lh053",
+    "kategorie": "Länder & Hauptstädte",
+    "frage": "Wie heißt die Hauptstadt von Guinea?",
+    "antwortKurz": "Conakry",
+    "erklaerung": "Conakry ist die Hauptstadt von Guinea. Das Land liegt in Afrika (Westafrika).",
+    "schwierigkeit": "mittel",
+    "quelle": "geodaten"
+  },
+  {
+    "id": "lh054",
+    "kategorie": "Länder & Hauptstädte",
+    "frage": "Wie heißt die Hauptstadt von Guinea-Bissau?",
+    "antwortKurz": "Bissau",
+    "erklaerung": "Bissau ist die Hauptstadt von Guinea-Bissau. Das Land liegt in Afrika (Westafrika).",
+    "schwierigkeit": "schwer",
+    "quelle": "geodaten"
+  },
+  {
+    "id": "lh055",
+    "kategorie": "Länder & Hauptstädte",
+    "frage": "Wie heißt die Hauptstadt von Guyana?",
+    "antwortKurz": "Georgetown",
+    "erklaerung": "Georgetown ist die Hauptstadt von Guyana. Das Land liegt in Amerika (Südamerika).",
+    "schwierigkeit": "mittel",
+    "quelle": "geodaten"
+  },
+  {
+    "id": "lh056",
+    "kategorie": "Länder & Hauptstädte",
+    "frage": "Wie heißt die Hauptstadt von Haiti?",
+    "antwortKurz": "Port-au-Prince",
+    "erklaerung": "Port-au-Prince ist die Hauptstadt von Haiti. Das Land liegt in Amerika (Karibik).",
+    "schwierigkeit": "mittel",
+    "quelle": "geodaten"
+  },
+  {
+    "id": "lh057",
+    "kategorie": "Länder & Hauptstädte",
+    "frage": "Wie heißt die Hauptstadt von Honduras?",
+    "antwortKurz": "Tegucigalpa",
+    "erklaerung": "Tegucigalpa ist die Hauptstadt von Honduras. Das Land liegt in Amerika (Mittelamerika).",
+    "schwierigkeit": "mittel",
+    "quelle": "geodaten"
+  },
+  {
+    "id": "lh058",
+    "kategorie": "Länder & Hauptstädte",
+    "frage": "Wie heißt die Hauptstadt von Indien?",
+    "antwortKurz": "Neu-Delhi",
+    "erklaerung": "Neu-Delhi ist die Hauptstadt von Indien. Das Land liegt in Asien (Südasien).",
+    "schwierigkeit": "leicht",
+    "quelle": "geodaten"
+  },
+  {
+    "id": "lh059",
+    "kategorie": "Länder & Hauptstädte",
+    "frage": "Wie heißt die Hauptstadt von Indonesien?",
+    "antwortKurz": "Jakarta",
+    "erklaerung": "Jakarta ist die Hauptstadt von Indonesien. Das Land liegt in Asien (Südostasien).",
+    "schwierigkeit": "mittel",
+    "quelle": "geodaten"
+  },
+  {
+    "id": "lh060",
+    "kategorie": "Länder & Hauptstädte",
+    "frage": "Wie heißt die Hauptstadt von Irak?",
+    "antwortKurz": "Bagdad",
+    "erklaerung": "Bagdad ist die Hauptstadt von Irak. Das Land liegt in Asien (Westasien).",
+    "schwierigkeit": "mittel",
+    "quelle": "geodaten"
+  },
+  {
+    "id": "lh061",
+    "kategorie": "Länder & Hauptstädte",
+    "frage": "Wie heißt die Hauptstadt von Iran?",
+    "antwortKurz": "Teheran",
+    "erklaerung": "Teheran ist die Hauptstadt von Iran. Das Land liegt in Asien (Südasien).",
+    "schwierigkeit": "mittel",
+    "quelle": "geodaten"
+  },
+  {
+    "id": "lh062",
+    "kategorie": "Länder & Hauptstädte",
+    "frage": "Wie heißt die Hauptstadt von Irland?",
+    "antwortKurz": "Dublin",
+    "erklaerung": "Dublin ist die Hauptstadt von Irland. Das Land liegt in Europa (Nordeuropa).",
+    "schwierigkeit": "leicht",
+    "quelle": "geodaten"
+  },
+  {
+    "id": "lh063",
+    "kategorie": "Länder & Hauptstädte",
+    "frage": "Wie heißt die Hauptstadt von Island?",
+    "antwortKurz": "Reykjavik",
+    "erklaerung": "Reykjavik ist die Hauptstadt von Island. Das Land liegt in Europa (Nordeuropa).",
+    "schwierigkeit": "mittel",
+    "quelle": "geodaten"
+  },
+  {
+    "id": "lh064",
+    "kategorie": "Länder & Hauptstädte",
+    "frage": "Wie heißt die Hauptstadt von Israel?",
+    "antwortKurz": "Jerusalem",
+    "erklaerung": "Jerusalem ist die Hauptstadt von Israel. Das Land liegt in Asien (Westasien). International ist das umstritten: die meisten Staaten unterhalten ihre Botschaften in Tel Aviv.",
+    "schwierigkeit": "leicht",
+    "quelle": "geodaten"
+  },
+  {
+    "id": "lh065",
+    "kategorie": "Länder & Hauptstädte",
+    "frage": "Wie heißt die Hauptstadt von Italien?",
+    "antwortKurz": "Rom",
+    "erklaerung": "Rom ist die Hauptstadt von Italien. Das Land liegt in Europa (Südeuropa).",
+    "schwierigkeit": "leicht",
+    "quelle": "geodaten"
+  },
+  {
+    "id": "lh066",
+    "kategorie": "Länder & Hauptstädte",
+    "frage": "Wie heißt die Hauptstadt von Jamaika?",
+    "antwortKurz": "Kingston",
+    "erklaerung": "Kingston ist die Hauptstadt von Jamaika. Das Land liegt in Amerika (Karibik).",
+    "schwierigkeit": "mittel",
+    "quelle": "geodaten"
+  },
+  {
+    "id": "lh067",
+    "kategorie": "Länder & Hauptstädte",
+    "frage": "Wie heißt die Hauptstadt von Japan?",
+    "antwortKurz": "Tokio",
+    "erklaerung": "Tokio ist die Hauptstadt von Japan. Das Land liegt in Asien (Ostasien).",
+    "schwierigkeit": "leicht",
+    "quelle": "geodaten"
+  },
+  {
+    "id": "lh068",
+    "kategorie": "Länder & Hauptstädte",
+    "frage": "Wie heißt die Hauptstadt von Jemen?",
+    "antwortKurz": "Sanaa",
+    "erklaerung": "Sanaa ist die Hauptstadt von Jemen. Das Land liegt in Asien (Westasien).",
+    "schwierigkeit": "mittel",
+    "quelle": "geodaten"
+  },
+  {
+    "id": "lh069",
+    "kategorie": "Länder & Hauptstädte",
+    "frage": "Wie heißt die Hauptstadt von Jordanien?",
+    "antwortKurz": "Amman",
+    "erklaerung": "Amman ist die Hauptstadt von Jordanien. Das Land liegt in Asien (Westasien).",
+    "schwierigkeit": "mittel",
+    "quelle": "geodaten"
+  },
+  {
+    "id": "lh070",
+    "kategorie": "Länder & Hauptstädte",
+    "frage": "Wie heißt die Hauptstadt von Kambodscha?",
+    "antwortKurz": "Phnom Penh",
+    "erklaerung": "Phnom Penh ist die Hauptstadt von Kambodscha. Das Land liegt in Asien (Südostasien).",
+    "schwierigkeit": "mittel",
+    "quelle": "geodaten"
+  },
+  {
+    "id": "lh071",
+    "kategorie": "Länder & Hauptstädte",
+    "frage": "Wie heißt die Hauptstadt von Kamerun?",
+    "antwortKurz": "Yaoundé",
+    "erklaerung": "Yaoundé ist die Hauptstadt von Kamerun. Das Land liegt in Afrika (Mittelafrika).",
+    "schwierigkeit": "mittel",
+    "quelle": "geodaten"
+  },
+  {
+    "id": "lh072",
+    "kategorie": "Länder & Hauptstädte",
+    "frage": "Wie heißt die Hauptstadt von Kanada?",
+    "antwortKurz": "Ottawa",
+    "erklaerung": "Ottawa ist die Hauptstadt von Kanada. Das Land liegt in Amerika (Nordamerika).",
+    "schwierigkeit": "leicht",
+    "quelle": "geodaten"
+  },
+  {
+    "id": "lh073",
+    "kategorie": "Länder & Hauptstädte",
+    "frage": "Wie heißt die Hauptstadt von Kap Verde?",
+    "antwortKurz": "Praia",
+    "erklaerung": "Praia ist die Hauptstadt von Kap Verde. Das Land liegt in Afrika (Westafrika).",
+    "schwierigkeit": "mittel",
+    "quelle": "geodaten"
+  },
+  {
+    "id": "lh074",
+    "kategorie": "Länder & Hauptstädte",
+    "frage": "Wie heißt die Hauptstadt von Kasachstan?",
+    "antwortKurz": "Astana",
+    "erklaerung": "Astana ist die Hauptstadt von Kasachstan. Das Land liegt in Asien (Zentralasien).",
+    "schwierigkeit": "mittel",
+    "quelle": "geodaten"
+  },
+  {
+    "id": "lh075",
+    "kategorie": "Länder & Hauptstädte",
+    "frage": "Wie heißt die Hauptstadt von Katar?",
+    "antwortKurz": "Doha",
+    "erklaerung": "Doha ist die Hauptstadt von Katar. Das Land liegt in Asien (Westasien).",
+    "schwierigkeit": "mittel",
+    "quelle": "geodaten"
+  },
+  {
+    "id": "lh076",
+    "kategorie": "Länder & Hauptstädte",
+    "frage": "Wie heißt die Hauptstadt von Kenia?",
+    "antwortKurz": "Nairobi",
+    "erklaerung": "Nairobi ist die Hauptstadt von Kenia. Das Land liegt in Afrika (Ostafrika).",
+    "schwierigkeit": "mittel",
+    "quelle": "geodaten"
+  },
+  {
+    "id": "lh077",
+    "kategorie": "Länder & Hauptstädte",
+    "frage": "Wie heißt die Hauptstadt von Kirgisistan?",
+    "antwortKurz": "Bishkek",
+    "erklaerung": "Bishkek ist die Hauptstadt von Kirgisistan. Das Land liegt in Asien (Zentralasien).",
+    "schwierigkeit": "mittel",
+    "quelle": "geodaten"
+  },
+  {
+    "id": "lh078",
+    "kategorie": "Länder & Hauptstädte",
+    "frage": "Wie heißt die Hauptstadt von Kiribati?",
+    "antwortKurz": "South Tarawa",
+    "erklaerung": "South Tarawa ist die Hauptstadt von Kiribati. Das Land liegt in Ozeanien (Mikronesien).",
+    "schwierigkeit": "schwer",
+    "quelle": "geodaten"
+  },
+  {
+    "id": "lh079",
+    "kategorie": "Länder & Hauptstädte",
+    "frage": "Wie heißt die Hauptstadt von Kolumbien?",
+    "antwortKurz": "Bogotá",
+    "erklaerung": "Bogotá ist die Hauptstadt von Kolumbien. Das Land liegt in Amerika (Südamerika).",
+    "schwierigkeit": "mittel",
+    "quelle": "geodaten"
+  },
+  {
+    "id": "lh080",
+    "kategorie": "Länder & Hauptstädte",
+    "frage": "Wie heißt die Hauptstadt von Komoren?",
+    "antwortKurz": "Moroni",
+    "erklaerung": "Moroni ist die Hauptstadt von Komoren. Das Land liegt in Afrika (Ostafrika).",
+    "schwierigkeit": "schwer",
+    "quelle": "geodaten"
+  },
+  {
+    "id": "lh081",
+    "kategorie": "Länder & Hauptstädte",
+    "frage": "Wie heißt die Hauptstadt von Kroatien?",
+    "antwortKurz": "Zagreb",
+    "erklaerung": "Zagreb ist die Hauptstadt von Kroatien. Das Land liegt in Europa (Südosteuropa).",
+    "schwierigkeit": "mittel",
+    "quelle": "geodaten"
+  },
+  {
+    "id": "lh082",
+    "kategorie": "Länder & Hauptstädte",
+    "frage": "Wie heißt die Hauptstadt von Kuba?",
+    "antwortKurz": "Havanna",
+    "erklaerung": "Havanna ist die Hauptstadt von Kuba. Das Land liegt in Amerika (Karibik).",
+    "schwierigkeit": "mittel",
+    "quelle": "geodaten"
+  },
+  {
+    "id": "lh083",
+    "kategorie": "Länder & Hauptstädte",
+    "frage": "Wie heißt die Hauptstadt von Kuwait?",
+    "antwortKurz": "Kuwait-Stadt",
+    "erklaerung": "Kuwait-Stadt ist die Hauptstadt von Kuwait. Das Land liegt in Asien (Westasien).",
+    "schwierigkeit": "mittel",
+    "quelle": "geodaten"
+  },
+  {
+    "id": "lh084",
+    "kategorie": "Länder & Hauptstädte",
+    "frage": "Wie heißt die Hauptstadt von Laos?",
+    "antwortKurz": "Vientiane",
+    "erklaerung": "Vientiane ist die Hauptstadt von Laos. Das Land liegt in Asien (Südostasien).",
+    "schwierigkeit": "mittel",
+    "quelle": "geodaten"
+  },
+  {
+    "id": "lh085",
+    "kategorie": "Länder & Hauptstädte",
+    "frage": "Wie heißt die Hauptstadt von Lesotho?",
+    "antwortKurz": "Maseru",
+    "erklaerung": "Maseru ist die Hauptstadt von Lesotho. Das Land liegt in Afrika (Südafrika (Region)).",
+    "schwierigkeit": "schwer",
+    "quelle": "geodaten"
+  },
+  {
+    "id": "lh086",
+    "kategorie": "Länder & Hauptstädte",
+    "frage": "Wie heißt die Hauptstadt von Lettland?",
+    "antwortKurz": "Riga",
+    "erklaerung": "Riga ist die Hauptstadt von Lettland. Das Land liegt in Europa (Nordeuropa).",
+    "schwierigkeit": "mittel",
+    "quelle": "geodaten"
+  },
+  {
+    "id": "lh087",
+    "kategorie": "Länder & Hauptstädte",
+    "frage": "Wie heißt die Hauptstadt von Libanon?",
+    "antwortKurz": "Beirut",
+    "erklaerung": "Beirut ist die Hauptstadt von Libanon. Das Land liegt in Asien (Westasien).",
+    "schwierigkeit": "mittel",
+    "quelle": "geodaten"
+  },
+  {
+    "id": "lh088",
+    "kategorie": "Länder & Hauptstädte",
+    "frage": "Wie heißt die Hauptstadt von Liberia?",
+    "antwortKurz": "Monrovia",
+    "erklaerung": "Monrovia ist die Hauptstadt von Liberia. Das Land liegt in Afrika (Westafrika).",
+    "schwierigkeit": "mittel",
+    "quelle": "geodaten"
+  },
+  {
+    "id": "lh089",
+    "kategorie": "Länder & Hauptstädte",
+    "frage": "Wie heißt die Hauptstadt von Libyen?",
+    "antwortKurz": "Tripoli",
+    "erklaerung": "Tripoli ist die Hauptstadt von Libyen. Das Land liegt in Afrika (Nordafrika).",
+    "schwierigkeit": "mittel",
+    "quelle": "geodaten"
+  },
+  {
+    "id": "lh090",
+    "kategorie": "Länder & Hauptstädte",
+    "frage": "Wie heißt die Hauptstadt von Liechtenstein?",
+    "antwortKurz": "Vaduz",
+    "erklaerung": "Vaduz ist die Hauptstadt von Liechtenstein. Das Land liegt in Europa (Westeuropa).",
+    "schwierigkeit": "schwer",
+    "quelle": "geodaten"
+  },
+  {
+    "id": "lh091",
+    "kategorie": "Länder & Hauptstädte",
+    "frage": "Wie heißt die Hauptstadt von Litauen?",
+    "antwortKurz": "Vilnius",
+    "erklaerung": "Vilnius ist die Hauptstadt von Litauen. Das Land liegt in Europa (Nordeuropa).",
+    "schwierigkeit": "mittel",
+    "quelle": "geodaten"
+  },
+  {
+    "id": "lh092",
+    "kategorie": "Länder & Hauptstädte",
+    "frage": "Wie heißt die Hauptstadt von Luxemburg?",
+    "antwortKurz": "Luxemburg",
+    "erklaerung": "Luxemburg ist Land und Hauptstadt zugleich. Es liegt in Europa (Westeuropa).",
+    "schwierigkeit": "mittel",
+    "quelle": "geodaten"
+  },
+  {
+    "id": "lh093",
+    "kategorie": "Länder & Hauptstädte",
+    "frage": "Wie heißt die Hauptstadt von Madagaskar?",
+    "antwortKurz": "Antananarivo",
+    "erklaerung": "Antananarivo ist die Hauptstadt von Madagaskar. Das Land liegt in Afrika (Ostafrika).",
+    "schwierigkeit": "mittel",
+    "quelle": "geodaten"
+  },
+  {
+    "id": "lh094",
+    "kategorie": "Länder & Hauptstädte",
+    "frage": "Wie heißt die Hauptstadt von Malawi?",
+    "antwortKurz": "Lilongwe",
+    "erklaerung": "Lilongwe ist die Hauptstadt von Malawi. Das Land liegt in Afrika (Ostafrika).",
+    "schwierigkeit": "mittel",
+    "quelle": "geodaten"
+  },
+  {
+    "id": "lh095",
+    "kategorie": "Länder & Hauptstädte",
+    "frage": "Wie heißt die Hauptstadt von Malaysia?",
+    "antwortKurz": "Kuala Lumpur",
+    "erklaerung": "Kuala Lumpur ist die Hauptstadt von Malaysia. Das Land liegt in Asien (Südostasien). Der Verwaltungssitz der Regierung wurde 2003 jedoch ins nahe gelegene Putrajaya verlegt.",
+    "schwierigkeit": "mittel",
+    "quelle": "geodaten"
+  },
+  {
+    "id": "lh096",
+    "kategorie": "Länder & Hauptstädte",
+    "frage": "Wie heißt die Hauptstadt von Malediven?",
+    "antwortKurz": "Malé",
+    "erklaerung": "Malé ist die Hauptstadt von Malediven. Das Land liegt in Asien (Südasien).",
+    "schwierigkeit": "schwer",
+    "quelle": "geodaten"
+  },
+  {
+    "id": "lh097",
+    "kategorie": "Länder & Hauptstädte",
+    "frage": "Wie heißt die Hauptstadt von Mali?",
+    "antwortKurz": "Bamako",
+    "erklaerung": "Bamako ist die Hauptstadt von Mali. Das Land liegt in Afrika (Westafrika).",
+    "schwierigkeit": "mittel",
+    "quelle": "geodaten"
+  },
+  {
+    "id": "lh098",
+    "kategorie": "Länder & Hauptstädte",
+    "frage": "Wie heißt die Hauptstadt von Malta?",
+    "antwortKurz": "Valletta",
+    "erklaerung": "Valletta ist die Hauptstadt von Malta. Das Land liegt in Europa (Südeuropa).",
+    "schwierigkeit": "mittel",
+    "quelle": "geodaten"
+  },
+  {
+    "id": "lh099",
+    "kategorie": "Länder & Hauptstädte",
+    "frage": "Wie heißt die Hauptstadt von Marokko?",
+    "antwortKurz": "Rabat",
+    "erklaerung": "Rabat ist die Hauptstadt von Marokko. Das Land liegt in Afrika (Nordafrika).",
+    "schwierigkeit": "mittel",
+    "quelle": "geodaten"
+  },
+  {
+    "id": "lh100",
+    "kategorie": "Länder & Hauptstädte",
+    "frage": "Wie heißt die Hauptstadt von Marshallinseln?",
+    "antwortKurz": "Majuro",
+    "erklaerung": "Majuro ist die Hauptstadt von Marshallinseln. Das Land liegt in Ozeanien (Mikronesien).",
+    "schwierigkeit": "schwer",
+    "quelle": "geodaten"
+  },
+  {
+    "id": "lh101",
+    "kategorie": "Länder & Hauptstädte",
+    "frage": "Wie heißt die Hauptstadt von Mauretanien?",
+    "antwortKurz": "Nouakchott",
+    "erklaerung": "Nouakchott ist die Hauptstadt von Mauretanien. Das Land liegt in Afrika (Westafrika).",
+    "schwierigkeit": "mittel",
+    "quelle": "geodaten"
+  },
+  {
+    "id": "lh102",
+    "kategorie": "Länder & Hauptstädte",
+    "frage": "Wie heißt die Hauptstadt von Mauritius?",
+    "antwortKurz": "Port Louis",
+    "erklaerung": "Port Louis ist die Hauptstadt von Mauritius. Das Land liegt in Afrika (Ostafrika).",
+    "schwierigkeit": "mittel",
+    "quelle": "geodaten"
+  },
+  {
+    "id": "lh103",
+    "kategorie": "Länder & Hauptstädte",
+    "frage": "Wie heißt die Hauptstadt von Mexiko?",
+    "antwortKurz": "Mexiko-Stadt",
+    "erklaerung": "Mexiko-Stadt ist die Hauptstadt von Mexiko. Das Land liegt in Amerika (Nordamerika).",
+    "schwierigkeit": "leicht",
+    "quelle": "geodaten"
+  },
+  {
+    "id": "lh104",
+    "kategorie": "Länder & Hauptstädte",
+    "frage": "Wie heißt die Hauptstadt von Mikronesien?",
+    "antwortKurz": "Palikir",
+    "erklaerung": "Palikir ist die Hauptstadt von Mikronesien. Das Land liegt in Ozeanien (Mikronesien).",
+    "schwierigkeit": "schwer",
+    "quelle": "geodaten"
+  },
+  {
+    "id": "lh105",
+    "kategorie": "Länder & Hauptstädte",
+    "frage": "Wie heißt die Hauptstadt von Moldawien?",
+    "antwortKurz": "Chișinău",
+    "erklaerung": "Chișinău ist die Hauptstadt von Moldawien. Das Land liegt in Europa (Osteuropa).",
+    "schwierigkeit": "mittel",
+    "quelle": "geodaten"
+  },
+  {
+    "id": "lh106",
+    "kategorie": "Länder & Hauptstädte",
+    "frage": "Wie heißt die Hauptstadt von Monaco?",
+    "antwortKurz": "Monaco",
+    "erklaerung": "Monaco ist Land und Hauptstadt zugleich. Es liegt in Europa (Westeuropa).",
+    "schwierigkeit": "schwer",
+    "quelle": "geodaten"
+  },
+  {
+    "id": "lh107",
+    "kategorie": "Länder & Hauptstädte",
+    "frage": "Wie heißt die Hauptstadt von Mongolei?",
+    "antwortKurz": "Ulaanbaatar",
+    "erklaerung": "Ulaanbaatar ist die Hauptstadt von Mongolei. Das Land liegt in Asien (Ostasien).",
+    "schwierigkeit": "mittel",
+    "quelle": "geodaten"
+  },
+  {
+    "id": "lh108",
+    "kategorie": "Länder & Hauptstädte",
+    "frage": "Wie heißt die Hauptstadt von Montenegro?",
+    "antwortKurz": "Podgorica",
+    "erklaerung": "Podgorica ist die Hauptstadt von Montenegro. Das Land liegt in Europa (Südosteuropa).",
+    "schwierigkeit": "mittel",
+    "quelle": "geodaten"
+  },
+  {
+    "id": "lh109",
+    "kategorie": "Länder & Hauptstädte",
+    "frage": "Wie heißt die Hauptstadt von Mosambik?",
+    "antwortKurz": "Maputo",
+    "erklaerung": "Maputo ist die Hauptstadt von Mosambik. Das Land liegt in Afrika (Ostafrika).",
+    "schwierigkeit": "mittel",
+    "quelle": "geodaten"
+  },
+  {
+    "id": "lh110",
+    "kategorie": "Länder & Hauptstädte",
+    "frage": "Wie heißt die Hauptstadt von Myanmar?",
+    "antwortKurz": "Naypyidaw",
+    "erklaerung": "Naypyidaw ist die Hauptstadt von Myanmar. Das Land liegt in Asien (Südostasien).",
+    "schwierigkeit": "mittel",
+    "quelle": "geodaten"
+  },
+  {
+    "id": "lh111",
+    "kategorie": "Länder & Hauptstädte",
+    "frage": "Wie heißt die Hauptstadt von Namibia?",
+    "antwortKurz": "Windhoek",
+    "erklaerung": "Windhoek ist die Hauptstadt von Namibia. Das Land liegt in Afrika (Südafrika (Region)).",
+    "schwierigkeit": "mittel",
+    "quelle": "geodaten"
+  },
+  {
+    "id": "lh112",
+    "kategorie": "Länder & Hauptstädte",
+    "frage": "Wie heißt die Hauptstadt von Nauru?",
+    "antwortKurz": "Yaren",
+    "erklaerung": "Yaren ist die Hauptstadt von Nauru. Das Land liegt in Ozeanien (Mikronesien).",
+    "schwierigkeit": "schwer",
+    "quelle": "geodaten"
+  },
+  {
+    "id": "lh113",
+    "kategorie": "Länder & Hauptstädte",
+    "frage": "Wie heißt die Hauptstadt von Nepal?",
+    "antwortKurz": "Kathmandu",
+    "erklaerung": "Kathmandu ist die Hauptstadt von Nepal. Das Land liegt in Asien (Südasien).",
+    "schwierigkeit": "mittel",
+    "quelle": "geodaten"
+  },
+  {
+    "id": "lh114",
+    "kategorie": "Länder & Hauptstädte",
+    "frage": "Wie heißt die Hauptstadt von Neuseeland?",
+    "antwortKurz": "Wellington",
+    "erklaerung": "Wellington ist die Hauptstadt von Neuseeland. Das Land liegt in Ozeanien (Australien und Neuseeland).",
+    "schwierigkeit": "leicht",
+    "quelle": "geodaten"
+  },
+  {
+    "id": "lh115",
+    "kategorie": "Länder & Hauptstädte",
+    "frage": "Wie heißt die Hauptstadt von Nicaragua?",
+    "antwortKurz": "Managua",
+    "erklaerung": "Managua ist die Hauptstadt von Nicaragua. Das Land liegt in Amerika (Mittelamerika).",
+    "schwierigkeit": "mittel",
+    "quelle": "geodaten"
+  },
+  {
+    "id": "lh116",
+    "kategorie": "Länder & Hauptstädte",
+    "frage": "Wie heißt die Hauptstadt von Niederlande?",
+    "antwortKurz": "Amsterdam",
+    "erklaerung": "Amsterdam ist die Hauptstadt von Niederlande. Das Land liegt in Europa (Westeuropa). Regierungssitz und Königsresidenz ist allerdings Den Haag, nicht Amsterdam.",
+    "schwierigkeit": "leicht",
+    "quelle": "geodaten"
+  },
+  {
+    "id": "lh117",
+    "kategorie": "Länder & Hauptstädte",
+    "frage": "Wie heißt die Hauptstadt von Niger?",
+    "antwortKurz": "Niamey",
+    "erklaerung": "Niamey ist die Hauptstadt von Niger. Das Land liegt in Afrika (Westafrika).",
+    "schwierigkeit": "mittel",
+    "quelle": "geodaten"
+  },
+  {
+    "id": "lh118",
+    "kategorie": "Länder & Hauptstädte",
+    "frage": "Wie heißt die Hauptstadt von Nigeria?",
+    "antwortKurz": "Abuja",
+    "erklaerung": "Abuja ist die Hauptstadt von Nigeria. Das Land liegt in Afrika (Westafrika).",
+    "schwierigkeit": "mittel",
+    "quelle": "geodaten"
+  },
+  {
+    "id": "lh119",
+    "kategorie": "Länder & Hauptstädte",
+    "frage": "Wie heißt die Hauptstadt von Nordkorea?",
+    "antwortKurz": "Pyongyang",
+    "erklaerung": "Pyongyang ist die Hauptstadt von Nordkorea. Das Land liegt in Asien (Ostasien).",
+    "schwierigkeit": "leicht",
+    "quelle": "geodaten"
+  },
+  {
+    "id": "lh120",
+    "kategorie": "Länder & Hauptstädte",
+    "frage": "Wie heißt die Hauptstadt von Nordmazedonien?",
+    "antwortKurz": "Skopje",
+    "erklaerung": "Skopje ist die Hauptstadt von Nordmazedonien. Das Land liegt in Europa (Südosteuropa).",
+    "schwierigkeit": "mittel",
+    "quelle": "geodaten"
+  },
+  {
+    "id": "lh121",
+    "kategorie": "Länder & Hauptstädte",
+    "frage": "Wie heißt die Hauptstadt von Norwegen?",
+    "antwortKurz": "Oslo",
+    "erklaerung": "Oslo ist die Hauptstadt von Norwegen. Das Land liegt in Europa (Nordeuropa).",
+    "schwierigkeit": "leicht",
+    "quelle": "geodaten"
+  },
+  {
+    "id": "lh122",
+    "kategorie": "Länder & Hauptstädte",
+    "frage": "Wie heißt die Hauptstadt von Oman?",
+    "antwortKurz": "Maskat",
+    "erklaerung": "Maskat ist die Hauptstadt von Oman. Das Land liegt in Asien (Westasien).",
+    "schwierigkeit": "mittel",
+    "quelle": "geodaten"
+  },
+  {
+    "id": "lh123",
+    "kategorie": "Länder & Hauptstädte",
+    "frage": "Wie heißt die Hauptstadt von Osttimor?",
+    "antwortKurz": "Dili",
+    "erklaerung": "Dili ist die Hauptstadt von Osttimor. Das Land liegt in Asien (Südostasien).",
+    "schwierigkeit": "schwer",
+    "quelle": "geodaten"
+  },
+  {
+    "id": "lh124",
+    "kategorie": "Länder & Hauptstädte",
+    "frage": "Wie heißt die Hauptstadt von Pakistan?",
+    "antwortKurz": "Islamabad",
+    "erklaerung": "Islamabad ist die Hauptstadt von Pakistan. Das Land liegt in Asien (Südasien).",
+    "schwierigkeit": "mittel",
+    "quelle": "geodaten"
+  },
+  {
+    "id": "lh125",
+    "kategorie": "Länder & Hauptstädte",
+    "frage": "Wie heißt die Hauptstadt von Palau?",
+    "antwortKurz": "Ngerulmud",
+    "erklaerung": "Ngerulmud ist die Hauptstadt von Palau. Das Land liegt in Ozeanien (Mikronesien).",
+    "schwierigkeit": "schwer",
+    "quelle": "geodaten"
+  },
+  {
+    "id": "lh126",
+    "kategorie": "Länder & Hauptstädte",
+    "frage": "Wie heißt die Hauptstadt von Panama?",
+    "antwortKurz": "Panama-Stadt",
+    "erklaerung": "Panama-Stadt ist die Hauptstadt von Panama. Das Land liegt in Amerika (Mittelamerika).",
+    "schwierigkeit": "mittel",
+    "quelle": "geodaten"
+  },
+  {
+    "id": "lh127",
+    "kategorie": "Länder & Hauptstädte",
+    "frage": "Wie heißt die Hauptstadt von Papua-Neuguinea?",
+    "antwortKurz": "Port Moresby",
+    "erklaerung": "Port Moresby ist die Hauptstadt von Papua-Neuguinea. Das Land liegt in Ozeanien (Melanesien).",
+    "schwierigkeit": "mittel",
+    "quelle": "geodaten"
+  },
+  {
+    "id": "lh128",
+    "kategorie": "Länder & Hauptstädte",
+    "frage": "Wie heißt die Hauptstadt von Paraguay?",
+    "antwortKurz": "Asunción",
+    "erklaerung": "Asunción ist die Hauptstadt von Paraguay. Das Land liegt in Amerika (Südamerika).",
+    "schwierigkeit": "mittel",
+    "quelle": "geodaten"
+  },
+  {
+    "id": "lh129",
+    "kategorie": "Länder & Hauptstädte",
+    "frage": "Wie heißt die Hauptstadt von Peru?",
+    "antwortKurz": "Lima",
+    "erklaerung": "Lima ist die Hauptstadt von Peru. Das Land liegt in Amerika (Südamerika).",
+    "schwierigkeit": "mittel",
+    "quelle": "geodaten"
+  },
+  {
+    "id": "lh130",
+    "kategorie": "Länder & Hauptstädte",
+    "frage": "Wie heißt die Hauptstadt von Philippinen?",
+    "antwortKurz": "Manila",
+    "erklaerung": "Manila ist die Hauptstadt von Philippinen. Das Land liegt in Asien (Südostasien).",
+    "schwierigkeit": "mittel",
+    "quelle": "geodaten"
+  },
+  {
+    "id": "lh131",
+    "kategorie": "Länder & Hauptstädte",
+    "frage": "Wie heißt die Hauptstadt von Polen?",
+    "antwortKurz": "Warschau",
+    "erklaerung": "Warschau ist die Hauptstadt von Polen. Das Land liegt in Europa (Mitteleuropa).",
+    "schwierigkeit": "leicht",
+    "quelle": "geodaten"
+  },
+  {
+    "id": "lh132",
+    "kategorie": "Länder & Hauptstädte",
+    "frage": "Wie heißt die Hauptstadt von Portugal?",
+    "antwortKurz": "Lissabon",
+    "erklaerung": "Lissabon ist die Hauptstadt von Portugal. Das Land liegt in Europa (Südeuropa).",
+    "schwierigkeit": "leicht",
+    "quelle": "geodaten"
+  },
+  {
+    "id": "lh133",
+    "kategorie": "Länder & Hauptstädte",
+    "frage": "Wie heißt die Hauptstadt von Republik Kongo?",
+    "antwortKurz": "Brazzaville",
+    "erklaerung": "Brazzaville ist die Hauptstadt von Republik Kongo. Das Land liegt in Afrika (Mittelafrika).",
+    "schwierigkeit": "mittel",
+    "quelle": "geodaten"
+  },
+  {
+    "id": "lh134",
+    "kategorie": "Länder & Hauptstädte",
+    "frage": "Wie heißt die Hauptstadt von Ruanda?",
+    "antwortKurz": "Kigali",
+    "erklaerung": "Kigali ist die Hauptstadt von Ruanda. Das Land liegt in Afrika (Ostafrika).",
+    "schwierigkeit": "mittel",
+    "quelle": "geodaten"
+  },
+  {
+    "id": "lh135",
+    "kategorie": "Länder & Hauptstädte",
+    "frage": "Wie heißt die Hauptstadt von Rumänien?",
+    "antwortKurz": "Bukarest",
+    "erklaerung": "Bukarest ist die Hauptstadt von Rumänien. Das Land liegt in Europa (Südosteuropa).",
+    "schwierigkeit": "mittel",
+    "quelle": "geodaten"
+  },
+  {
+    "id": "lh136",
+    "kategorie": "Länder & Hauptstädte",
+    "frage": "Wie heißt die Hauptstadt von Russland?",
+    "antwortKurz": "Moskau",
+    "erklaerung": "Moskau ist die Hauptstadt von Russland. Das Land liegt in Europa (Osteuropa).",
+    "schwierigkeit": "leicht",
+    "quelle": "geodaten"
+  },
+  {
+    "id": "lh137",
+    "kategorie": "Länder & Hauptstädte",
+    "frage": "Wie heißt die Hauptstadt von Salomonen?",
+    "antwortKurz": "Honiara",
+    "erklaerung": "Honiara ist die Hauptstadt von Salomonen. Das Land liegt in Ozeanien (Melanesien).",
+    "schwierigkeit": "schwer",
+    "quelle": "geodaten"
+  },
+  {
+    "id": "lh138",
+    "kategorie": "Länder & Hauptstädte",
+    "frage": "Wie heißt die Hauptstadt von Sambia?",
+    "antwortKurz": "Lusaka",
+    "erklaerung": "Lusaka ist die Hauptstadt von Sambia. Das Land liegt in Afrika (Ostafrika).",
+    "schwierigkeit": "mittel",
+    "quelle": "geodaten"
+  },
+  {
+    "id": "lh139",
+    "kategorie": "Länder & Hauptstädte",
+    "frage": "Wie heißt die Hauptstadt von Samoa?",
+    "antwortKurz": "Apia",
+    "erklaerung": "Apia ist die Hauptstadt von Samoa. Das Land liegt in Ozeanien (Polynesien).",
+    "schwierigkeit": "schwer",
+    "quelle": "geodaten"
+  },
+  {
+    "id": "lh140",
+    "kategorie": "Länder & Hauptstädte",
+    "frage": "Wie heißt die Hauptstadt von San Marino?",
+    "antwortKurz": "San Marino",
+    "erklaerung": "San Marino ist Land und Hauptstadt zugleich. Es liegt in Europa (Südeuropa).",
+    "schwierigkeit": "schwer",
+    "quelle": "geodaten"
+  },
+  {
+    "id": "lh141",
+    "kategorie": "Länder & Hauptstädte",
+    "frage": "Wie heißt die Hauptstadt von Saudi-Arabien?",
+    "antwortKurz": "Riad",
+    "erklaerung": "Riad ist die Hauptstadt von Saudi-Arabien. Das Land liegt in Asien (Westasien).",
+    "schwierigkeit": "leicht",
+    "quelle": "geodaten"
+  },
+  {
+    "id": "lh142",
+    "kategorie": "Länder & Hauptstädte",
+    "frage": "Wie heißt die Hauptstadt von Schweden?",
+    "antwortKurz": "Stockholm",
+    "erklaerung": "Stockholm ist die Hauptstadt von Schweden. Das Land liegt in Europa (Nordeuropa).",
+    "schwierigkeit": "leicht",
+    "quelle": "geodaten"
+  },
+  {
+    "id": "lh143",
+    "kategorie": "Länder & Hauptstädte",
+    "frage": "Wie heißt die Hauptstadt von Schweiz?",
+    "antwortKurz": "Bern",
+    "erklaerung": "Bern ist die Hauptstadt von Schweiz. Das Land liegt in Europa (Westeuropa). Die Schweiz nennt Bern offiziell nur „Bundesstadt\", da sie föderal keine einzelne Hauptstadt kennt.",
+    "schwierigkeit": "leicht",
+    "quelle": "geodaten"
+  },
+  {
+    "id": "lh144",
+    "kategorie": "Länder & Hauptstädte",
+    "frage": "Wie heißt die Hauptstadt von Senegal?",
+    "antwortKurz": "Dakar",
+    "erklaerung": "Dakar ist die Hauptstadt von Senegal. Das Land liegt in Afrika (Westafrika).",
+    "schwierigkeit": "mittel",
+    "quelle": "geodaten"
+  },
+  {
+    "id": "lh145",
+    "kategorie": "Länder & Hauptstädte",
+    "frage": "Wie heißt die Hauptstadt von Serbien?",
+    "antwortKurz": "Belgrad",
+    "erklaerung": "Belgrad ist die Hauptstadt von Serbien. Das Land liegt in Europa (Südosteuropa).",
+    "schwierigkeit": "mittel",
+    "quelle": "geodaten"
+  },
+  {
+    "id": "lh146",
+    "kategorie": "Länder & Hauptstädte",
+    "frage": "Wie heißt die Hauptstadt von Seychellen?",
+    "antwortKurz": "Victoria",
+    "erklaerung": "Victoria ist die Hauptstadt von Seychellen. Das Land liegt in Afrika (Ostafrika).",
+    "schwierigkeit": "schwer",
+    "quelle": "geodaten"
+  },
+  {
+    "id": "lh147",
+    "kategorie": "Länder & Hauptstädte",
+    "frage": "Wie heißt die Hauptstadt von Sierra Leone?",
+    "antwortKurz": "Freetown",
+    "erklaerung": "Freetown ist die Hauptstadt von Sierra Leone. Das Land liegt in Afrika (Westafrika).",
+    "schwierigkeit": "mittel",
+    "quelle": "geodaten"
+  },
+  {
+    "id": "lh148",
+    "kategorie": "Länder & Hauptstädte",
+    "frage": "Wie heißt die Hauptstadt von Simbabwe?",
+    "antwortKurz": "Harare",
+    "erklaerung": "Harare ist die Hauptstadt von Simbabwe. Das Land liegt in Afrika (Ostafrika).",
+    "schwierigkeit": "mittel",
+    "quelle": "geodaten"
+  },
+  {
+    "id": "lh149",
+    "kategorie": "Länder & Hauptstädte",
+    "frage": "Wie heißt die Hauptstadt von Singapur?",
+    "antwortKurz": "Singapur",
+    "erklaerung": "Singapur ist Land und Hauptstadt zugleich. Es liegt in Asien (Südostasien).",
+    "schwierigkeit": "mittel",
+    "quelle": "geodaten"
+  },
+  {
+    "id": "lh150",
+    "kategorie": "Länder & Hauptstädte",
+    "frage": "Wie heißt die Hauptstadt von Slowakei?",
+    "antwortKurz": "Bratislava",
+    "erklaerung": "Bratislava ist die Hauptstadt von Slowakei. Das Land liegt in Europa (Mitteleuropa).",
+    "schwierigkeit": "mittel",
+    "quelle": "geodaten"
+  },
+  {
+    "id": "lh151",
+    "kategorie": "Länder & Hauptstädte",
+    "frage": "Wie heißt die Hauptstadt von Slowenien?",
+    "antwortKurz": "Ljubljana",
+    "erklaerung": "Ljubljana ist die Hauptstadt von Slowenien. Das Land liegt in Europa (Mitteleuropa).",
+    "schwierigkeit": "mittel",
+    "quelle": "geodaten"
+  },
+  {
+    "id": "lh152",
+    "kategorie": "Länder & Hauptstädte",
+    "frage": "Wie heißt die Hauptstadt von Somalia?",
+    "antwortKurz": "Mogadishu",
+    "erklaerung": "Mogadishu ist die Hauptstadt von Somalia. Das Land liegt in Afrika (Ostafrika).",
+    "schwierigkeit": "mittel",
+    "quelle": "geodaten"
+  },
+  {
+    "id": "lh153",
+    "kategorie": "Länder & Hauptstädte",
+    "frage": "Wie heißt die Hauptstadt von Spanien?",
+    "antwortKurz": "Madrid",
+    "erklaerung": "Madrid ist die Hauptstadt von Spanien. Das Land liegt in Europa (Südeuropa).",
+    "schwierigkeit": "leicht",
+    "quelle": "geodaten"
+  },
+  {
+    "id": "lh154",
+    "kategorie": "Länder & Hauptstädte",
+    "frage": "Wie heißt die Hauptstadt von Sri Lanka?",
+    "antwortKurz": "Sri Jayawardenepura Kotte",
+    "erklaerung": "Sri Jayawardenepura Kotte ist die Hauptstadt von Sri Lanka. Das Land liegt in Asien (Südasien). Umgangssprachlich wird oft Colombo als Hauptstadt genannt — das ist aber nur die Handels- und ehemalige Hauptstadt.",
+    "schwierigkeit": "mittel",
+    "quelle": "geodaten"
+  },
+  {
+    "id": "lh155",
+    "kategorie": "Länder & Hauptstädte",
+    "frage": "Wie heißt die Hauptstadt von St. Kitts und Nevis?",
+    "antwortKurz": "Basseterre",
+    "erklaerung": "Basseterre ist die Hauptstadt von St. Kitts und Nevis. Das Land liegt in Amerika (Karibik).",
+    "schwierigkeit": "schwer",
+    "quelle": "geodaten"
+  },
+  {
+    "id": "lh156",
+    "kategorie": "Länder & Hauptstädte",
+    "frage": "Wie heißt die Hauptstadt von St. Lucia?",
+    "antwortKurz": "Castries",
+    "erklaerung": "Castries ist die Hauptstadt von St. Lucia. Das Land liegt in Amerika (Karibik).",
+    "schwierigkeit": "mittel",
+    "quelle": "geodaten"
+  },
+  {
+    "id": "lh157",
+    "kategorie": "Länder & Hauptstädte",
+    "frage": "Wie heißt die Hauptstadt von St. Vincent und die Grenadinen?",
+    "antwortKurz": "Kingstown",
+    "erklaerung": "Kingstown ist die Hauptstadt von St. Vincent und die Grenadinen. Das Land liegt in Amerika (Karibik).",
+    "schwierigkeit": "schwer",
+    "quelle": "geodaten"
+  },
+  {
+    "id": "lh158",
+    "kategorie": "Länder & Hauptstädte",
+    "frage": "Wie heißt die Hauptstadt von Sudan?",
+    "antwortKurz": "Khartoum",
+    "erklaerung": "Khartoum ist die Hauptstadt von Sudan. Das Land liegt in Afrika (Nordafrika).",
+    "schwierigkeit": "mittel",
+    "quelle": "geodaten"
+  },
+  {
+    "id": "lh159",
+    "kategorie": "Länder & Hauptstädte",
+    "frage": "Wie heißt die Hauptstadt von Suriname?",
+    "antwortKurz": "Paramaribo",
+    "erklaerung": "Paramaribo ist die Hauptstadt von Suriname. Das Land liegt in Amerika (Südamerika).",
+    "schwierigkeit": "mittel",
+    "quelle": "geodaten"
+  },
+  {
+    "id": "lh160",
+    "kategorie": "Länder & Hauptstädte",
+    "frage": "Wie heißt die Hauptstadt von Syrien?",
+    "antwortKurz": "Damaskus",
+    "erklaerung": "Damaskus ist die Hauptstadt von Syrien. Das Land liegt in Asien (Westasien).",
+    "schwierigkeit": "mittel",
+    "quelle": "geodaten"
+  },
+  {
+    "id": "lh161",
+    "kategorie": "Länder & Hauptstädte",
+    "frage": "Wie heißt die Hauptstadt von São Tomé und Príncipe?",
+    "antwortKurz": "São Tomé",
+    "erklaerung": "São Tomé ist die Hauptstadt von São Tomé und Príncipe. Das Land liegt in Afrika (Mittelafrika).",
+    "schwierigkeit": "schwer",
+    "quelle": "geodaten"
+  },
+  {
+    "id": "lh162",
+    "kategorie": "Länder & Hauptstädte",
+    "frage": "Wie heißt die Hauptstadt von Südafrika?",
+    "antwortKurz": "Pretoria",
+    "erklaerung": "Pretoria ist die Hauptstadt von Südafrika. Das Land liegt in Afrika (Südafrika (Region)). Südafrika hat sogar drei Hauptstädte: Pretoria (Regierung), Kapstadt (Parlament) und Bloemfontein (Gerichte).",
+    "schwierigkeit": "leicht",
+    "quelle": "geodaten"
+  },
+  {
+    "id": "lh163",
+    "kategorie": "Länder & Hauptstädte",
+    "frage": "Wie heißt die Hauptstadt von Südkorea?",
+    "antwortKurz": "Seoul",
+    "erklaerung": "Seoul ist die Hauptstadt von Südkorea. Das Land liegt in Asien (Ostasien).",
+    "schwierigkeit": "leicht",
+    "quelle": "geodaten"
+  },
+  {
+    "id": "lh164",
+    "kategorie": "Länder & Hauptstädte",
+    "frage": "Wie heißt die Hauptstadt von Südsudan?",
+    "antwortKurz": "Juba",
+    "erklaerung": "Juba ist die Hauptstadt von Südsudan. Das Land liegt in Afrika (Mittelafrika).",
+    "schwierigkeit": "mittel",
+    "quelle": "geodaten"
+  },
+  {
+    "id": "lh165",
+    "kategorie": "Länder & Hauptstädte",
+    "frage": "Wie heißt die Hauptstadt von Tadschikistan?",
+    "antwortKurz": "Duschanbe",
+    "erklaerung": "Duschanbe ist die Hauptstadt von Tadschikistan. Das Land liegt in Asien (Zentralasien).",
+    "schwierigkeit": "mittel",
+    "quelle": "geodaten"
+  },
+  {
+    "id": "lh166",
+    "kategorie": "Länder & Hauptstädte",
+    "frage": "Wie heißt die Hauptstadt von Tansania?",
+    "antwortKurz": "Dodoma",
+    "erklaerung": "Dodoma ist die Hauptstadt von Tansania. Das Land liegt in Afrika (Ostafrika).",
+    "schwierigkeit": "mittel",
+    "quelle": "geodaten"
+  },
+  {
+    "id": "lh167",
+    "kategorie": "Länder & Hauptstädte",
+    "frage": "Wie heißt die Hauptstadt von Thailand?",
+    "antwortKurz": "Bangkok",
+    "erklaerung": "Bangkok ist die Hauptstadt von Thailand. Das Land liegt in Asien (Südostasien).",
+    "schwierigkeit": "leicht",
+    "quelle": "geodaten"
+  },
+  {
+    "id": "lh168",
+    "kategorie": "Länder & Hauptstädte",
+    "frage": "Wie heißt die Hauptstadt von Togo?",
+    "antwortKurz": "Lomé",
+    "erklaerung": "Lomé ist die Hauptstadt von Togo. Das Land liegt in Afrika (Westafrika).",
+    "schwierigkeit": "mittel",
+    "quelle": "geodaten"
+  },
+  {
+    "id": "lh169",
+    "kategorie": "Länder & Hauptstädte",
+    "frage": "Wie heißt die Hauptstadt von Tonga?",
+    "antwortKurz": "Nuku'alofa",
+    "erklaerung": "Nuku'alofa ist die Hauptstadt von Tonga. Das Land liegt in Ozeanien (Polynesien).",
+    "schwierigkeit": "schwer",
+    "quelle": "geodaten"
+  },
+  {
+    "id": "lh170",
+    "kategorie": "Länder & Hauptstädte",
+    "frage": "Wie heißt die Hauptstadt von Trinidad und Tobago?",
+    "antwortKurz": "Port of Spain",
+    "erklaerung": "Port of Spain ist die Hauptstadt von Trinidad und Tobago. Das Land liegt in Amerika (Karibik).",
+    "schwierigkeit": "mittel",
+    "quelle": "geodaten"
+  },
+  {
+    "id": "lh171",
+    "kategorie": "Länder & Hauptstädte",
+    "frage": "Wie heißt die Hauptstadt von Tschad?",
+    "antwortKurz": "N'Djamena",
+    "erklaerung": "N'Djamena ist die Hauptstadt von Tschad. Das Land liegt in Afrika (Mittelafrika).",
+    "schwierigkeit": "mittel",
+    "quelle": "geodaten"
+  },
+  {
+    "id": "lh172",
+    "kategorie": "Länder & Hauptstädte",
+    "frage": "Wie heißt die Hauptstadt von Tschechien?",
+    "antwortKurz": "Prag",
+    "erklaerung": "Prag ist die Hauptstadt von Tschechien. Das Land liegt in Europa (Mitteleuropa).",
+    "schwierigkeit": "leicht",
+    "quelle": "geodaten"
+  },
+  {
+    "id": "lh173",
+    "kategorie": "Länder & Hauptstädte",
+    "frage": "Wie heißt die Hauptstadt von Tunesien?",
+    "antwortKurz": "Tunis",
+    "erklaerung": "Tunis ist die Hauptstadt von Tunesien. Das Land liegt in Afrika (Nordafrika).",
+    "schwierigkeit": "mittel",
+    "quelle": "geodaten"
+  },
+  {
+    "id": "lh174",
+    "kategorie": "Länder & Hauptstädte",
+    "frage": "Wie heißt die Hauptstadt von Turkmenistan?",
+    "antwortKurz": "Aschgabat",
+    "erklaerung": "Aschgabat ist die Hauptstadt von Turkmenistan. Das Land liegt in Asien (Zentralasien).",
+    "schwierigkeit": "mittel",
+    "quelle": "geodaten"
+  },
+  {
+    "id": "lh175",
+    "kategorie": "Länder & Hauptstädte",
+    "frage": "Wie heißt die Hauptstadt von Tuvalu?",
+    "antwortKurz": "Funafuti",
+    "erklaerung": "Funafuti ist die Hauptstadt von Tuvalu. Das Land liegt in Ozeanien (Polynesien).",
+    "schwierigkeit": "schwer",
+    "quelle": "geodaten"
+  },
+  {
+    "id": "lh176",
+    "kategorie": "Länder & Hauptstädte",
+    "frage": "Wie heißt die Hauptstadt von Türkei?",
+    "antwortKurz": "Ankara",
+    "erklaerung": "Ankara ist die Hauptstadt von Türkei. Das Land liegt in Asien (Westasien).",
+    "schwierigkeit": "leicht",
+    "quelle": "geodaten"
+  },
+  {
+    "id": "lh177",
+    "kategorie": "Länder & Hauptstädte",
+    "frage": "Wie heißt die Hauptstadt von Uganda?",
+    "antwortKurz": "Kampala",
+    "erklaerung": "Kampala ist die Hauptstadt von Uganda. Das Land liegt in Afrika (Ostafrika).",
+    "schwierigkeit": "mittel",
+    "quelle": "geodaten"
+  },
+  {
+    "id": "lh178",
+    "kategorie": "Länder & Hauptstädte",
+    "frage": "Wie heißt die Hauptstadt von Ukraine?",
+    "antwortKurz": "Kiew",
+    "erklaerung": "Kiew ist die Hauptstadt von Ukraine. Das Land liegt in Europa (Osteuropa).",
+    "schwierigkeit": "leicht",
+    "quelle": "geodaten"
+  },
+  {
+    "id": "lh179",
+    "kategorie": "Länder & Hauptstädte",
+    "frage": "Wie heißt die Hauptstadt von Ungarn?",
+    "antwortKurz": "Budapest",
+    "erklaerung": "Budapest ist die Hauptstadt von Ungarn. Das Land liegt in Europa (Mitteleuropa).",
+    "schwierigkeit": "leicht",
+    "quelle": "geodaten"
+  },
+  {
+    "id": "lh180",
+    "kategorie": "Länder & Hauptstädte",
+    "frage": "Wie heißt die Hauptstadt von Uruguay?",
+    "antwortKurz": "Montevideo",
+    "erklaerung": "Montevideo ist die Hauptstadt von Uruguay. Das Land liegt in Amerika (Südamerika).",
+    "schwierigkeit": "mittel",
+    "quelle": "geodaten"
+  },
+  {
+    "id": "lh181",
+    "kategorie": "Länder & Hauptstädte",
+    "frage": "Wie heißt die Hauptstadt von Usbekistan?",
+    "antwortKurz": "Taschkent",
+    "erklaerung": "Taschkent ist die Hauptstadt von Usbekistan. Das Land liegt in Asien (Zentralasien).",
+    "schwierigkeit": "mittel",
+    "quelle": "geodaten"
+  },
+  {
+    "id": "lh182",
+    "kategorie": "Länder & Hauptstädte",
+    "frage": "Wie heißt die Hauptstadt von Vanuatu?",
+    "antwortKurz": "Port Vila",
+    "erklaerung": "Port Vila ist die Hauptstadt von Vanuatu. Das Land liegt in Ozeanien (Melanesien).",
+    "schwierigkeit": "schwer",
+    "quelle": "geodaten"
+  },
+  {
+    "id": "lh183",
+    "kategorie": "Länder & Hauptstädte",
+    "frage": "Wie heißt die Hauptstadt von Vatikanstadt?",
+    "antwortKurz": "Vatikanstadt",
+    "erklaerung": "Vatikanstadt ist Land und Hauptstadt zugleich. Es liegt in Europa (Südeuropa).",
+    "schwierigkeit": "mittel",
+    "quelle": "geodaten"
+  },
+  {
+    "id": "lh184",
+    "kategorie": "Länder & Hauptstädte",
+    "frage": "Wie heißt die Hauptstadt von Venezuela?",
+    "antwortKurz": "Caracas",
+    "erklaerung": "Caracas ist die Hauptstadt von Venezuela. Das Land liegt in Amerika (Südamerika).",
+    "schwierigkeit": "mittel",
+    "quelle": "geodaten"
+  },
+  {
+    "id": "lh185",
+    "kategorie": "Länder & Hauptstädte",
+    "frage": "Wie heißt die Hauptstadt von Vereinigte Arabische Emirate?",
+    "antwortKurz": "Abu Dhabi",
+    "erklaerung": "Abu Dhabi ist die Hauptstadt von Vereinigte Arabische Emirate. Das Land liegt in Asien (Westasien).",
+    "schwierigkeit": "leicht",
+    "quelle": "geodaten"
+  },
+  {
+    "id": "lh186",
+    "kategorie": "Länder & Hauptstädte",
+    "frage": "Wie heißt die Hauptstadt von Vereinigte Staaten?",
+    "antwortKurz": "Washington D.C.",
+    "erklaerung": "Washington D.C. ist die Hauptstadt von Vereinigte Staaten. Das Land liegt in Amerika (Nordamerika).",
+    "schwierigkeit": "leicht",
+    "quelle": "geodaten"
+  },
+  {
+    "id": "lh187",
+    "kategorie": "Länder & Hauptstädte",
+    "frage": "Wie heißt die Hauptstadt von Vereinigtes Königreich?",
+    "antwortKurz": "London",
+    "erklaerung": "London ist die Hauptstadt von Vereinigtes Königreich. Das Land liegt in Europa (Nordeuropa).",
+    "schwierigkeit": "leicht",
+    "quelle": "geodaten"
+  },
+  {
+    "id": "lh188",
+    "kategorie": "Länder & Hauptstädte",
+    "frage": "Wie heißt die Hauptstadt von Vietnam?",
+    "antwortKurz": "Hanoi",
+    "erklaerung": "Hanoi ist die Hauptstadt von Vietnam. Das Land liegt in Asien (Südostasien).",
+    "schwierigkeit": "mittel",
+    "quelle": "geodaten"
+  },
+  {
+    "id": "lh189",
+    "kategorie": "Länder & Hauptstädte",
+    "frage": "Wie heißt die Hauptstadt von Zentralafrikanische Republik?",
+    "antwortKurz": "Bangui",
+    "erklaerung": "Bangui ist die Hauptstadt von Zentralafrikanische Republik. Das Land liegt in Afrika (Mittelafrika).",
+    "schwierigkeit": "mittel",
+    "quelle": "geodaten"
+  },
+  {
+    "id": "lh190",
+    "kategorie": "Länder & Hauptstädte",
+    "frage": "Wie heißt die Hauptstadt von Zypern?",
+    "antwortKurz": "Nikosia",
+    "erklaerung": "Nikosia ist die Hauptstadt von Zypern. Das Land liegt in Europa (Südeuropa).",
+    "schwierigkeit": "mittel",
+    "quelle": "geodaten"
+  },
+  {
+    "id": "lh191",
+    "kategorie": "Länder & Hauptstädte",
+    "frage": "Wie heißt die Hauptstadt von Ägypten?",
+    "antwortKurz": "Kairo",
+    "erklaerung": "Kairo ist die Hauptstadt von Ägypten. Das Land liegt in Afrika (Nordafrika).",
+    "schwierigkeit": "leicht",
+    "quelle": "geodaten"
+  },
+  {
+    "id": "lh192",
+    "kategorie": "Länder & Hauptstädte",
+    "frage": "Wie heißt die Hauptstadt von Äquatorialguinea?",
+    "antwortKurz": "Malabo",
+    "erklaerung": "Malabo ist die Hauptstadt von Äquatorialguinea. Das Land liegt in Afrika (Mittelafrika).",
+    "schwierigkeit": "schwer",
+    "quelle": "geodaten"
+  },
+  {
+    "id": "lh193",
+    "kategorie": "Länder & Hauptstädte",
+    "frage": "Wie heißt die Hauptstadt von Äthiopien?",
+    "antwortKurz": "Addis Ababa",
+    "erklaerung": "Addis Ababa ist die Hauptstadt von Äthiopien. Das Land liegt in Afrika (Ostafrika).",
+    "schwierigkeit": "mittel",
+    "quelle": "geodaten"
+  },
+  {
+    "id": "lh194",
+    "kategorie": "Länder & Hauptstädte",
+    "frage": "Wie heißt die Hauptstadt von Österreich?",
+    "antwortKurz": "Wien",
+    "erklaerung": "Wien ist die Hauptstadt von Österreich. Das Land liegt in Europa (Mitteleuropa).",
+    "schwierigkeit": "leicht",
+    "quelle": "geodaten"
+  }
+]
