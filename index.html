@@ -81,6 +81,8 @@
   .fortschritt-leiste i { display: block; height: 100%; background: linear-gradient(90deg, #ff8a5c, #ff5c9e); }
   .frage-zaehler { font-size: 12px; color: #b7aad6; margin-bottom: 10px; }
   .frage-text { font-size: 20px; font-weight: 700; line-height: 1.4; margin-bottom: 18px; }
+  .frage-sterne { font-size: 16px; letter-spacing: 2px; margin-bottom: 6px; min-height: 20px; }
+  .frage-daumen { font-size: 16px; letter-spacing: 2px; margin-bottom: 6px; min-height: 20px; }
   .antwort-kurz { font-size: 18px; font-weight: 800; color: #ff9d73; margin-bottom: 10px; }
   .erklaerung-text { font-size: 15px; line-height: 1.55; color: #ddd4f5; }
   .vorlesen-btn {
@@ -151,6 +153,8 @@
     <div class="fortschritt-leiste"><i id="fortschritt-fuellung" style="width:0%"></i></div>
     <div class="frage-zaehler" id="frage-zaehler">Frage 1 von 50</div>
     <div class="karte">
+      <div class="frage-sterne" id="frage-sterne"></div>
+      <div class="frage-daumen" id="frage-daumen"></div>
       <div class="frage-text" id="frage-text"></div>
       <div id="antwort-bereich" style="display:none">
         <div class="antwort-kurz" id="antwort-kurz-text"></div>
@@ -299,9 +303,10 @@
 
   function holeFragenStatus(id) {
     var s = fortschritt.fragenStatus[id];
-    if (!s || typeof s !== "object") { return { gewusstCount: 0, ort: "kategorie" }; }
+    if (!s || typeof s !== "object") { return { gewusstCount: 0, nichtGewusstCount: 0, ort: "kategorie" }; }
     return {
       gewusstCount: typeof s.gewusstCount === "number" ? s.gewusstCount : 0,
+      nichtGewusstCount: typeof s.nichtGewusstCount === "number" ? s.nichtGewusstCount : 0,
       ort: s.ort === "nichtGewusst" ? "nichtGewusst" : "kategorie"
     };
   }
@@ -488,6 +493,9 @@
     var frage = quizFragen[quizIndex];
     document.getElementById("frage-zaehler").textContent = "Frage " + (quizIndex + 1) + " von " + quizFragen.length;
     document.getElementById("fortschritt-fuellung").style.width = Math.round((quizIndex / quizFragen.length) * 100) + "%";
+    var fragenStatus = holeFragenStatus(frage.id);
+    document.getElementById("frage-sterne").textContent = fragenStatus.gewusstCount > 0 ? "⭐".repeat(fragenStatus.gewusstCount) : "";
+    document.getElementById("frage-daumen").textContent = fragenStatus.nichtGewusstCount > 0 ? "👎".repeat(fragenStatus.nichtGewusstCount) : "";
     document.getElementById("frage-text").innerHTML = esc(frage.frage);
     document.getElementById("antwort-kurz-text").innerHTML = esc(frage.antwortKurz);
     document.getElementById("erklaerung-text").innerHTML = esc(frage.erklaerung);
@@ -514,6 +522,7 @@
       if (status.gewusstCount < GEMEISTERT_AB) { status.ort = "kategorie"; }
     } else {
       zaehler.nichtGewusst += 1;
+      status.nichtGewusstCount += 1;
       status.ort = "nichtGewusst";
     }
     setzeFragenStatus(frage.id, status);
