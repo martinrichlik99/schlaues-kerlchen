@@ -422,16 +422,16 @@
     return ergebnis;
   }
 
-  var vorleseWachTimer = null;
-
-  function haltVorlesenWach() {
-    vorleseWachTimer = window.setTimeout(function () {
-      if (window.speechSynthesis.speaking) {
-        window.speechSynthesis.pause();
-        window.speechSynthesis.resume();
-        haltVorlesenWach();
-      }
-    }, 10000);
+  function vorleseHaeppchen(text) {
+    var woerter = text.split(/\s+/).filter(function (w) { return w.length > 0; });
+    var haeppchen = [];
+    var aktuell = [];
+    for (var i = 0; i < woerter.length; i++) {
+      aktuell.push(woerter[i]);
+      if (aktuell.length >= 12) { haeppchen.push(aktuell.join(" ")); aktuell = []; }
+    }
+    if (aktuell.length > 0) { haeppchen.push(aktuell.join(" ")); }
+    return haeppchen.length > 0 ? haeppchen : [text];
   }
 
   function vorlesen(text) {
@@ -440,14 +440,17 @@
       return;
     }
     window.speechSynthesis.cancel();
-    if (vorleseWachTimer) { window.clearTimeout(vorleseWachTimer); vorleseWachTimer = null; }
-    var u = new SpeechSynthesisUtterance(text);
-    u.lang = "de-DE";
-    u.onend = function () {
-      if (vorleseWachTimer) { window.clearTimeout(vorleseWachTimer); vorleseWachTimer = null; }
-    };
-    window.speechSynthesis.speak(u);
-    haltVorlesenWach();
+    var haeppchen = vorleseHaeppchen(text);
+    var index = 0;
+    function naechstesHaeppchen() {
+      if (index >= haeppchen.length) { return; }
+      var u = new SpeechSynthesisUtterance(haeppchen[index]);
+      u.lang = "de-DE";
+      index += 1;
+      u.onend = naechstesHaeppchen;
+      window.speechSynthesis.speak(u);
+    }
+    naechstesHaeppchen();
   }
 
   function zeigeBlatt(name) {
@@ -523,7 +526,8 @@
     } else {
       zaehler.nichtGewusst += 1;
       status.nichtGewusstCount += 1;
-      status.ort = "nichtGewusst";
+      if (status.gewusstCount > 0) { status.gewusstCount -= 1; }
+      if (status.gewusstCount === 0) { status.ort = "nichtGewusst"; }
     }
     setzeFragenStatus(frage.id, status);
     speichereSicher(fortschritt);
