@@ -214,6 +214,7 @@
   var quizIndex = 0;
   var quizGewusst = 0;
   var antwortSichtbar = false;
+  var vorleseWarteschlange = [];
 
   function esc(wert) {
     if (wert === null || wert === undefined) { return ""; }
@@ -442,12 +443,14 @@
     window.speechSynthesis.cancel();
     var haeppchen = vorleseHaeppchen(text);
     var index = 0;
+    vorleseWarteschlange = [];
     function naechstesHaeppchen() {
-      if (index >= haeppchen.length) { return; }
+      if (index >= haeppchen.length) { vorleseWarteschlange = []; return; }
       var u = new SpeechSynthesisUtterance(haeppchen[index]);
       u.lang = "de-DE";
       index += 1;
       u.onend = naechstesHaeppchen;
+      vorleseWarteschlange.push(u);
       window.speechSynthesis.speak(u);
     }
     naechstesHaeppchen();
