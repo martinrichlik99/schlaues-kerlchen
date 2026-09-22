@@ -33,6 +33,13 @@
   #app { width: 100%; max-width: 480px; min-height: 100vh; display: flex; flex-direction: column; padding: 20px 18px calc(20px + env(safe-area-inset-bottom)); }
 
   .kopf { display: flex; align-items: center; justify-content: space-between; margin-bottom: 18px; }
+  .kopf-links { display: flex; align-items: center; gap: 10px; }
+  .kopf-zurueck {
+    display: none; align-items: center; justify-content: center;
+    width: 34px; height: 34px; border-radius: 10px;
+    background: rgba(255,255,255,0.06); color: #cbb8f0; font-size: 17px;
+    cursor: pointer; flex-shrink: 0;
+  }
   .logo { font-size: 20px; font-weight: 800; letter-spacing: -0.02em; }
   .logo span { background: linear-gradient(90deg, #ff8a5c, #ff5c9e); -webkit-background-clip: text; background-clip: text; color: transparent; }
   .streak { font-size: 13px; color: #cbb8f0; background: rgba(255,255,255,0.06); padding: 6px 10px; border-radius: 20px; }
@@ -88,10 +95,11 @@
   .vorlesen-btn {
     position: fixed; left: 50%; bottom: calc(18px + env(safe-area-inset-bottom));
     transform: translateX(-50%); z-index: 15;
-    display: inline-flex; align-items: center; gap: 8px;
+    width: calc(100% - 36px); max-width: 444px;
+    display: flex; align-items: center; justify-content: center; gap: 8px;
     background: linear-gradient(90deg, #ff8a5c, #ff5c9e);
     border: none; color: #1c0f2e; font-size: 14px; font-weight: 700;
-    padding: 14px 26px; border-radius: 30px; cursor: pointer;
+    padding: 16px 26px; border-radius: 16px; cursor: pointer;
     box-shadow: 0 6px 20px rgba(0,0,0,0.4);
   }
   .knopf-reihe { display: flex; gap: 10px; margin-top: 20px; }
@@ -100,7 +108,6 @@
   .knopf-schwach { background: rgba(255,255,255,0.05); font-size: 13px; color: #cbb8f0; }
   .knopf-nein { background: rgba(255,92,120,0.16); color: #ff8ba0; }
   .knopf-ja { background: rgba(90,220,170,0.18); color: #7be8bd; }
-  .zurueck-link { margin-top: auto; padding-top: 18px; text-align: center; font-size: 13px; color: #8677a8; cursor: pointer; }
 
   /* Ende */
   #ende-blatt { display: none; flex: 1; flex-direction: column; align-items: center; justify-content: center; text-align: center; }
@@ -117,7 +124,10 @@
 <body>
 <div id="app">
   <div class="kopf">
-    <div class="logo">Schlaues <span>Kerlchen</span></div>
+    <div class="kopf-links">
+      <div class="kopf-zurueck" id="kopf-zurueck-icon">←</div>
+      <div class="logo">Schlaues <span>Kerlchen</span></div>
+    </div>
     <div class="streak" id="streak-anzeige">🔥 0 Tage</div>
   </div>
 
@@ -170,8 +180,6 @@
       <button class="knopf knopf-nein" id="nicht-gewusst-btn" type="button">✗ Nicht gewusst</button>
       <button class="knopf knopf-ja" id="gewusst-btn" type="button">✓ Gewusst</button>
     </div>
-
-    <div class="zurueck-link" id="quiz-abbrechen">Zurück zur Startseite</div>
   </div>
 
   <div id="ende-blatt">
@@ -460,6 +468,7 @@
     document.getElementById("start-blatt").style.display = name === "start" ? "block" : "none";
     document.getElementById("quiz-blatt").style.display = name === "quiz" ? "flex" : "none";
     document.getElementById("ende-blatt").style.display = name === "ende" ? "flex" : "none";
+    document.getElementById("kopf-zurueck-icon").style.display = name === "quiz" ? "flex" : "none";
   }
 
   function alleFragenGemischt() {
@@ -574,7 +583,7 @@
   document.getElementById("antwort-zeigen-btn").addEventListener("click", zeigeAntwort);
   document.getElementById("nicht-gewusst-btn").addEventListener("click", function () { bewerte(false); });
   document.getElementById("gewusst-btn").addEventListener("click", function () { bewerte(true); });
-  document.getElementById("quiz-abbrechen").addEventListener("click", function () { zeigeBlatt("start"); aktualisiereStartAnzeige(); aktualisiereKachelAnzahlen(); });
+  document.getElementById("kopf-zurueck-icon").addEventListener("click", function () { zeigeBlatt("start"); aktualisiereStartAnzeige(); aktualisiereKachelAnzahlen(); });
   document.getElementById("ende-zurueck-btn").addEventListener("click", function () { zeigeBlatt("start"); aktualisiereStartAnzeige(); aktualisiereKachelAnzahlen(); });
   document.getElementById("ende-nochmal-btn").addEventListener("click", function () { starteQuiz(); });
   document.getElementById("vorlesen-btn").addEventListener("click", function () {
