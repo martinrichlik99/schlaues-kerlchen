@@ -63,13 +63,20 @@
   .kategorie-kachel .name { font-size: 14.5px; font-weight: 700; line-height: 1.25; }
   .kategorie-kachel .anzahl { font-size: 10.5px; color: #d8c9ff; margin-top: 2px; }
   .kategorie-kachel .pfeil { font-size: 18px; color: #ff8a5c; flex-shrink: 0; margin-left: 6px; }
-  .auto-schalter {
-    display: flex; align-items: center; justify-content: space-between; gap: 12px;
-    background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.08);
-    border-radius: 16px; padding: 14px 16px; margin-bottom: 10px; cursor: pointer;
+  .schnell-reihe { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; margin-bottom: 12px; }
+  .schnell-kachel {
+    display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 5px;
+    min-height: 104px; padding: 12px 6px; border-radius: 16px; cursor: pointer;
+    width: 100%; font: inherit; color: inherit; text-align: center;
   }
-  .auto-schalter .name { display: block; font-size: 15px; font-weight: 700; }
-  .auto-schalter .anzahl { display: block; font-size: 12px; color: #b7aad6; margin-top: 2px; }
+  .schnell-kachel .icon { font-size: 24px; line-height: 1; }
+  .schnell-kachel .name { font-size: 14px; font-weight: 700; line-height: 1.2; }
+  .schnell-kachel .anzahl { font-size: 11px; color: #d8c9ff; }
+  .auto-schalter {
+    background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.12);
+    transition: background 0.2s, border-color 0.2s;
+  }
+  .auto-schalter:has(input:checked) { background: rgba(90,220,170,0.2); border-color: rgba(90,220,170,0.6); }
   .auto-schalter input {
     appearance: none; -webkit-appearance: none; flex-shrink: 0; cursor: pointer;
     width: 52px; height: 32px; border-radius: 16px; background: rgba(255,255,255,0.15);
@@ -84,19 +91,11 @@
   .kachel-gemischt {
     background: linear-gradient(135deg, rgba(139,92,246,0.22), rgba(34,211,238,0.14));
     border: 1px solid rgba(139,92,246,0.4);
-    padding: 18px 20px; margin-top: 6px;
   }
-  .kachel-gemischt .name { font-size: 17px; }
-  .kachel-gemischt .anzahl { font-size: 12px; }
-  .kachel-gemischt .pfeil { font-size: 22px; color: #a78bfa; }
   .kachel-nicht-gewusst {
     background: linear-gradient(135deg, rgba(255,92,120,0.2), rgba(255,157,115,0.12));
     border: 1px solid rgba(255,92,120,0.4);
-    padding: 18px 20px; margin-top: 10px;
   }
-  .kachel-nicht-gewusst .name { font-size: 17px; }
-  .kachel-nicht-gewusst .anzahl { font-size: 12px; }
-  .kachel-nicht-gewusst .pfeil { font-size: 22px; color: #ff8ba0; }
   .trennlinie { border: none; border-top: 1px solid rgba(255,255,255,0.08); margin: 4px 0 12px; }
   #kategorien-liste { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
   .bald { margin-top: 12px; font-size: 12px; color: #8677a8; text-align: center; }
@@ -160,27 +159,23 @@
       <div class="stat"><b id="stat-quote">0%</b><span>Trefferquote</span></div>
     </div>
 
-    <label class="auto-schalter">
-      <span>
-        <span class="name">🚗 Auto-Modus</span>
-        <span class="anzahl">Liest Frage und Antwort automatisch vor</span>
-      </span>
-      <input type="checkbox" role="switch" id="auto-modus">
-    </label>
-    <button type="button" class="kategorie-kachel kachel-gemischt" id="kachel-alle">
-      <span>
-        <span class="name">🎲 Gemischt</span>
+    <div class="schnell-reihe">
+      <label class="schnell-kachel auto-schalter">
+        <span class="icon" aria-hidden="true">🚗</span>
+        <span class="name">Auto</span>
+        <input type="checkbox" role="switch" id="auto-modus" aria-label="Auto-Modus: liest Frage und Antwort automatisch vor">
+      </label>
+      <button type="button" class="schnell-kachel kachel-gemischt" id="kachel-alle">
+        <span class="icon" aria-hidden="true">🎲</span>
+        <span class="name">Gemischt</span>
         <span class="anzahl" id="anzahl-alle">wird geladen …</span>
-      </span>
-      <span class="pfeil" aria-hidden="true">→</span>
-    </button>
-    <button type="button" class="kategorie-kachel kachel-nicht-gewusst" id="kachel-nichtGewusst">
-      <span>
-        <span class="name">🔁 Nicht gewusst</span>
-        <span class="anzahl" id="anzahl-nichtGewusst">0 Fragen zum Üben</span>
-      </span>
-      <span class="pfeil" aria-hidden="true">→</span>
-    </button>
+      </button>
+      <button type="button" class="schnell-kachel kachel-nicht-gewusst" id="kachel-nichtGewusst">
+        <span class="icon" aria-hidden="true">🔁</span>
+        <span class="name">Nicht gewusst</span>
+        <span class="anzahl" id="anzahl-nichtGewusst">0 Fragen</span>
+      </button>
+    </div>
     <hr class="trennlinie">
     <div id="kategorien-liste"></div>
   </div>
@@ -411,9 +406,9 @@
       }
     }
     var alleEl = document.getElementById("anzahl-alle");
-    if (alleEl) { alleEl.textContent = gemischtPool().length + " Fragen aus allen Kategorien"; }
+    if (alleEl) { alleEl.textContent = gemischtPool().length + " Fragen"; }
     var ngEl = document.getElementById("anzahl-nichtGewusst");
-    if (ngEl) { ngEl.textContent = nichtGewusstPool().length + " Fragen zum Üben"; }
+    if (ngEl) { ngEl.textContent = nichtGewusstPool().length + " Fragen"; }
   }
 
   function renderKategorienListe() {
