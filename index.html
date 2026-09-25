@@ -561,8 +561,7 @@
   }
 
   function antwortVorlesetext(frage) {
-    var antwort = frage.antwortKurz + ". " + frage.erklaerung;
-    return autoModus ? "Frage: " + frage.frage + " Antwort: " + antwort : antwort;
+    return frage.antwortKurz + ". " + frage.erklaerung;
   }
 
   function zeigeAntwort() {
