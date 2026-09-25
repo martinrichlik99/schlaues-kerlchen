@@ -66,6 +66,17 @@
   .aw-tabelle th:first-child, .aw-tabelle td:first-child { text-align: left; }
   .aw-tabelle .richtig { color: #7be8bd; }
   .aw-tabelle .falsch { color: #ff8ba0; }
+  .aw-tabelle + .abschnitt, .abzeichen-liste + .abschnitt { margin-top: 22px; }
+  .abzeichen-liste { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+  .abzeichen {
+    display: flex; flex-direction: column; align-items: center; gap: 4px; text-align: center;
+    background: rgba(255,255,255,0.05); border-radius: 14px; padding: 10px 6px; font-size: 11px; line-height: 1.25;
+  }
+  .abzeichen b { font-size: 22px; font-weight: 400; }
+  .abzeichen.offen { opacity: 0.35; filter: grayscale(1); }
+  .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+  .sprachtest { display: flex; gap: 8px; margin-top: 10px; }
+  #sprachtest-ausgabe { font-size: 13px; color: #ddd4f5; margin-top: 10px; min-height: 18px; }
   .kategorie-kachel {
     display: flex; align-items: center; justify-content: space-between;
     background: linear-gradient(135deg, rgba(255,138,92,0.18), rgba(255,92,158,0.12));
@@ -76,14 +87,14 @@
   .kategorie-kachel .name { font-size: 14.5px; font-weight: 700; line-height: 1.25; }
   .kategorie-kachel .anzahl { font-size: 10.5px; color: #d8c9ff; margin-top: 2px; }
   .kategorie-kachel .pfeil { font-size: 18px; color: #ff8a5c; flex-shrink: 0; margin-left: 6px; }
-  .schnell-reihe { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; margin-bottom: 12px; }
+  .schnell-reihe { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; margin-bottom: 12px; }
   .schnell-kachel {
     display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 5px;
     min-height: 104px; padding: 12px 6px; border-radius: 16px; cursor: pointer;
     width: 100%; font: inherit; color: inherit; text-align: center;
   }
-  .schnell-kachel .icon { font-size: 24px; line-height: 1; }
-  .schnell-kachel .name { font-size: 14px; font-weight: 700; line-height: 1.2; }
+  .schnell-kachel .icon { font-size: 22px; line-height: 1; }
+  .schnell-kachel .name { font-size: 13px; font-weight: 700; line-height: 1.2; }
   .schnell-kachel .anzahl { font-size: 11px; color: #d8c9ff; }
   .auto-schalter {
     background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.12);
@@ -105,6 +116,10 @@
     background: linear-gradient(135deg, rgba(139,92,246,0.22), rgba(34,211,238,0.14));
     border: 1px solid rgba(139,92,246,0.4);
   }
+  .kachel-faellig {
+    background: linear-gradient(135deg, rgba(56,189,248,0.2), rgba(90,220,170,0.12));
+    border: 1px solid rgba(56,189,248,0.45);
+  }
   .kachel-nicht-gewusst {
     background: linear-gradient(135deg, rgba(255,92,120,0.2), rgba(255,157,115,0.12));
     border: 1px solid rgba(255,92,120,0.4);
@@ -117,7 +132,9 @@
   #quiz-blatt { display: none; flex: 1; flex-direction: column; padding-bottom: 76px; }
   .fortschritt-leiste { height: 6px; background: rgba(255,255,255,0.08); border-radius: 6px; overflow: hidden; margin-bottom: 18px; }
   .fortschritt-leiste i { display: block; height: 100%; background: linear-gradient(90deg, #ff8a5c, #ff5c9e); }
-  .frage-zaehler { font-size: 12px; color: #b7aad6; margin-bottom: 10px; }
+  .quiz-kopf { display: flex; justify-content: space-between; align-items: center; gap: 10px; margin-bottom: 10px; }
+  .frage-zaehler { font-size: 12px; color: #b7aad6; }
+  .leiter { font-size: 12px; font-weight: 700; color: #ffd27a; background: rgba(255,210,122,0.1); padding: 4px 9px; border-radius: 12px; white-space: nowrap; }
   .frage-text { font-size: 20px; font-weight: 700; line-height: 1.4; margin-bottom: 18px; }
   .frage-sterne { font-size: 16px; letter-spacing: 2px; margin-bottom: 6px; min-height: 20px; }
   .frage-daumen { font-size: 16px; letter-spacing: 2px; margin-bottom: 6px; min-height: 20px; }
@@ -150,6 +167,7 @@
     background: #4a1420; border: 1px solid #ff5c78; color: #ffd7de; padding: 12px 16px;
     border-radius: 12px; font-size: 13px; display: none; z-index: 20;
   }
+  .fehler-toast.gut { background: #0f3a2c; border-color: #5adcaa; color: #d6fbe9; }
 </style>
 </head>
 <body>
@@ -178,6 +196,11 @@
         <span class="name">Auto</span>
         <input type="checkbox" role="switch" id="auto-modus" aria-label="Auto-Modus: liest Frage und Antwort automatisch vor">
       </label>
+      <button type="button" class="schnell-kachel kachel-faellig" id="kachel-faellig">
+        <span class="icon" aria-hidden="true">📅</span>
+        <span class="name">Fällig</span>
+        <span class="anzahl" id="anzahl-faellig">0 Fragen</span>
+      </button>
       <button type="button" class="schnell-kachel kachel-gemischt" id="kachel-alle">
         <span class="icon" aria-hidden="true">🎲</span>
         <span class="name">Gemischt</span>
@@ -195,7 +218,10 @@
 
   <div id="quiz-blatt">
     <div class="fortschritt-leiste"><i id="fortschritt-fuellung" style="width:0%"></i></div>
-    <div class="frage-zaehler" id="frage-zaehler">Frage 1 von 50</div>
+    <div class="quiz-kopf">
+      <div class="frage-zaehler" id="frage-zaehler">Frage 1 von 50</div>
+      <div class="leiter" id="leiter-anzeige"></div>
+    </div>
     <div class="karte">
       <div class="frage-sterne" id="frage-sterne"></div>
       <div class="frage-daumen" id="frage-daumen"></div>
@@ -220,6 +246,8 @@
     <div class="aw-titel">📊 Auswertung</div>
     <div class="abschnitt">Antworten</div>
     <div class="stat-reihe" id="aw-antworten"></div>
+    <div class="abschnitt">Millionen-Leiter</div>
+    <div class="stat-reihe" id="aw-leiter"></div>
     <div class="abschnitt">Fragen</div>
     <div class="stat-reihe" id="aw-fragen"></div>
     <div class="abschnitt">Je Kategorie <small>· schwächste zuerst</small></div>
@@ -227,6 +255,14 @@
       <thead><tr><th scope="col">Kategorie</th><th scope="col">Beantw.</th><th scope="col">Richtig</th><th scope="col">Falsch</th><th scope="col">Quote</th></tr></thead>
       <tbody id="aw-kategorien"></tbody>
     </table>
+    <div class="abschnitt">Abzeichen</div>
+    <div class="abzeichen-liste" id="aw-abzeichen"></div>
+    <div class="abschnitt">Test Sprachsteuerung</div>
+    <div class="sprachtest">
+      <button type="button" class="knopf knopf-schwach" id="sprachtest-ansage-btn">🔊 Mit Ansage</button>
+      <button type="button" class="knopf knopf-schwach" id="sprachtest-direkt-btn">🎤 Direkt</button>
+    </div>
+    <div id="sprachtest-ausgabe" aria-live="polite"></div>
   </div>
 
   <div id="ende-blatt">
@@ -272,6 +308,10 @@
   var vorleseWarteschlange = [];
   var vorleseLauf = 0;
   var autoModus = false;
+  var TAGESZIEL = 30;
+  var LEITER = [0, 50, 100, 200, 300, 500, 1000, 2000, 4000, 8000, 16000, 32000, 64000, 125000, 500000, 1000000];
+  var WIEDERHOLUNG_TAGE = [0, 1, 3, 7, 14];
+  var sprachtestAnsage = null;
 
   function esc(wert) {
     if (wert === null || wert === undefined) { return ""; }
@@ -290,15 +330,29 @@
     return jahr + "-" + monat + "-" + tag;
   }
 
-  function zeigeFehler(text) {
+  var toastTimer = null;
+  function zeigeFehler(text, gut) {
     var toast = document.getElementById("fehler-toast");
     toast.textContent = text;
+    toast.classList.toggle("gut", !!gut);
     toast.style.display = "block";
-    window.setTimeout(function () { toast.style.display = "none"; }, 4000);
+    window.clearTimeout(toastTimer);
+    toastTimer = window.setTimeout(function () { toast.style.display = "none"; }, 4000);
+  }
+
+  function tagPlus(tage) {
+    var d = new Date();
+    d.setDate(d.getDate() + tage);
+    return localISODate(d);
+  }
+
+  function euro(betrag) {
+    return betrag === 1000000 ? "1 Mio. €" : betrag.toLocaleString("de-DE") + " €";
   }
 
   function leererFortschritt() {
-    return { kategorien: {}, streak: { anzahl: 0, letzterTag: "" }, fragenStatus: {} };
+    return { kategorien: {}, streak: { anzahl: 0, letzterTag: "" }, fragenStatus: {},
+      leiter: { stufe: 0, best: 0, millionen: 0 }, heute: { tag: "", anzahl: 0 }, abzeichen: {} };
   }
 
   function ladeFortschritt() {
@@ -323,6 +377,10 @@
     if (typeof daten.streak.anzahl !== "number") { daten.streak.anzahl = 0; }
     if (typeof daten.streak.letzterTag !== "string") { daten.streak.letzterTag = ""; }
     if (!daten.fragenStatus || typeof daten.fragenStatus !== "object") { daten.fragenStatus = {}; }
+    var leer = leererFortschritt();
+    ["leiter", "heute", "abzeichen"].forEach(function (feld) {
+      if (!daten[feld] || typeof daten[feld] !== "object") { daten[feld] = leer[feld]; }
+    });
     return daten;
   }
 
@@ -401,6 +459,16 @@
     return pool;
   }
 
+  // Fehlt faelligAb (Sterne aus der Zeit vor der Wiederholungs-Logik), gilt die Frage als fällig.
+  function istFaellig(frage) {
+    var s = fortschritt.fragenStatus[frage.id];
+    return holeFragenStatus(frage.id).gewusstCount > 0 && istAktivInKategorie(frage) && !(s && s.faelligAb > tagPlus(0));
+  }
+
+  function faelligPool() {
+    return alleFragenGemischt().filter(istFaellig);
+  }
+
   function gemischtPool() {
     var alle = alleFragenGemischt();
     var pool = [];
@@ -416,7 +484,11 @@
     document.getElementById("stat-beantwortet").textContent = String(g.beantwortet);
     var quote = g.beantwortet > 0 ? Math.round((g.gewusst / g.beantwortet) * 100) : 0;
     document.getElementById("stat-quote").textContent = quote + "%";
-    document.getElementById("streak-anzeige").textContent = "🔥 " + (fortschritt.streak.anzahl || 0) + " Tage";
+    var s = fortschritt.streak;
+    var streakLaeuft = s.letzterTag === tagPlus(0) || s.letzterTag === tagPlus(-1);
+    var heute = fortschritt.heute.tag === tagPlus(0) ? fortschritt.heute.anzahl : 0;
+    document.getElementById("streak-anzeige").textContent = "🔥 " + (streakLaeuft ? s.anzahl : 0) + " · " +
+      (heute >= TAGESZIEL ? "✅ " : "🎯 ") + heute + "/" + TAGESZIEL;
   }
 
   function setzeKategorieAnzahl(kategorieId, text) {
@@ -435,6 +507,7 @@
     if (alleEl) { alleEl.textContent = gemischtPool().length + " Fragen"; }
     var ngEl = document.getElementById("anzahl-nichtGewusst");
     if (ngEl) { ngEl.textContent = nichtGewusstPool().length + " Fragen"; }
+    document.getElementById("anzahl-faellig").textContent = faelligPool().length + " Fragen";
   }
 
   function renderKategorienListe() {
@@ -467,6 +540,44 @@
     }
     fortschritt.streak.letzterTag = heute;
     speichereSicher(fortschritt);
+  }
+
+  var ABZEICHEN = [
+    { id: "antw10", icon: "🌱", name: "10 Antworten", erreicht: function (k) { return k.beantwortet >= 10; } },
+    { id: "antw100", icon: "📘", name: "100 Antworten", erreicht: function (k) { return k.beantwortet >= 100; } },
+    { id: "antw1000", icon: "🏛️", name: "1000 Antworten", erreicht: function (k) { return k.beantwortet >= 1000; } },
+    { id: "gem10", icon: "⭐", name: "10 gemeistert", erreicht: function (k) { return k.gemeistert >= 10; } },
+    { id: "gem100", icon: "🌟", name: "100 gemeistert", erreicht: function (k) { return k.gemeistert >= 100; } },
+    { id: "streak7", icon: "🔥", name: "7 Tage in Folge", erreicht: function (k) { return k.streak >= 7; } },
+    { id: "streak30", icon: "☄️", name: "30 Tage in Folge", erreicht: function (k) { return k.streak >= 30; } },
+    { id: "million", icon: "💰", name: "Million geknackt", erreicht: function (k) { return k.millionen >= 1; } }
+  ].concat(KATEGORIEN.map(function (kat) {
+    return { id: "kat_" + kat.id, icon: kat.icon, name: kat.name + " gemeistert", erreicht: function (k) { return k.komplett[kat.id]; } };
+  }));
+
+  function abzeichenKennzahlen() {
+    var komplett = {};
+    var gemeistert = 0;
+    KATEGORIEN.forEach(function (kat) {
+      var liste = fragenNachKategorie[kat.id] || [];
+      var fertig = liste.filter(function (f) { return holeFragenStatus(f.id).gewusstCount >= GEMEISTERT_AB; }).length;
+      gemeistert += fertig;
+      komplett[kat.id] = liste.length > 0 && fertig === liste.length;
+    });
+    return { beantwortet: gesamtZaehler().beantwortet, gemeistert: gemeistert, streak: fortschritt.streak.anzahl || 0,
+      millionen: fortschritt.leiter.millionen || 0, komplett: komplett };
+  }
+
+  function pruefeAbzeichen() {
+    var k = abzeichenKennzahlen();
+    var neu = [];
+    ABZEICHEN.forEach(function (a) {
+      if (!fortschritt.abzeichen[a.id] && a.erreicht(k)) {
+        fortschritt.abzeichen[a.id] = tagPlus(0);
+        neu.push(a.icon + " " + a.name);
+      }
+    });
+    return neu;
   }
 
   function mische(liste) {
@@ -548,6 +659,11 @@
       [g.beantwortet, "Beantwortet"], [g.gewusst, "Richtig"], [g.beantwortet - g.gewusst, "Falsch"], [quoteText(g.gewusst, g.beantwortet), "Quote"]
     ]);
 
+    var L = fortschritt.leiter;
+    document.getElementById("aw-leiter").innerHTML = statKacheln([
+      [euro(LEITER[L.stufe || 0]), "Aktuell"], [euro(LEITER[L.best || 0]), "Bestleistung"], [L.millionen || 0, "Millionen"]
+    ]);
+
     var alle = alleFragenGemischt();
     var gesehen = 0;
     var gemeistert = 0;
@@ -571,6 +687,37 @@
         '<td class="richtig">' + z.richtig + '</td><td class="falsch">' + (z.beantwortet - z.richtig) + '</td>' +
         '<td>' + quoteText(z.richtig, z.beantwortet) + '</td></tr>';
     }).join("");
+
+    document.getElementById("aw-abzeichen").innerHTML = ABZEICHEN.map(function (a) {
+      var am = fortschritt.abzeichen[a.id];
+      return '<span class="abzeichen ' + (am ? "erreicht" : "offen") + '"' + (am ? ' title="erreicht ' + esc(am) + '"' : "") +
+        '><b aria-hidden="true">' + a.icon + '</b>' + esc(a.name) + (am ? "" : ' <span class="sr-only">(noch offen)</span>') + '</span>';
+    }).join("");
+  }
+
+  // Nur zum Ausprobieren im Auto: klärt, ob Spracherkennung in der installierten iPhone-App läuft.
+  function sprachtest(mitAnsage) {
+    var ausgabe = document.getElementById("sprachtest-ausgabe");
+    var Erkennung = window.SpeechRecognition || window.webkitSpeechRecognition;
+    if (!Erkennung) { ausgabe.textContent = "❌ Spracherkennung wird hier nicht unterstützt."; return; }
+    function zuhoeren() {
+      var r = new Erkennung();
+      var gehoert = false;
+      r.lang = "de-DE";
+      r.interimResults = false;
+      r.onresult = function (e) { gehoert = true; ausgabe.textContent = "✅ Verstanden: „" + e.results[0][0].transcript + "“"; };
+      r.onerror = function (e) { gehoert = true; ausgabe.textContent = "❌ Fehler: " + e.error; };
+      r.onend = function () { if (!gehoert) { ausgabe.textContent = "⏹ Nichts gehört."; } };
+      ausgabe.textContent = "🎤 Ich höre zu …";
+      try { r.start(); } catch (e) { ausgabe.textContent = "❌ Start fehlgeschlagen: " + e.message; }
+    }
+    if (!mitAnsage) { zuhoeren(); return; }
+    stoppeVorlesen();
+    sprachtestAnsage = new SpeechSynthesisUtterance("Sag jetzt gewusst oder nicht gewusst.");
+    sprachtestAnsage.lang = "de-DE";
+    sprachtestAnsage.onend = zuhoeren;
+    ausgabe.textContent = "🔊 Ansage läuft …";
+    window.speechSynthesis.speak(sprachtestAnsage);
   }
 
   function alleFragenGemischt() {
@@ -588,13 +735,16 @@
     var fragen;
     if (id === "alle") { fragen = gemischtPool(); }
     else if (id === "nichtGewusst") { fragen = nichtGewusstPool(); }
+    else if (id === "faellig") { fragen = faelligPool(); }
     else { fragen = aktivePoolFuerKategorie(id); }
     if (!fragen || fragen.length === 0) {
       var geladen = id === "alle" ? alleFragenGemischt().length > 0 : (fragenNachKategorie[id] || []).length > 0;
       if (id === "nichtGewusst") {
         zeigeFehler("Noch keine als „Nicht gewusst“ markierten Fragen.");
+      } else if (id === "faellig") {
+        zeigeFehler("Heute ist nichts fällig 🎉", true);
       } else if (geladen) {
-        zeigeFehler("Alle Fragen gemeistert 🎉");
+        zeigeFehler("Alle Fragen gemeistert 🎉", true);
       } else {
         zeigeFehler("Fragen sind noch nicht geladen.");
       }
@@ -612,6 +762,8 @@
     antwortSichtbar = false;
     var frage = quizFragen[quizIndex];
     document.getElementById("frage-zaehler").textContent = "Frage " + (quizIndex + 1) + " von " + quizFragen.length;
+    var stufe = fortschritt.leiter.stufe || 0;
+    document.getElementById("leiter-anzeige").textContent = "💰 " + euro(LEITER[stufe]) + " · " + stufe + "/" + (LEITER.length - 1);
     document.getElementById("fortschritt-fuellung").style.width = Math.round((quizIndex / quizFragen.length) * 100) + "%";
     var fragenStatus = holeFragenStatus(frage.id);
     document.getElementById("frage-sterne").textContent = fragenStatus.gewusstCount > 0 ? "⭐".repeat(fragenStatus.gewusstCount) : "";
@@ -642,20 +794,42 @@
     var frage = quizFragen[quizIndex];
     var zaehler = kategorieZaehler(frage.kategorie);
     var status = holeFragenStatus(frage.id);
+    var leiter = fortschritt.leiter;
+    var meldungen = [];
     if (warGewusst) {
       zaehler.gewusst += 1;
       quizGewusst += 1;
       status.gewusstCount += 1;
       if (status.gewusstCount < GEMEISTERT_AB) { status.ort = "kategorie"; }
+      status.faelligAb = tagPlus(WIEDERHOLUNG_TAGE[Math.min(status.gewusstCount, WIEDERHOLUNG_TAGE.length - 1)]);
+      leiter.stufe = (leiter.stufe || 0) + 1;
+      leiter.best = Math.max(leiter.best || 0, leiter.stufe);
+      if (leiter.stufe === LEITER.length - 1) {
+        leiter.millionen = (leiter.millionen || 0) + 1;
+        leiter.stufe = 0;
+        meldungen.push("🎉 Eine Million! Die Leiter beginnt von vorne.");
+      }
     } else {
       zaehler.nichtGewusst += 1;
       status.nichtGewusstCount += 1;
       if (status.gewusstCount > 0) { status.gewusstCount -= 1; }
       if (status.gewusstCount === 0) { status.ort = "nichtGewusst"; }
+      status.faelligAb = tagPlus(1);
+      leiter.stufe = leiter.stufe >= 10 ? 10 : leiter.stufe >= 5 ? 5 : 0;
     }
     setzeFragenStatus(frage.id, status);
+
+    var heute = fortschritt.heute;
+    if (heute.tag !== tagPlus(0)) { heute.tag = tagPlus(0); heute.anzahl = 0; }
+    heute.anzahl += 1;
+    if (heute.anzahl === TAGESZIEL) {
+      vermerkeStreakHeute();
+      meldungen.push("🎯 Tagesziel erreicht! 🔥 " + fortschritt.streak.anzahl + " Tage");
+    }
+    pruefeAbzeichen().forEach(function (a) { meldungen.push("🏅 Neues Abzeichen: " + a); });
     speichereSicher(fortschritt);
-    vermerkeStreakHeute();
+    aktualisiereStartAnzeige();
+    if (meldungen.length > 0) { zeigeFehler(meldungen.join(" · "), true); }
     stoppeVorlesen();
 
     quizIndex += 1;
@@ -682,6 +856,7 @@
             if (!Array.isArray(daten)) { throw new Error("Unerwartetes Format"); }
             fragenNachKategorie[kat.id] = daten;
             aktualisiereKachelAnzahlen();
+            if (pruefeAbzeichen().length > 0) { speichereSicher(fortschritt); }
           })
           .catch(function () {
             zeigeFehler("Fragen für " + kat.name + " konnten nicht geladen werden.");
@@ -693,6 +868,9 @@
 
   document.getElementById("stat-knopf").addEventListener("click", function () { renderAuswertung(); zeigeBlatt("auswertung"); window.scrollTo(0, 0); });
   document.getElementById("kachel-alle").addEventListener("click", function () { starteQuiz("alle"); });
+  document.getElementById("kachel-faellig").addEventListener("click", function () { starteQuiz("faellig"); });
+  document.getElementById("sprachtest-ansage-btn").addEventListener("click", function () { sprachtest(true); });
+  document.getElementById("sprachtest-direkt-btn").addEventListener("click", function () { sprachtest(false); });
   document.getElementById("kachel-nichtGewusst").addEventListener("click", function () { starteQuiz("nichtGewusst"); });
   document.getElementById("antwort-zeigen-btn").addEventListener("click", zeigeAntwort);
   document.getElementById("nicht-gewusst-btn").addEventListener("click", function () { bewerte(false); });
