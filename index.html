@@ -53,6 +53,19 @@
   .stat { flex: 1; background: rgba(255,255,255,0.05); border-radius: 14px; padding: 12px; text-align: center; }
   .stat b { display: block; font-size: 20px; }
   .stat span { font-size: 11px; color: #b7aad6; }
+  #stat-knopf { width: 100%; border: none; background: none; padding: 0; font: inherit; color: inherit; cursor: pointer; }
+
+  /* Auswertung */
+  #auswertung-blatt { display: none; }
+  .aw-titel { font-size: 22px; font-weight: 800; margin-bottom: 16px; }
+  .abschnitt { font-size: 12px; font-weight: 700; color: #b7aad6; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 10px; }
+  .abschnitt small { font-weight: 400; text-transform: none; letter-spacing: 0; }
+  .aw-tabelle { width: 100%; border-collapse: collapse; font-size: 13px; font-variant-numeric: tabular-nums; }
+  .aw-tabelle th { font-size: 11px; font-weight: 600; color: #b7aad6; text-align: right; padding: 0 4px 8px; }
+  .aw-tabelle td { text-align: right; padding: 9px 4px; border-top: 1px solid rgba(255,255,255,0.08); }
+  .aw-tabelle th:first-child, .aw-tabelle td:first-child { text-align: left; }
+  .aw-tabelle .richtig { color: #7be8bd; }
+  .aw-tabelle .falsch { color: #ff8ba0; }
   .kategorie-kachel {
     display: flex; align-items: center; justify-content: space-between;
     background: linear-gradient(135deg, rgba(255,138,92,0.18), rgba(255,92,158,0.12));
@@ -153,11 +166,11 @@
     <div class="titel">Wie schlau bist du heute?</div>
     <div class="untertitel">Allgemeinwissen, ausführlich erklärt — mit Vorlesefunktion.</div>
 
-    <div class="stat-reihe">
-      <div class="stat"><b id="stat-gewusst">0</b><span>Gewusst</span></div>
-      <div class="stat"><b id="stat-beantwortet">0</b><span>Beantwortet</span></div>
-      <div class="stat"><b id="stat-quote">0%</b><span>Trefferquote</span></div>
-    </div>
+    <button type="button" class="stat-reihe" id="stat-knopf" aria-label="Auswertung öffnen">
+      <span class="stat"><b id="stat-gewusst">0</b><span>Gewusst</span></span>
+      <span class="stat"><b id="stat-beantwortet">0</b><span>Beantwortet</span></span>
+      <span class="stat"><b id="stat-quote">0%</b><span>Trefferquote</span></span>
+    </button>
 
     <div class="schnell-reihe">
       <label class="schnell-kachel auto-schalter">
@@ -201,6 +214,19 @@
       <button class="knopf knopf-nein" id="nicht-gewusst-btn" type="button">✗ Nicht gewusst</button>
       <button class="knopf knopf-ja" id="gewusst-btn" type="button">✓ Gewusst</button>
     </div>
+  </div>
+
+  <div id="auswertung-blatt">
+    <div class="aw-titel">📊 Auswertung</div>
+    <div class="abschnitt">Antworten</div>
+    <div class="stat-reihe" id="aw-antworten"></div>
+    <div class="abschnitt">Fragen</div>
+    <div class="stat-reihe" id="aw-fragen"></div>
+    <div class="abschnitt">Je Kategorie <small>· schwächste zuerst</small></div>
+    <table class="aw-tabelle">
+      <thead><tr><th scope="col">Kategorie</th><th scope="col">Beantw.</th><th scope="col">Richtig</th><th scope="col">Falsch</th><th scope="col">Quote</th></tr></thead>
+      <tbody id="aw-kategorien"></tbody>
+    </table>
   </div>
 
   <div id="ende-blatt">
@@ -504,7 +530,47 @@
     document.getElementById("start-blatt").style.display = name === "start" ? "block" : "none";
     document.getElementById("quiz-blatt").style.display = name === "quiz" ? "flex" : "none";
     document.getElementById("ende-blatt").style.display = name === "ende" ? "flex" : "none";
-    document.getElementById("kopf-zurueck-icon").style.display = name === "quiz" ? "flex" : "none";
+    document.getElementById("auswertung-blatt").style.display = name === "auswertung" ? "block" : "none";
+    document.getElementById("kopf-zurueck-icon").style.display = name === "quiz" || name === "auswertung" ? "flex" : "none";
+  }
+
+  function quoteText(richtig, beantwortet) {
+    return beantwortet > 0 ? Math.round((richtig / beantwortet) * 100) + "%" : "–";
+  }
+
+  function statKacheln(liste) {
+    return liste.map(function (k) { return '<span class="stat"><b>' + esc(k[0]) + '</b><span>' + esc(k[1]) + '</span></span>'; }).join("");
+  }
+
+  function renderAuswertung() {
+    var g = gesamtZaehler();
+    document.getElementById("aw-antworten").innerHTML = statKacheln([
+      [g.beantwortet, "Beantwortet"], [g.gewusst, "Richtig"], [g.beantwortet - g.gewusst, "Falsch"], [quoteText(g.gewusst, g.beantwortet), "Quote"]
+    ]);
+
+    var alle = alleFragenGemischt();
+    var gesehen = 0;
+    var gemeistert = 0;
+    for (var i = 0; i < alle.length; i++) {
+      if (fortschritt.fragenStatus[alle[i].id]) { gesehen += 1; }
+      if (holeFragenStatus(alle[i].id).gewusstCount >= GEMEISTERT_AB) { gemeistert += 1; }
+    }
+    document.getElementById("aw-fragen").innerHTML = statKacheln([
+      [gesehen, "Gesehen"], [gemeistert, "Gemeistert"], [nichtGewusstPool().length, "Nicht gewusst"], [alle.length - gesehen, "Noch offen"]
+    ]);
+
+    var zeilen = KATEGORIEN.map(function (kat) {
+      var k = fortschritt.kategorien[kat.name] || {};
+      var richtig = k.gewusst || 0;
+      var beantwortet = richtig + (k.nichtGewusst || 0);
+      return { kat: kat, richtig: richtig, beantwortet: beantwortet, quote: beantwortet > 0 ? richtig / beantwortet : 2 };
+    });
+    zeilen.sort(function (a, b) { return a.quote - b.quote || b.beantwortet - a.beantwortet; });
+    document.getElementById("aw-kategorien").innerHTML = zeilen.map(function (z) {
+      return '<tr><td>' + z.kat.icon + ' ' + esc(z.kat.name) + '</td><td>' + z.beantwortet + '</td>' +
+        '<td class="richtig">' + z.richtig + '</td><td class="falsch">' + (z.beantwortet - z.richtig) + '</td>' +
+        '<td>' + quoteText(z.richtig, z.beantwortet) + '</td></tr>';
+    }).join("");
   }
 
   function alleFragenGemischt() {
@@ -625,6 +691,7 @@
     }
   }
 
+  document.getElementById("stat-knopf").addEventListener("click", function () { renderAuswertung(); zeigeBlatt("auswertung"); window.scrollTo(0, 0); });
   document.getElementById("kachel-alle").addEventListener("click", function () { starteQuiz("alle"); });
   document.getElementById("kachel-nichtGewusst").addEventListener("click", function () { starteQuiz("nichtGewusst"); });
   document.getElementById("antwort-zeigen-btn").addEventListener("click", zeigeAntwort);
