@@ -38,7 +38,7 @@
     display: none; align-items: center; justify-content: center;
     width: 34px; height: 34px; border-radius: 10px;
     background: rgba(255,255,255,0.06); color: #cbb8f0; font-size: 17px;
-    cursor: pointer; flex-shrink: 0;
+    cursor: pointer; flex-shrink: 0; border: none;
   }
   .logo { font-size: 20px; font-weight: 800; letter-spacing: -0.02em; }
   .logo span { background: linear-gradient(90deg, #ff8a5c, #ff5c9e); -webkit-background-clip: text; background-clip: text; color: transparent; }
@@ -57,11 +57,30 @@
     display: flex; align-items: center; justify-content: space-between;
     background: linear-gradient(135deg, rgba(255,138,92,0.18), rgba(255,92,158,0.12));
     border: 1px solid rgba(255,138,92,0.35); border-radius: 16px; padding: 14px;
-    cursor: pointer;
+    cursor: pointer; width: 100%; font: inherit; color: inherit; text-align: left;
   }
+  .kategorie-kachel .name, .kategorie-kachel .anzahl { display: block; }
   .kategorie-kachel .name { font-size: 14.5px; font-weight: 700; line-height: 1.25; }
   .kategorie-kachel .anzahl { font-size: 10.5px; color: #d8c9ff; margin-top: 2px; }
   .kategorie-kachel .pfeil { font-size: 18px; color: #ff8a5c; flex-shrink: 0; margin-left: 6px; }
+  .auto-schalter {
+    display: flex; align-items: center; justify-content: space-between; gap: 12px;
+    background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 16px; padding: 14px 16px; margin-bottom: 10px; cursor: pointer;
+  }
+  .auto-schalter .name { display: block; font-size: 15px; font-weight: 700; }
+  .auto-schalter .anzahl { display: block; font-size: 12px; color: #b7aad6; margin-top: 2px; }
+  .auto-schalter input {
+    appearance: none; -webkit-appearance: none; flex-shrink: 0; cursor: pointer;
+    width: 52px; height: 32px; border-radius: 16px; background: rgba(255,255,255,0.15);
+    position: relative; transition: background 0.2s;
+  }
+  .auto-schalter input::after {
+    content: ""; position: absolute; top: 3px; left: 3px; width: 26px; height: 26px;
+    border-radius: 50%; background: #f2eefc; transition: transform 0.2s;
+  }
+  .auto-schalter input:checked { background: #5adcaa; }
+  .auto-schalter input:checked::after { transform: translateX(20px); }
   .kachel-gemischt {
     background: linear-gradient(135deg, rgba(139,92,246,0.22), rgba(34,211,238,0.14));
     border: 1px solid rgba(139,92,246,0.4);
@@ -125,7 +144,7 @@
 <div id="app">
   <div class="kopf">
     <div class="kopf-links">
-      <div class="kopf-zurueck" id="kopf-zurueck-icon">←</div>
+      <button type="button" class="kopf-zurueck" id="kopf-zurueck-icon" aria-label="Zurück zur Startseite">←</button>
       <div class="logo">Schlaues <span>Kerlchen</span></div>
     </div>
     <div class="streak" id="streak-anzeige">🔥 0 Tage</div>
@@ -141,20 +160,27 @@
       <div class="stat"><b id="stat-quote">0%</b><span>Trefferquote</span></div>
     </div>
 
-    <div class="kategorie-kachel kachel-gemischt" id="kachel-alle">
-      <div>
-        <div class="name">🎲 Gemischt</div>
-        <div class="anzahl" id="anzahl-alle">wird geladen …</div>
-      </div>
-      <div class="pfeil">→</div>
-    </div>
-    <div class="kategorie-kachel kachel-nicht-gewusst" id="kachel-nichtGewusst">
-      <div>
-        <div class="name">🔁 Nicht gewusst</div>
-        <div class="anzahl" id="anzahl-nichtGewusst">0 Fragen zum Üben</div>
-      </div>
-      <div class="pfeil">→</div>
-    </div>
+    <label class="auto-schalter">
+      <span>
+        <span class="name">🚗 Auto-Modus</span>
+        <span class="anzahl">Liest Frage und Antwort automatisch vor</span>
+      </span>
+      <input type="checkbox" role="switch" id="auto-modus">
+    </label>
+    <button type="button" class="kategorie-kachel kachel-gemischt" id="kachel-alle">
+      <span>
+        <span class="name">🎲 Gemischt</span>
+        <span class="anzahl" id="anzahl-alle">wird geladen …</span>
+      </span>
+      <span class="pfeil" aria-hidden="true">→</span>
+    </button>
+    <button type="button" class="kategorie-kachel kachel-nicht-gewusst" id="kachel-nichtGewusst">
+      <span>
+        <span class="name">🔁 Nicht gewusst</span>
+        <span class="anzahl" id="anzahl-nichtGewusst">0 Fragen zum Üben</span>
+      </span>
+      <span class="pfeil" aria-hidden="true">→</span>
+    </button>
     <hr class="trennlinie">
     <div id="kategorien-liste"></div>
   </div>
@@ -223,6 +249,8 @@
   var quizGewusst = 0;
   var antwortSichtbar = false;
   var vorleseWarteschlange = [];
+  var vorleseLauf = 0;
+  var autoModus = false;
 
   function esc(wert) {
     if (wert === null || wert === undefined) { return ""; }
@@ -393,10 +421,10 @@
     var html = "";
     for (var i = 0; i < KATEGORIEN.length; i++) {
       var kat = KATEGORIEN[i];
-      html += '<div class="kategorie-kachel" id="kachel-' + kat.id + '">' +
-        '<div><div class="name">' + kat.icon + ' ' + esc(kat.name) + '</div>' +
-        '<div class="anzahl" id="anzahl-' + kat.id + '">wird geladen …</div></div>' +
-        '<div class="pfeil">→</div></div>';
+      html += '<button type="button" class="kategorie-kachel" id="kachel-' + kat.id + '">' +
+        '<span><span class="name">' + kat.icon + ' ' + esc(kat.name) + '</span>' +
+        '<span class="anzahl" id="anzahl-' + kat.id + '">wird geladen …</span></span>' +
+        '<span class="pfeil" aria-hidden="true">→</span></button>';
     }
     container.innerHTML = html;
     for (var j = 0; j < KATEGORIEN.length; j++) {
@@ -443,19 +471,31 @@
     return haeppchen.length > 0 ? haeppchen : [text];
   }
 
+  // cancel() löst bei Safari onend des laufenden Häppchens aus — ohne Laufnummer würde die alte Kette weiterlesen.
+  function stoppeVorlesen() {
+    vorleseLauf += 1;
+    vorleseWarteschlange = [];
+    if ("speechSynthesis" in window) { window.speechSynthesis.cancel(); }
+  }
+
   function vorlesen(text) {
     if (!("speechSynthesis" in window)) {
       zeigeFehler("Vorlesen wird von diesem Browser nicht unterstützt.");
       return;
     }
-    window.speechSynthesis.cancel();
+    stoppeVorlesen();
+    var lauf = vorleseLauf;
     var haeppchen = vorleseHaeppchen(text);
     var index = 0;
-    vorleseWarteschlange = [];
+    // Stummer Nachlauf nach dem letzten Häppchen: CarPlay puffert Audio, iOS schließt die Tonausgabe
+    // bei Sprechende sofort — ohne Nachlauf fehlten dort die letzten Wörter (Vermutung, 2026-09-25).
     function naechstesHaeppchen() {
-      if (index >= haeppchen.length) { vorleseWarteschlange = []; return; }
-      var u = new SpeechSynthesisUtterance(haeppchen[index]);
+      if (lauf !== vorleseLauf) { return; }
+      if (index > haeppchen.length) { vorleseWarteschlange = []; return; }
+      var nachlauf = index === haeppchen.length;
+      var u = new SpeechSynthesisUtterance(nachlauf ? "Und weiter geht es mit der nächsten Runde." : haeppchen[index]);
       u.lang = "de-DE";
+      if (nachlauf) { u.volume = 0; }
       index += 1;
       u.onend = naechstesHaeppchen;
       vorleseWarteschlange.push(u);
@@ -465,6 +505,7 @@
   }
 
   function zeigeBlatt(name) {
+    stoppeVorlesen();
     document.getElementById("start-blatt").style.display = name === "start" ? "block" : "none";
     document.getElementById("quiz-blatt").style.display = name === "quiz" ? "flex" : "none";
     document.getElementById("ende-blatt").style.display = name === "ende" ? "flex" : "none";
@@ -488,8 +529,11 @@
     else if (id === "nichtGewusst") { fragen = nichtGewusstPool(); }
     else { fragen = aktivePoolFuerKategorie(id); }
     if (!fragen || fragen.length === 0) {
+      var geladen = id === "alle" ? alleFragenGemischt().length > 0 : (fragenNachKategorie[id] || []).length > 0;
       if (id === "nichtGewusst") {
         zeigeFehler("Noch keine als „Nicht gewusst“ markierten Fragen.");
+      } else if (geladen) {
+        zeigeFehler("Alle Fragen gemeistert 🎉");
       } else {
         zeigeFehler("Fragen sind noch nicht geladen.");
       }
@@ -517,6 +561,13 @@
     document.getElementById("antwort-bereich").style.display = "none";
     document.getElementById("frage-knoepfe").style.display = "flex";
     document.getElementById("bewertung-knoepfe").style.display = "none";
+    document.getElementById("vorlesen-btn").textContent = autoModus ? "🔁 Nochmal" : "🔊 Vorlesen";
+    if (autoModus) { vorlesen(frage.frage); }
+  }
+
+  function antwortVorlesetext(frage) {
+    var antwort = frage.antwortKurz + ". " + frage.erklaerung;
+    return autoModus ? "Frage: " + frage.frage + " Antwort: " + antwort : antwort;
   }
 
   function zeigeAntwort() {
@@ -524,6 +575,7 @@
     document.getElementById("antwort-bereich").style.display = "block";
     document.getElementById("frage-knoepfe").style.display = "none";
     document.getElementById("bewertung-knoepfe").style.display = "flex";
+    if (autoModus) { vorlesen(antwortVorlesetext(quizFragen[quizIndex])); }
   }
 
   function bewerte(warGewusst) {
@@ -544,6 +596,7 @@
     setzeFragenStatus(frage.id, status);
     speichereSicher(fortschritt);
     vermerkeStreakHeute();
+    stoppeVorlesen();
 
     quizIndex += 1;
     if (quizIndex >= quizFragen.length) {
@@ -589,9 +642,13 @@
   document.getElementById("vorlesen-btn").addEventListener("click", function () {
     var frage = quizFragen[quizIndex];
     if (!frage) { return; }
-    var text = antwortSichtbar ? (frage.antwortKurz + ". " + frage.erklaerung) : frage.frage;
+    var text = antwortSichtbar ? antwortVorlesetext(frage) : frage.frage;
     vorlesen(text);
   });
+
+  var autoSchalter = document.getElementById("auto-modus");
+  autoSchalter.checked = false;
+  autoSchalter.addEventListener("change", function () { autoModus = autoSchalter.checked; });
 
   renderKategorienListe();
   aktualisiereStartAnzeige();
