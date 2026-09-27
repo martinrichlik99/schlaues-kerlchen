@@ -138,6 +138,12 @@
   }
   .trennlinie { border: none; border-top: 1px solid rgba(255,255,255,0.08); margin: 4px 0 12px; }
   #kategorien-liste { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .kachel-pruefung {
+    margin-top: 12px;
+    background: linear-gradient(135deg, rgba(90,220,170,0.2), rgba(56,189,248,0.12));
+    border-color: rgba(90,220,170,0.45);
+  }
+  .kachel-pruefung .pfeil { color: #5adcaa; }
   .bald { margin-top: 12px; font-size: 12px; color: #8677a8; text-align: center; }
 
   /* Quiz */
@@ -147,7 +153,7 @@
   .quiz-kopf { display: flex; justify-content: space-between; align-items: center; gap: 10px; margin-bottom: 10px; }
   .frage-zaehler { font-size: 12px; color: #b7aad6; }
   .leiter { font-size: 12px; font-weight: 700; color: #ffd27a; background: rgba(255,210,122,0.1); padding: 4px 9px; border-radius: 12px; white-space: nowrap; }
-  .frage-text { font-size: 20px; font-weight: 700; line-height: 1.4; margin-bottom: 18px; }
+  .frage-text { font-size: 20px; font-weight: 700; line-height: 1.4; margin-bottom: 18px; white-space: pre-line; }
   .frage-sterne { font-size: 16px; letter-spacing: 2px; margin-bottom: 6px; min-height: 20px; }
   .frage-daumen { font-size: 16px; letter-spacing: 2px; margin-bottom: 6px; min-height: 20px; }
   .antwort-kurz { font-size: 18px; font-weight: 800; color: #ff9d73; margin-bottom: 10px; }
@@ -229,6 +235,10 @@
       <summary>📚 Kategorien <span class="anzahl" id="anzahl-kategorien"></span></summary>
       <div id="kategorien-liste"></div>
     </details>
+    <button type="button" class="kategorie-kachel kachel-pruefung" id="kachel-pruefung">
+      <span><span class="name">🩺 APHI-Prüfung</span><span class="anzahl" id="anzahl-pruefung">wird geladen …</span></span>
+      <span class="pfeil" aria-hidden="true">→</span>
+    </button>
   </div>
 
   <div id="quiz-blatt">
@@ -314,8 +324,13 @@
   ];
   // Länder & Hauptstädte bewusst NICHT Teil der wöchentlichen Automations-Routine (Martins Wunsch 2026-09-18) —
   // Kategorie ist eine feste Faktenliste (alle 193 UN-Mitgliedstaaten + Vatikanstadt), keine Trivia-Fragen.
+  // Prüfungsfragen für Tamina (Katalog aus dem Projekt Prüfungsheldin, werkzeuge/kerlchen_export.py).
+  // Bewusst getrennt von KATEGORIEN: nicht in Gemischt, Nicht gewusst, Fällig, Jetzt lernen (Martins Wunsch 2026-09-27).
+  var PRUEFUNG = { id: "aphi1", datei: "daten/aphi1.json", datum: "2026-10-12" };
+  var pruefungsFragen = [];
   var fragenNachKategorie = {};
   var aktiveKategorieId = null;
+  var aktuellerFrageText = "";
   var quizFragen = [];
   var quizIndex = 0;
   var quizGewusst = 0;
@@ -486,6 +501,20 @@
     return alleFragenGemischt().filter(istFaellig);
   }
 
+  // Falsch Beantwortete zuerst, Gemeisterte fallen raus.
+  function pruefungsPool() {
+    var offen = mische(pruefungsFragen.filter(function (f) { return holeFragenStatus(f.id).gewusstCount < GEMEISTERT_AB; }));
+    return offen.filter(istInNichtGewusst).concat(offen.filter(function (f) { return !istInNichtGewusst(f); }));
+  }
+
+  function tageBisPruefung() {
+    var teile = PRUEFUNG.datum.split("-");
+    var ziel = new Date(Number(teile[0]), Number(teile[1]) - 1, Number(teile[2]));
+    var heute = new Date();
+    heute.setHours(0, 0, 0, 0);
+    return Math.round((ziel - heute) / 86400000);
+  }
+
   function gemischtPool() {
     var alle = alleFragenGemischt();
     var pool = [];
@@ -554,6 +583,11 @@
     var ngEl = document.getElementById("anzahl-nichtGewusst");
     if (ngEl) { ngEl.textContent = nichtGewusstPool().length + " Fragen"; }
     document.getElementById("anzahl-kategorien").textContent = KATEGORIEN.length + " · " + alleFragenGemischt().length + " Fragen";
+    if (pruefungsFragen.length > 0) {
+      var tage = tageBisPruefung();
+      document.getElementById("anzahl-pruefung").textContent = pruefungsPool().length + " von " + pruefungsFragen.length +
+        " Fragen offen · " + (tage > 1 ? "noch " + tage + " Tage" : tage === 1 ? "morgen ist Prüfung" : tage === 0 ? "heute ist Prüfung 🍀" : "Prüfung vorbei");
+    }
     aktualisiereJetztLernen();
   }
 
@@ -783,9 +817,10 @@
     if (id === "alle") { fragen = gemischtPool(); }
     else if (id === "nichtGewusst") { fragen = nichtGewusstPool(); }
     else if (id === "faellig") { fragen = faelligPool(); }
+    else if (id === PRUEFUNG.id) { fragen = pruefungsPool(); }
     else { fragen = aktivePoolFuerKategorie(id); }
     if (!fragen || fragen.length === 0) {
-      var geladen = id === "alle" ? alleFragenGemischt().length > 0 : (fragenNachKategorie[id] || []).length > 0;
+      var geladen = id === "alle" ? alleFragenGemischt().length > 0 : id === PRUEFUNG.id ? pruefungsFragen.length > 0 : (fragenNachKategorie[id] || []).length > 0;
       if (id === "nichtGewusst") {
         zeigeFehler("Noch keine als „Nicht gewusst“ markierten Fragen.");
       } else if (id === "faellig") {
@@ -798,7 +833,7 @@
       return;
     }
     aktiveKategorieId = id;
-    quizFragen = mische(fragen);
+    quizFragen = id === PRUEFUNG.id ? fragen : mische(fragen);
     quizIndex = 0;
     quizGewusst = 0;
     zeigeBlatt("quiz");
@@ -815,14 +850,18 @@
     var fragenStatus = holeFragenStatus(frage.id);
     document.getElementById("frage-sterne").textContent = fragenStatus.gewusstCount > 0 ? "⭐".repeat(fragenStatus.gewusstCount) : "";
     document.getElementById("frage-daumen").textContent = fragenStatus.nichtGewusstCount > 0 ? "👎".repeat(fragenStatus.nichtGewusstCount) : "";
-    document.getElementById("frage-text").innerHTML = esc(frage.frage);
+    aktuellerFrageText = frage.frage;
+    if (frage.optionen) {
+      aktuellerFrageText += "\n" + mische(frage.optionen).map(function (o, i) { return "ABCDEF".charAt(i) + ": " + o; }).join("\n");
+    }
+    document.getElementById("frage-text").innerHTML = esc(aktuellerFrageText);
     document.getElementById("antwort-kurz-text").innerHTML = esc(frage.antwortKurz);
     document.getElementById("erklaerung-text").innerHTML = esc(frage.erklaerung);
     document.getElementById("antwort-bereich").style.display = "none";
     document.getElementById("frage-knoepfe").style.display = "flex";
     document.getElementById("bewertung-knoepfe").style.display = "none";
     document.getElementById("vorlesen-btn").textContent = autoModus ? "🔁 Nochmal" : "🔊 Vorlesen";
-    if (autoModus) { vorlesen(frage.frage); }
+    if (autoModus) { vorlesen(aktuellerFrageText); }
   }
 
   function antwortVorlesetext(frage) {
@@ -911,10 +950,24 @@
           });
       })(KATEGORIEN[i]);
     }
+    fetch(PRUEFUNG.datei)
+      .then(function (antwort) {
+        if (!antwort.ok) { throw new Error("HTTP " + antwort.status); }
+        return antwort.json();
+      })
+      .then(function (daten) {
+        if (!Array.isArray(daten)) { throw new Error("Unerwartetes Format"); }
+        pruefungsFragen = daten;
+        aktualisiereKachelAnzahlen();
+      })
+      .catch(function () {
+        document.getElementById("anzahl-pruefung").textContent = "konnte nicht geladen werden";
+      });
   }
 
   document.getElementById("stat-knopf").addEventListener("click", function () { renderAuswertung(); zeigeBlatt("auswertung"); window.scrollTo(0, 0); });
   document.getElementById("kachel-alle").addEventListener("click", function () { starteQuiz("alle"); });
+  document.getElementById("kachel-pruefung").addEventListener("click", function () { starteQuiz(PRUEFUNG.id); });
   document.getElementById("jetzt-lernen").addEventListener("click", function () { starteQuiz(jetztLernenZiel); });
   document.getElementById("sprachtest-ansage-btn").addEventListener("click", function () { sprachtest(true); });
   document.getElementById("sprachtest-direkt-btn").addEventListener("click", function () { sprachtest(false); });
@@ -928,7 +981,7 @@
   document.getElementById("vorlesen-btn").addEventListener("click", function () {
     var frage = quizFragen[quizIndex];
     if (!frage) { return; }
-    var text = antwortSichtbar ? antwortVorlesetext(frage) : frage.frage;
+    var text = antwortSichtbar ? antwortVorlesetext(frage) : aktuellerFrageText;
     vorlesen(text);
   });
 
