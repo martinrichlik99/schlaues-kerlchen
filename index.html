@@ -87,7 +87,7 @@
   .kategorie-kachel .name { font-size: 14.5px; font-weight: 700; line-height: 1.25; }
   .kategorie-kachel .anzahl { font-size: 10.5px; color: #d8c9ff; margin-top: 2px; }
   .kategorie-kachel .pfeil { font-size: 18px; color: #ff8a5c; flex-shrink: 0; margin-left: 6px; }
-  .schnell-reihe { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; margin-bottom: 12px; }
+  .schnell-reihe { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; margin-bottom: 12px; }
   .schnell-kachel {
     display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 5px;
     min-height: 104px; padding: 12px 6px; border-radius: 16px; cursor: pointer;
@@ -135,6 +135,10 @@
   .kachel-nicht-gewusst {
     background: linear-gradient(135deg, rgba(255,92,120,0.2), rgba(255,157,115,0.12));
     border: 1px solid rgba(255,92,120,0.4);
+  }
+  .kachel-gemeistert {
+    background: linear-gradient(135deg, rgba(90,220,170,0.2), rgba(90,220,170,0.08));
+    border: 1px solid rgba(90,220,170,0.4);
   }
   .trennlinie { border: none; border-top: 1px solid rgba(255,255,255,0.08); margin: 4px 0 12px; }
   #kategorien-liste { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
@@ -222,6 +226,11 @@
         <span class="icon" aria-hidden="true">🔁</span>
         <span class="name">Nicht gewusst</span>
         <span class="anzahl" id="anzahl-nichtGewusst">0 Fragen</span>
+      </button>
+      <button type="button" class="schnell-kachel kachel-gemeistert" id="kachel-gemeistert">
+        <span class="icon" aria-hidden="true">🏆</span>
+        <span class="name">Gemeistert</span>
+        <span class="anzahl" id="anzahl-gemeistert">0 Fragen</span>
       </button>
     </div>
     <hr class="trennlinie">
@@ -477,6 +486,10 @@
     return pool;
   }
 
+  function gemeistertPool() {
+    return alleFragenGemischt().filter(function (f) { return holeFragenStatus(f.id).gewusstCount >= GEMEISTERT_AB; });
+  }
+
   // Fehlt faelligAb (Sterne aus der Zeit vor der Wiederholungs-Logik), gilt die Frage als fällig.
   function istFaellig(frage) {
     var s = fortschritt.fragenStatus[frage.id];
@@ -555,6 +568,7 @@
     if (alleEl) { alleEl.textContent = gemischtPool().length + " Fragen"; }
     var ngEl = document.getElementById("anzahl-nichtGewusst");
     if (ngEl) { ngEl.textContent = nichtGewusstPool().length + " Fragen"; }
+    document.getElementById("anzahl-gemeistert").textContent = gemeistertPool().length + " Fragen";
     document.getElementById("anzahl-kategorien").textContent = KATEGORIEN.length + " · " + alleFragenGemischt().length + " Fragen";
     aktualisiereJetztLernen();
   }
@@ -784,12 +798,15 @@
     var fragen;
     if (id === "alle") { fragen = gemischtPool(); }
     else if (id === "nichtGewusst") { fragen = nichtGewusstPool(); }
+    else if (id === "gemeistert") { fragen = gemeistertPool(); }
     else if (id === "faellig") { fragen = faelligPool(); }
     else { fragen = aktivePoolFuerKategorie(id); }
     if (!fragen || fragen.length === 0) {
       var geladen = id === "alle" ? alleFragenGemischt().length > 0 : (fragenNachKategorie[id] || []).length > 0;
       if (id === "nichtGewusst") {
         zeigeFehler("Noch keine als „Nicht gewusst“ markierten Fragen.");
+      } else if (id === "gemeistert") {
+        zeigeFehler("Noch keine Frage gemeistert.");
       } else if (id === "faellig") {
         zeigeFehler("Heute ist nichts fällig 🎉", true);
       } else if (geladen) {
@@ -922,6 +939,7 @@
   document.getElementById("sprachtest-ansage-btn").addEventListener("click", function () { sprachtest(true); });
   document.getElementById("sprachtest-direkt-btn").addEventListener("click", function () { sprachtest(false); });
   document.getElementById("kachel-nichtGewusst").addEventListener("click", function () { starteQuiz("nichtGewusst"); });
+  document.getElementById("kachel-gemeistert").addEventListener("click", function () { starteQuiz("gemeistert"); });
   document.getElementById("antwort-zeigen-btn").addEventListener("click", zeigeAntwort);
   document.getElementById("nicht-gewusst-btn").addEventListener("click", function () { bewerte(false); });
   document.getElementById("gewusst-btn").addEventListener("click", function () { bewerte(true); });
