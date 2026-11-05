@@ -76,7 +76,7 @@
   .abzeichen.offen { opacity: 0.35; filter: grayscale(1); }
   .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
   .sprachtest { display: flex; gap: 8px; margin-top: 10px; }
-  #sprachtest-ausgabe { font-size: 13px; color: #ddd4f5; margin-top: 10px; min-height: 18px; }
+  #sprachtest-ausgabe, #version-info { font-size: 13px; color: #ddd4f5; margin-top: 10px; min-height: 18px; }
   .kategorie-kachel {
     display: flex; align-items: center; justify-content: space-between;
     background: linear-gradient(135deg, rgba(255,138,92,0.18), rgba(255,92,158,0.12));
@@ -293,6 +293,7 @@
       <button type="button" class="knopf knopf-schwach" id="import-btn">📂 Importieren</button>
     </div>
     <input type="file" id="import-datei" accept="application/json,.json" hidden>
+    <div id="version-info"></div>
   </div>
 
   <div id="ende-blatt">
@@ -992,6 +993,9 @@
   });
 
   if (navigator.storage && navigator.storage.persist) { navigator.storage.persist(); }
+
+  document.getElementById("version-info").textContent = "Version vom " +
+    new Date(document.lastModified).toLocaleString("de-AT", { dateStyle: "medium", timeStyle: "short" });
 
   var autoSchalter = document.getElementById("auto-modus");
   autoSchalter.checked = false;
