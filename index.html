@@ -287,6 +287,12 @@
       <button type="button" class="knopf knopf-schwach" id="sprachtest-direkt-btn">🎤 Direkt</button>
     </div>
     <div id="sprachtest-ausgabe" aria-live="polite"></div>
+    <div class="abschnitt">Sicherung <small>· Fortschritt als Datei</small></div>
+    <div class="sprachtest">
+      <button type="button" class="knopf knopf-schwach" id="export-btn">💾 Exportieren</button>
+      <button type="button" class="knopf knopf-schwach" id="import-btn">📂 Importieren</button>
+    </div>
+    <input type="file" id="import-datei" accept="application/json,.json" hidden>
   </div>
 
   <div id="ende-blatt">
@@ -952,6 +958,40 @@
     var text = antwortSichtbar ? antwortVorlesetext(frage) : aktuellerFrageText;
     vorlesen(text);
   });
+
+  document.getElementById("export-btn").addEventListener("click", function () {
+    var blob = new Blob([JSON.stringify(fortschritt)], { type: "application/json" });
+    var link = document.createElement("a");
+    link.href = URL.createObjectURL(blob);
+    link.download = "schlaues-kerlchen-" + localISODate(new Date()) + ".json";
+    link.click();
+    window.setTimeout(function () { URL.revokeObjectURL(link.href); }, 1000);
+  });
+
+  var importDatei = document.getElementById("import-datei");
+  document.getElementById("import-btn").addEventListener("click", function () { importDatei.click(); });
+  importDatei.addEventListener("change", function () {
+    var datei = importDatei.files[0];
+    importDatei.value = "";
+    if (!datei) { return; }
+    datei.text().then(function (text) {
+      var daten;
+      try { daten = JSON.parse(text); } catch (e) { daten = null; }
+      if (!daten || typeof daten !== "object" || (!daten.fragenStatus && !daten.kategorien)) {
+        zeigeFehler("Keine gültige Sicherungsdatei.");
+        return;
+      }
+      if (!window.confirm("Aktuellen Fortschritt durch die Sicherung ersetzen?")) { return; }
+      speichereSicher(daten);
+      fortschritt = ladeFortschritt();
+      renderAuswertung();
+      aktualisiereStartAnzeige();
+      aktualisiereKachelAnzahlen();
+      zeigeFehler("Fortschritt wiederhergestellt.", true);
+    });
+  });
+
+  if (navigator.storage && navigator.storage.persist) { navigator.storage.persist(); }
 
   var autoSchalter = document.getElementById("auto-modus");
   autoSchalter.checked = false;
