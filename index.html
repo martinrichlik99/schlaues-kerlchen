@@ -152,6 +152,8 @@
   .frage-zaehler { font-size: 12px; color: #b7aad6; }
   .leiter { font-size: 12px; font-weight: 700; color: #ffd27a; background: rgba(255,210,122,0.1); padding: 4px 9px; border-radius: 12px; white-space: nowrap; }
   .frage-text { font-size: 20px; font-weight: 700; line-height: 1.4; margin-bottom: 18px; white-space: pre-line; }
+  .frage-kategorie { font-size: 12px; color: #b7aad6; margin: -12px 0 18px; }
+  .loeschen-btn { align-self: center; margin-top: 14px; background: none; border: none; color: #8677a8; font-size: 12px; padding: 10px; cursor: pointer; }
   .frage-sterne { font-size: 16px; letter-spacing: 2px; margin-bottom: 6px; min-height: 20px; }
   .frage-daumen { font-size: 16px; letter-spacing: 2px; margin-bottom: 6px; min-height: 20px; }
   .antwort-kurz { font-size: 18px; font-weight: 800; color: #ff9d73; margin-bottom: 10px; }
@@ -250,6 +252,7 @@
       <div class="frage-sterne" id="frage-sterne"></div>
       <div class="frage-daumen" id="frage-daumen"></div>
       <div class="frage-text" id="frage-text"></div>
+      <div class="frage-kategorie" id="frage-kategorie"></div>
       <div id="antwort-bereich" style="display:none">
         <div class="antwort-kurz" id="antwort-kurz-text"></div>
         <div class="erklaerung-text" id="erklaerung-text"></div>
@@ -264,6 +267,7 @@
       <button class="knopf knopf-nein" id="nicht-gewusst-btn" type="button">✗ Nicht gewusst</button>
       <button class="knopf knopf-ja" id="gewusst-btn" type="button">✓ Gewusst</button>
     </div>
+    <button class="loeschen-btn" id="loeschen-btn" type="button">🗑 Frage löschen – nie wieder zeigen</button>
   </div>
 
   <div id="auswertung-blatt">
@@ -293,6 +297,10 @@
       <button type="button" class="knopf knopf-schwach" id="import-btn">📂 Importieren</button>
     </div>
     <input type="file" id="import-datei" accept="application/json,.json" hidden>
+    <div class="abschnitt">Gelöschte Fragen</div>
+    <div class="sprachtest">
+      <button type="button" class="knopf knopf-schwach" id="wiederherstellen-btn"></button>
+    </div>
     <div id="version-info"></div>
   </div>
 
@@ -330,6 +338,7 @@
   ];
   // Länder & Hauptstädte bewusst NICHT Teil der wöchentlichen Automations-Routine (Martins Wunsch 2026-09-18) —
   // Kategorie ist eine feste Faktenliste (alle 193 UN-Mitgliedstaaten + Vatikanstadt), keine Trivia-Fragen.
+  var geladeneFragen = {};
   var fragenNachKategorie = {};
   var aktiveKategorieId = null;
   var aktuellerFrageText = "";
@@ -386,7 +395,7 @@
 
   function leererFortschritt() {
     return { kategorien: {}, streak: { anzahl: 0, letzterTag: "" }, fragenStatus: {},
-      leiter: { stufe: 0, best: 0, millionen: 0 }, heute: { tag: "", anzahl: 0 }, abzeichen: {} };
+      leiter: { stufe: 0, best: 0, millionen: 0 }, heute: { tag: "", anzahl: 0 }, abzeichen: {}, geloescht: {} };
   }
 
   function ladeFortschritt() {
@@ -412,7 +421,7 @@
     if (typeof daten.streak.letzterTag !== "string") { daten.streak.letzterTag = ""; }
     if (!daten.fragenStatus || typeof daten.fragenStatus !== "object") { daten.fragenStatus = {}; }
     var leer = leererFortschritt();
-    ["leiter", "heute", "abzeichen"].forEach(function (feld) {
+    ["leiter", "heute", "abzeichen", "geloescht"].forEach(function (feld) {
       if (!daten[feld] || typeof daten[feld] !== "object") { daten[feld] = leer[feld]; }
     });
     return daten;
@@ -843,6 +852,8 @@
     document.getElementById("frage-daumen").textContent = fragenStatus.nichtGewusstCount > 0 ? "👎".repeat(fragenStatus.nichtGewusstCount) : "";
     aktuellerFrageText = frage.frage;
     document.getElementById("frage-text").innerHTML = esc(aktuellerFrageText);
+    var kat = KATEGORIEN.find(function (k) { return k.name === frage.kategorie; });
+    document.getElementById("frage-kategorie").textContent = (kat ? kat.icon + " " : "") + frage.kategorie;
     document.getElementById("antwort-kurz-text").innerHTML = esc(frage.antwortKurz);
     document.getElementById("erklaerung-text").innerHTML = esc(frage.erklaerung);
     document.getElementById("antwort-bereich").style.display = "none";
@@ -918,6 +929,34 @@
     }
   }
 
+  function wendeLoeschungenAn() {
+    Object.keys(geladeneFragen).forEach(function (id) {
+      fragenNachKategorie[id] = geladeneFragen[id].filter(function (f) { return !fortschritt.geloescht[f.id]; });
+    });
+    var anzahl = Object.keys(fortschritt.geloescht).length;
+    var knopf = document.getElementById("wiederherstellen-btn");
+    knopf.textContent = "↩️ Alle " + anzahl + " wiederherstellen";
+    knopf.disabled = anzahl === 0;
+  }
+
+  function loescheAktuelleFrage() {
+    var frage = quizFragen[quizIndex];
+    if (!window.confirm("Diese Frage löschen? Sie wird nie wieder gezeigt.\n(Wiederherstellen in der Auswertung möglich.)")) { return; }
+    stoppeVorlesen();
+    fortschritt.geloescht[frage.id] = tagPlus(0);
+    speichereSicher(fortschritt);
+    wendeLoeschungenAn();
+    quizFragen.splice(quizIndex, 1);
+    zeigeFehler("Frage gelöscht.", true);
+    if (quizIndex >= quizFragen.length) {
+      zeigeBlatt("start");
+      aktualisiereStartAnzeige();
+      aktualisiereKachelAnzahlen();
+    } else {
+      renderFrage();
+    }
+  }
+
   function ladeFragen() {
     for (var i = 0; i < KATEGORIEN.length; i++) {
       (function (kat) {
@@ -928,7 +967,8 @@
           })
           .then(function (daten) {
             if (!Array.isArray(daten)) { throw new Error("Unerwartetes Format"); }
-            fragenNachKategorie[kat.id] = daten;
+            geladeneFragen[kat.id] = daten;
+            wendeLoeschungenAn();
             aktualisiereKachelAnzahlen();
             if (pruefeAbzeichen().length > 0) { speichereSicher(fortschritt); }
           })
@@ -950,6 +990,15 @@
   document.getElementById("antwort-zeigen-btn").addEventListener("click", zeigeAntwort);
   document.getElementById("nicht-gewusst-btn").addEventListener("click", function () { bewerte(false); });
   document.getElementById("gewusst-btn").addEventListener("click", function () { bewerte(true); });
+  document.getElementById("loeschen-btn").addEventListener("click", loescheAktuelleFrage);
+  document.getElementById("wiederherstellen-btn").addEventListener("click", function () {
+    if (!window.confirm("Alle gelöschten Fragen wiederherstellen?")) { return; }
+    fortschritt.geloescht = {};
+    speichereSicher(fortschritt);
+    wendeLoeschungenAn();
+    aktualisiereKachelAnzahlen();
+    zeigeFehler("Gelöschte Fragen wiederhergestellt.", true);
+  });
   document.getElementById("kopf-zurueck-icon").addEventListener("click", function () { zeigeBlatt("start"); aktualisiereStartAnzeige(); aktualisiereKachelAnzahlen(); });
   document.getElementById("ende-zurueck-btn").addEventListener("click", function () { zeigeBlatt("start"); aktualisiereStartAnzeige(); aktualisiereKachelAnzahlen(); });
   document.getElementById("ende-nochmal-btn").addEventListener("click", function () { starteQuiz(); });
@@ -985,6 +1034,7 @@
       if (!window.confirm("Aktuellen Fortschritt durch die Sicherung ersetzen?")) { return; }
       speichereSicher(daten);
       fortschritt = ladeFortschritt();
+      wendeLoeschungenAn();
       renderAuswertung();
       aktualisiereStartAnzeige();
       aktualisiereKachelAnzahlen();
@@ -1002,6 +1052,7 @@
   autoSchalter.addEventListener("change", function () { autoModus = autoSchalter.checked; });
 
   renderKategorienListe();
+  wendeLoeschungenAn();
   aktualisiereStartAnzeige();
   ladeFragen();
   zeigeBlatt("start");
