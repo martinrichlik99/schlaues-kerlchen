@@ -158,6 +158,25 @@
   .frage-daumen { font-size: 16px; letter-spacing: 2px; margin-bottom: 6px; min-height: 20px; }
   .antwort-kurz { font-size: 18px; font-weight: 800; color: #ff9d73; margin-bottom: 10px; }
   .erklaerung-text { font-size: 15px; line-height: 1.55; color: #ddd4f5; }
+  .mehr-bereich { margin-top: 16px; padding-top: 14px; border-top: 1px solid rgba(255,255,255,0.08); }
+  .mehr-titel { font-size: 12px; font-weight: 700; color: #b7aad6; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 8px; }
+  .mehr-reihe { display: flex; flex-wrap: wrap; gap: 8px; }
+  .mehr-knopf {
+    display: inline-flex; align-items: center; gap: 6px; min-height: 40px; padding: 9px 13px; border-radius: 12px;
+    background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.12); color: #f2eefc;
+    font: inherit; font-size: 13px; font-weight: 600; text-decoration: none; cursor: pointer;
+  }
+  .mehr-knopf.vertiefen { background: rgba(56,189,248,0.16); border-color: rgba(56,189,248,0.45); }
+  .mehr-knopf[hidden] { display: none; }
+  .mehr-knopf:disabled { cursor: default; opacity: 0.7; }
+  .vertiefung { margin-top: 12px; }
+  .vertiefung summary { cursor: pointer; font-size: 14px; font-weight: 700; color: #7dd3fc; padding: 6px 0; }
+  .vertiefung-text { font-size: 15px; line-height: 1.6; color: #ddd4f5; white-space: pre-line; margin: 8px 0 10px; }
+  #vertiefungen-blatt { display: none; }
+  .vt-eintrag { background: rgba(255,255,255,0.05); border-radius: 14px; padding: 12px 14px; margin-bottom: 10px; }
+  .vt-eintrag summary { cursor: pointer; font-size: 14.5px; font-weight: 700; line-height: 1.35; }
+  .vt-eintrag .vt-status { display: block; font-size: 12px; font-weight: 400; color: #b7aad6; margin-top: 3px; }
+  .vt-leer { font-size: 14px; color: #b7aad6; line-height: 1.5; }
   .vorlesen-btn {
     position: fixed; left: 50%; bottom: calc(18px + env(safe-area-inset-bottom));
     transform: translateX(-50%); z-index: 15;
@@ -240,6 +259,15 @@
       <summary>📚 Kategorien <span class="anzahl" id="anzahl-kategorien"></span></summary>
       <div id="kategorien-liste"></div>
     </details>
+    <button type="button" class="jetzt-lernen" id="vertiefungen-knopf" style="margin-top:12px">
+      <span><span class="name">🔎 Vertiefungen</span><span class="vorschlag" id="vertiefungen-anzahl">Themen, über die du mehr wissen wolltest</span></span>
+      <span class="pfeil" aria-hidden="true">→</span>
+    </button>
+  </div>
+
+  <div id="vertiefungen-blatt">
+    <div class="aw-titel">🔎 Vertiefungen</div>
+    <div id="vertiefungen-liste"></div>
   </div>
 
   <div id="quiz-blatt">
@@ -256,6 +284,15 @@
       <div id="antwort-bereich" style="display:none">
         <div class="antwort-kurz" id="antwort-kurz-text"></div>
         <div class="erklaerung-text" id="erklaerung-text"></div>
+        <div id="vertiefung-inline"></div>
+        <div class="mehr-bereich">
+          <div class="mehr-titel">Mehr darüber erfahren</div>
+          <div class="mehr-reihe">
+            <button type="button" class="mehr-knopf vertiefen" id="vertiefen-btn"></button>
+            <a class="mehr-knopf" id="wikipedia-link" target="_blank" rel="noopener">📖 Wikipedia</a>
+            <a class="mehr-knopf" id="claude-link" target="_blank" rel="noopener">💬 Claude fragen</a>
+          </div>
+        </div>
       </div>
       <button class="vorlesen-btn" id="vorlesen-btn" type="button">🔊 Vorlesen</button>
     </div>
@@ -355,6 +392,8 @@
   var LEITER = [0, 50, 100, 200, 300, 500, 1000, 2000, 4000, 8000, 16000, 32000, 64000, 125000, 500000, 1000000];
   var WIEDERHOLUNG_TAGE = [0, 1, 3, 7, 14];
   var sprachtestAnsage = null;
+  var REPO = "https://github.com/martinrichlik99/schlaues-kerlchen";
+  var vertiefungen = {};
 
   function esc(wert) {
     if (wert === null || wert === undefined) { return ""; }
@@ -395,7 +434,7 @@
 
   function leererFortschritt() {
     return { kategorien: {}, streak: { anzahl: 0, letzterTag: "" }, fragenStatus: {},
-      leiter: { stufe: 0, best: 0, millionen: 0 }, heute: { tag: "", anzahl: 0 }, abzeichen: {}, geloescht: {} };
+      leiter: { stufe: 0, best: 0, millionen: 0 }, heute: { tag: "", anzahl: 0 }, abzeichen: {}, geloescht: {}, vertiefen: {} };
   }
 
   function ladeFortschritt() {
@@ -421,7 +460,7 @@
     if (typeof daten.streak.letzterTag !== "string") { daten.streak.letzterTag = ""; }
     if (!daten.fragenStatus || typeof daten.fragenStatus !== "object") { daten.fragenStatus = {}; }
     var leer = leererFortschritt();
-    ["leiter", "heute", "abzeichen", "geloescht"].forEach(function (feld) {
+    ["leiter", "heute", "abzeichen", "geloescht", "vertiefen"].forEach(function (feld) {
       if (!daten[feld] || typeof daten[feld] !== "object") { daten[feld] = leer[feld]; }
     });
     return daten;
@@ -585,6 +624,7 @@
     var ngEl = document.getElementById("anzahl-nichtGewusst");
     if (ngEl) { ngEl.textContent = nichtGewusstPool().length + " Fragen"; }
     document.getElementById("anzahl-gemeistert").textContent = gemeistertPool().length + " Fragen";
+    aktualisiereVertiefungenAnzahl();
     document.getElementById("anzahl-kategorien").textContent = KATEGORIEN.length + " · " + alleFragenGemischt().length + " Fragen";
     aktualisiereJetztLernen();
   }
@@ -721,7 +761,8 @@
     document.getElementById("quiz-blatt").style.display = name === "quiz" ? "flex" : "none";
     document.getElementById("ende-blatt").style.display = name === "ende" ? "flex" : "none";
     document.getElementById("auswertung-blatt").style.display = name === "auswertung" ? "block" : "none";
-    document.getElementById("kopf-zurueck-icon").style.display = name === "quiz" || name === "auswertung" ? "flex" : "none";
+    document.getElementById("vertiefungen-blatt").style.display = name === "vertiefungen" ? "block" : "none";
+    document.getElementById("kopf-zurueck-icon").style.display = name === "start" || name === "ende" ? "none" : "flex";
   }
 
   function quoteText(richtig, beantwortet) {
@@ -859,8 +900,75 @@
     document.getElementById("antwort-bereich").style.display = "none";
     document.getElementById("frage-knoepfe").style.display = "flex";
     document.getElementById("bewertung-knoepfe").style.display = "none";
+    renderMehr(frage);
     document.getElementById("vorlesen-btn").textContent = autoModus ? "🔁 Nochmal" : "🔊 Vorlesen";
     if (autoModus) { vorlesen(aktuellerFrageText); }
+  }
+
+  function wikipediaBegriff(frage) {
+    return frage.antwortKurz.replace(/\(.*?\)/g, "").replace(/^(der|die|das|den|dem|ein|eine)\s+/i, "").trim();
+  }
+
+  function anfrageLink(frage) {
+    return REPO + "/issues/new?labels=vertiefung&title=" + encodeURIComponent("Vertiefung: " + frage.id) +
+      "&body=" + encodeURIComponent("Frage: " + frage.frage + "\nAntwort: " + frage.antwortKurz + "\n\nIch möchte mehr über dieses Thema erfahren.");
+  }
+
+  function claudeLink(frage) {
+    return "https://claude.ai/new?q=" + encodeURIComponent("Ich lerne gerade Allgemeinwissen. Frage: „" + frage.frage +
+      "“ Antwort: „" + frage.antwortKurz + "“. Erzähl mir ausführlich und anschaulich mehr über dieses Thema: " +
+      "Hintergründe, Zusammenhänge, warum es wichtig ist, und ein paar überraschende Fakten.");
+  }
+
+  function vertiefungHtml(id) {
+    return '<div class="vertiefung-text">' + esc(vertiefungen[id].text) + '</div>' +
+      '<button type="button" class="mehr-knopf" data-vorlesen="' + esc(id) + '">🔊 Vertiefung vorlesen</button>';
+  }
+
+  function renderMehr(frage) {
+    var hat = !!vertiefungen[frage.id];
+    document.getElementById("vertiefung-inline").innerHTML = hat ?
+      '<details class="vertiefung"><summary>📖 Vertiefung lesen</summary>' + vertiefungHtml(frage.id) + '</details>' : "";
+    var knopf = document.getElementById("vertiefen-btn");
+    knopf.hidden = hat;
+    knopf.disabled = !!fortschritt.vertiefen[frage.id];
+    knopf.textContent = knopf.disabled ? "⏳ Vertiefung angefragt" : "🔎 Vertiefen";
+    document.getElementById("wikipedia-link").href = "https://de.wikipedia.org/w/index.php?search=" + encodeURIComponent(wikipediaBegriff(frage));
+    document.getElementById("claude-link").href = claudeLink(frage);
+  }
+
+  function alleFragenNachId() {
+    var alle = {};
+    Object.keys(geladeneFragen).forEach(function (k) { geladeneFragen[k].forEach(function (f) { alle[f.id] = f; }); });
+    return alle;
+  }
+
+  function vertiefungsIds() {
+    var alle = alleFragenNachId();
+    return Object.keys(Object.assign({}, vertiefungen, fortschritt.vertiefen)).filter(function (id) { return alle[id]; });
+  }
+
+  function aktualisiereVertiefungenAnzahl() {
+    var ids = vertiefungsIds();
+    var fertig = ids.filter(function (id) { return vertiefungen[id]; }).length;
+    document.getElementById("vertiefungen-anzahl").textContent = ids.length === 0 ?
+      "Themen, über die du mehr wissen wolltest" : fertig + " fertig · " + (ids.length - fertig) + " in Arbeit";
+  }
+
+  function renderVertiefungen() {
+    var alle = alleFragenNachId();
+    var ids = vertiefungsIds().sort(function (a, b) { return !!vertiefungen[b] - !!vertiefungen[a]; });
+    document.getElementById("vertiefungen-liste").innerHTML = ids.length === 0 ?
+      '<p class="vt-leer">Noch nichts angefragt. Tippe nach einer Antwort auf „🔎 Vertiefen“, dann erscheint das Thema hier.</p>' :
+      ids.map(function (id) {
+        var f = alle[id];
+        var fertig = !!vertiefungen[id];
+        return '<details class="vt-eintrag"><summary>' + (fertig ? "✅ " : "⏳ ") + esc(f.antwortKurz) +
+          '<span class="vt-status">' + esc(f.frage) + '</span></summary>' +
+          (fertig ? vertiefungHtml(id) : '<p class="vt-leer" style="margin:10px 0">Angefragt am ' + esc(fortschritt.vertiefen[id]) +
+            '. Der Text erscheint hier, sobald er fertig ist.</p><a class="mehr-knopf" target="_blank" rel="noopener" href="' +
+            esc(anfrageLink(f)) + '">↗️ Anfrage nochmal öffnen</a>') + '</details>';
+      }).join("");
   }
 
   function antwortVorlesetext(frage) {
@@ -957,6 +1065,16 @@
     }
   }
 
+  function ladeVertiefungen() {
+    fetch("daten/vertiefungen.json")
+      .then(function (antwort) {
+        if (!antwort.ok) { throw new Error("HTTP " + antwort.status); }
+        return antwort.json();
+      })
+      .then(function (daten) { vertiefungen = daten; aktualisiereVertiefungenAnzahl(); })
+      .catch(function () { zeigeFehler("Vertiefungen konnten nicht geladen werden."); });
+  }
+
   function ladeFragen() {
     for (var i = 0; i < KATEGORIEN.length; i++) {
       (function (kat) {
@@ -991,6 +1109,19 @@
   document.getElementById("nicht-gewusst-btn").addEventListener("click", function () { bewerte(false); });
   document.getElementById("gewusst-btn").addEventListener("click", function () { bewerte(true); });
   document.getElementById("loeschen-btn").addEventListener("click", loescheAktuelleFrage);
+  document.getElementById("vertiefen-btn").addEventListener("click", function () {
+    var frage = quizFragen[quizIndex];
+    window.open(anfrageLink(frage), "_blank", "noopener");
+    fortschritt.vertiefen[frage.id] = tagPlus(0);
+    speichereSicher(fortschritt);
+    renderMehr(frage);
+    zeigeFehler("Auf GitHub nur noch „Create“ tippen – dann kommt die Vertiefung in die App.", true);
+  });
+  document.getElementById("vertiefungen-knopf").addEventListener("click", function () { renderVertiefungen(); zeigeBlatt("vertiefungen"); window.scrollTo(0, 0); });
+  document.addEventListener("click", function (e) {
+    var knopf = e.target.closest("[data-vorlesen]");
+    if (knopf) { vorlesen(vertiefungen[knopf.dataset.vorlesen].text); }
+  });
   document.getElementById("wiederherstellen-btn").addEventListener("click", function () {
     if (!window.confirm("Alle gelöschten Fragen wiederherstellen?")) { return; }
     fortschritt.geloescht = {};
@@ -1055,6 +1186,7 @@
   wendeLoeschungenAn();
   aktualisiereStartAnzeige();
   ladeFragen();
+  ladeVertiefungen();
   zeigeBlatt("start");
 })();
 </script>
