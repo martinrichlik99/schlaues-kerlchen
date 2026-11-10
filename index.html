@@ -173,6 +173,9 @@
   .mehr-knopf:disabled { cursor: default; background: rgba(255,210,122,0.1); border-color: rgba(255,210,122,0.45); color: #ffd27a; }
   .mehr-knopf.lesen { background: rgba(90,220,170,0.16); border-color: rgba(90,220,170,0.5); }
   #vertiefung-inline { margin-top: 12px; }
+  #quiz-blatt.auto .mehr-titel, #quiz-blatt.auto #wikipedia-link { display: none; }
+  #quiz-blatt.auto .mehr-bereich { border-top: none; margin-top: 14px; padding-top: 0; }
+  #quiz-blatt.auto #antwort-bereich .mehr-reihe .mehr-knopf { flex: 0 0 auto; padding: 9px 14px; font-size: 12px; opacity: 0.8; }
   .vertiefung-text { font-size: 15px; line-height: 1.6; color: #ddd4f5; white-space: pre-line; margin: 8px 0 10px; }
   #vertiefungen-blatt { display: none; }
   .vt-eintrag { background: rgba(255,255,255,0.05); border-radius: 14px; padding: 12px 14px; margin-bottom: 10px; }
@@ -938,9 +941,9 @@
     var knopf = document.getElementById("vertiefen-btn");
     knopf.disabled = !hat && !!fortschritt.vertiefen[frage.id];
     knopf.classList.toggle("lesen", hat);
-    if (hat) { knopf.setAttribute("aria-expanded", "false"); } else { knopf.removeAttribute("aria-expanded"); }
-    knopf.textContent = hat ? "📚 Vertiefung lesen" : knopf.disabled ? "⏳ Angefragt" : "🔎 Vertiefen";
-    document.querySelector(".mehr-bereich").hidden = autoModus;
+    if (hat && !autoModus) { knopf.setAttribute("aria-expanded", "false"); } else { knopf.removeAttribute("aria-expanded"); }
+    knopf.textContent = hat ? (autoModus ? "🔊 Vertiefung anhören" : "📚 Vertiefung lesen") : knopf.disabled ? "⏳ Angefragt" : "🔎 Vertiefen";
+    document.getElementById("quiz-blatt").classList.toggle("auto", autoModus);
     document.getElementById("wikipedia-link").href = "https://de.wikipedia.org/w/index.php?search=" + encodeURIComponent(wikipediaBegriff(frage));
   }
 
@@ -1148,6 +1151,10 @@
   document.getElementById("loeschen-btn").addEventListener("click", loescheAktuelleFrage);
   document.getElementById("vertiefen-btn").addEventListener("click", function () {
     var frage = quizFragen[quizIndex];
+    if (vertiefungen[frage.id] && autoModus) {
+      vorlesen(vertiefungen[frage.id].text);
+      return;
+    }
     if (vertiefungen[frage.id]) {
       var text = document.getElementById("vertiefung-inline");
       text.hidden = !text.hidden;
