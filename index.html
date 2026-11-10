@@ -170,9 +170,9 @@
   }
   .mehr-knopf.vertiefen { background: rgba(56,189,248,0.16); border-color: rgba(56,189,248,0.45); }
   .mehr-knopf[hidden] { display: none; }
-  .mehr-knopf:disabled { cursor: default; opacity: 0.7; }
-  .vertiefung { margin-top: 12px; }
-  .vertiefung summary { cursor: pointer; font-size: 14px; font-weight: 700; color: #7dd3fc; padding: 6px 0; }
+  .mehr-knopf:disabled { cursor: default; background: rgba(255,210,122,0.1); border-color: rgba(255,210,122,0.45); color: #ffd27a; }
+  .mehr-knopf.lesen { background: rgba(90,220,170,0.16); border-color: rgba(90,220,170,0.5); }
+  #vertiefung-inline { margin-top: 12px; }
   .vertiefung-text { font-size: 15px; line-height: 1.6; color: #ddd4f5; white-space: pre-line; margin: 8px 0 10px; }
   #vertiefungen-blatt { display: none; }
   .vt-eintrag { background: rgba(255,255,255,0.05); border-radius: 14px; padding: 12px 14px; margin-bottom: 10px; }
@@ -296,13 +296,13 @@
       <div id="antwort-bereich" style="display:none">
         <div class="antwort-kurz" id="antwort-kurz-text"></div>
         <div class="erklaerung-text" id="erklaerung-text"></div>
-        <div id="vertiefung-inline"></div>
         <div class="mehr-bereich">
           <div class="mehr-titel">Mehr darüber erfahren</div>
           <div class="mehr-reihe">
             <button type="button" class="mehr-knopf vertiefen" id="vertiefen-btn"></button>
             <a class="mehr-knopf" id="wikipedia-link" target="_blank" rel="noopener" aria-label="Auf Wikipedia nachlesen">📖 Wiki</a>
           </div>
+          <div id="vertiefung-inline" hidden></div>
         </div>
       </div>
       <button class="vorlesen-btn" id="vorlesen-btn" type="button">🔊 Vorlesen</button>
@@ -932,12 +932,15 @@
 
   function renderMehr(frage) {
     var hat = !!vertiefungen[frage.id];
-    document.getElementById("vertiefung-inline").innerHTML = hat ?
-      '<details class="vertiefung"><summary>📖 Vertiefung lesen</summary>' + vertiefungHtml(frage.id) + '</details>' : "";
+    var text = document.getElementById("vertiefung-inline");
+    text.hidden = true;
+    text.innerHTML = hat ? vertiefungHtml(frage.id) : "";
     var knopf = document.getElementById("vertiefen-btn");
-    knopf.hidden = hat;
-    knopf.disabled = !!fortschritt.vertiefen[frage.id];
-    knopf.textContent = knopf.disabled ? "⏳ Angefragt" : "🔎 Vertiefen";
+    knopf.disabled = !hat && !!fortschritt.vertiefen[frage.id];
+    knopf.classList.toggle("lesen", hat);
+    if (hat) { knopf.setAttribute("aria-expanded", "false"); } else { knopf.removeAttribute("aria-expanded"); }
+    knopf.textContent = hat ? "📚 Vertiefung lesen" : knopf.disabled ? "⏳ Angefragt" : "🔎 Vertiefen";
+    document.querySelector(".mehr-bereich").hidden = autoModus;
     document.getElementById("wikipedia-link").href = "https://de.wikipedia.org/w/index.php?search=" + encodeURIComponent(wikipediaBegriff(frage));
   }
 
@@ -1145,6 +1148,13 @@
   document.getElementById("loeschen-btn").addEventListener("click", loescheAktuelleFrage);
   document.getElementById("vertiefen-btn").addEventListener("click", function () {
     var frage = quizFragen[quizIndex];
+    if (vertiefungen[frage.id]) {
+      var text = document.getElementById("vertiefung-inline");
+      text.hidden = !text.hidden;
+      this.textContent = text.hidden ? "📚 Vertiefung lesen" : "📚 Zuklappen";
+      this.setAttribute("aria-expanded", String(!text.hidden));
+      return;
+    }
     window.open(anfrageLink(frage), "_blank", "noopener");
     fortschritt.vertiefen[frage.id] = tagPlus(0);
     speichereSicher(fortschritt);
