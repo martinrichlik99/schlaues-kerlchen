@@ -302,7 +302,6 @@
           <div class="mehr-reihe">
             <button type="button" class="mehr-knopf vertiefen" id="vertiefen-btn"></button>
             <a class="mehr-knopf" id="wikipedia-link" target="_blank" rel="noopener" aria-label="Auf Wikipedia nachlesen">📖 Wiki</a>
-            <a class="mehr-knopf" id="claude-link" target="_blank" rel="noopener" aria-label="Claude fragen">💬 Claude</a>
           </div>
         </div>
       </div>
@@ -926,12 +925,6 @@
       "&body=" + encodeURIComponent("Frage: " + frage.frage + "\nAntwort: " + frage.antwortKurz + "\n\nIch möchte mehr über dieses Thema erfahren.");
   }
 
-  function claudeLink(frage) {
-    return "https://claude.ai/new?q=" + encodeURIComponent("Ich lerne gerade Allgemeinwissen. Frage: „" + frage.frage +
-      "“ Antwort: „" + frage.antwortKurz + "“. Erzähl mir ausführlich und anschaulich mehr über dieses Thema: " +
-      "Hintergründe, Zusammenhänge, warum es wichtig ist, und ein paar überraschende Fakten.");
-  }
-
   function vertiefungHtml(id) {
     return '<div class="vertiefung-text">' + esc(vertiefungen[id].text) + '</div>' +
       '<button type="button" class="mehr-knopf" data-vorlesen="' + esc(id) + '">🔊 Vertiefung vorlesen</button>';
@@ -946,7 +939,6 @@
     knopf.disabled = !!fortschritt.vertiefen[frage.id];
     knopf.textContent = knopf.disabled ? "⏳ Angefragt" : "🔎 Vertiefen";
     document.getElementById("wikipedia-link").href = "https://de.wikipedia.org/w/index.php?search=" + encodeURIComponent(wikipediaBegriff(frage));
-    document.getElementById("claude-link").href = claudeLink(frage);
   }
 
   function alleFragenNachId() {
