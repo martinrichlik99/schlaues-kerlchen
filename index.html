@@ -177,6 +177,10 @@
   .vt-eintrag summary { cursor: pointer; font-size: 14.5px; font-weight: 700; line-height: 1.35; }
   .vt-eintrag .vt-status { display: block; font-size: 12px; font-weight: 400; color: #b7aad6; margin-top: 3px; }
   .vt-leer { font-size: 14px; color: #b7aad6; line-height: 1.5; }
+  .vt-gruppe { margin-bottom: 6px; }
+  .vt-gruppe > summary { cursor: pointer; padding: 12px 4px; font-size: 15px; font-weight: 700; }
+  .vt-gruppe > summary .anzahl { font-size: 12px; font-weight: 400; color: #d8c9ff; margin-left: 4px; }
+  .vt-knoepfe { display: flex; flex-wrap: wrap; gap: 8px; }
   .vorlesen-btn {
     position: fixed; left: 50%; bottom: calc(18px + env(safe-area-inset-bottom));
     transform: translateX(-50%); z-index: 15;
@@ -434,7 +438,7 @@
 
   function leererFortschritt() {
     return { kategorien: {}, streak: { anzahl: 0, letzterTag: "" }, fragenStatus: {},
-      leiter: { stufe: 0, best: 0, millionen: 0 }, heute: { tag: "", anzahl: 0 }, abzeichen: {}, geloescht: {}, vertiefen: {} };
+      leiter: { stufe: 0, best: 0, millionen: 0 }, heute: { tag: "", anzahl: 0 }, abzeichen: {}, geloescht: {}, vertiefen: {}, vertiefungGelesen: {} };
   }
 
   function ladeFortschritt() {
@@ -460,7 +464,7 @@
     if (typeof daten.streak.letzterTag !== "string") { daten.streak.letzterTag = ""; }
     if (!daten.fragenStatus || typeof daten.fragenStatus !== "object") { daten.fragenStatus = {}; }
     var leer = leererFortschritt();
-    ["leiter", "heute", "abzeichen", "geloescht", "vertiefen"].forEach(function (feld) {
+    ["leiter", "heute", "abzeichen", "geloescht", "vertiefen", "vertiefungGelesen"].forEach(function (feld) {
       if (!daten[feld] || typeof daten[feld] !== "object") { daten[feld] = leer[feld]; }
     });
     return daten;
@@ -951,24 +955,54 @@
   function aktualisiereVertiefungenAnzahl() {
     var ids = vertiefungsIds();
     var fertig = ids.filter(function (id) { return vertiefungen[id]; }).length;
+    var gelesen = ids.filter(function (id) { return fortschritt.vertiefungGelesen[id]; }).length;
     document.getElementById("vertiefungen-anzahl").textContent = ids.length === 0 ?
-      "Themen, über die du mehr wissen wolltest" : fertig + " fertig · " + (ids.length - fertig) + " in Arbeit";
+      "Themen, über die du mehr wissen wolltest" :
+      (fertig - gelesen) + " zu lesen · " + (ids.length - fertig) + " in Arbeit · " + gelesen + " gelesen";
+  }
+
+  function vertiefungDatum(id) {
+    return fortschritt.vertiefen[id] || (vertiefungen[id] && vertiefungen[id].stand) || "";
+  }
+
+  function vertiefungEintrag(id, f) {
+    var fertig = !!vertiefungen[id];
+    var gelesen = !!fortschritt.vertiefungGelesen[id];
+    return '<details class="vt-eintrag"><summary>' + (gelesen ? "✓ " : fertig ? "✅ " : "⏳ ") + esc(f.antwortKurz) +
+      '<span class="vt-status">' + esc(f.frage) + '</span></summary>' +
+      (fertig ? '<div class="vertiefung-text">' + esc(vertiefungen[id].text) + '</div><div class="vt-knoepfe">' +
+        '<button type="button" class="mehr-knopf" data-vorlesen="' + esc(id) + '">🔊 Vorlesen</button>' +
+        '<button type="button" class="mehr-knopf" data-gelesen="' + esc(id) + '">' + (gelesen ? "↩️ Wieder ungelesen" : "✓ Gelesen") + '</button></div>' :
+        '<p class="vt-leer" style="margin:10px 0">Angefragt am ' + esc(fortschritt.vertiefen[id]) +
+        '. Der Text erscheint hier, sobald er fertig ist.</p><a class="mehr-knopf" target="_blank" rel="noopener" href="' +
+        esc(anfrageLink(f)) + '">↗️ Anfrage nochmal öffnen</a>') + '</details>';
+  }
+
+  function vertiefungGruppe(schluessel, titel, eintraege) {
+    return '<details class="vt-gruppe" data-gruppe="' + esc(schluessel) + '"><summary>' + titel +
+      ' <span class="anzahl">' + eintraege.length + '</span></summary>' + eintraege.join("") + '</details>';
   }
 
   function renderVertiefungen() {
+    var liste = document.getElementById("vertiefungen-liste");
+    var offen = [].map.call(liste.querySelectorAll(".vt-gruppe[open]"), function (d) { return d.dataset.gruppe; });
     var alle = alleFragenNachId();
-    var ids = vertiefungsIds().sort(function (a, b) { return !!vertiefungen[b] - !!vertiefungen[a]; });
-    document.getElementById("vertiefungen-liste").innerHTML = ids.length === 0 ?
-      '<p class="vt-leer">Noch nichts angefragt. Tippe nach einer Antwort auf „🔎 Vertiefen“, dann erscheint das Thema hier.</p>' :
-      ids.map(function (id) {
-        var f = alle[id];
-        var fertig = !!vertiefungen[id];
-        return '<details class="vt-eintrag"><summary>' + (fertig ? "✅ " : "⏳ ") + esc(f.antwortKurz) +
-          '<span class="vt-status">' + esc(f.frage) + '</span></summary>' +
-          (fertig ? vertiefungHtml(id) : '<p class="vt-leer" style="margin:10px 0">Angefragt am ' + esc(fortschritt.vertiefen[id]) +
-            '. Der Text erscheint hier, sobald er fertig ist.</p><a class="mehr-knopf" target="_blank" rel="noopener" href="' +
-            esc(anfrageLink(f)) + '">↗️ Anfrage nochmal öffnen</a>') + '</details>';
-      }).join("");
+    var ids = vertiefungsIds().sort(function (a, b) { return vertiefungDatum(b) < vertiefungDatum(a) ? -1 : 1; });
+    if (ids.length === 0) {
+      liste.innerHTML = '<p class="vt-leer">Noch nichts angefragt. Tippe nach einer Antwort auf „🔎 Vertiefen“, dann erscheint das Thema hier.</p>';
+      return;
+    }
+    var gelesen = ids.filter(function (id) { return fortschritt.vertiefungGelesen[id]; });
+    var html = KATEGORIEN.map(function (kat) {
+      var eintraege = ids.filter(function (id) { return !fortschritt.vertiefungGelesen[id] && alle[id].kategorie === kat.name; })
+        .map(function (id) { return vertiefungEintrag(id, alle[id]); });
+      return eintraege.length ? vertiefungGruppe(kat.id, kat.icon + " " + esc(kat.name), eintraege) : "";
+    }).join("");
+    if (gelesen.length) {
+      html += '<hr class="trennlinie">' + vertiefungGruppe("gelesen", "✓ Gelesen", gelesen.map(function (id) { return vertiefungEintrag(id, alle[id]); }));
+    }
+    liste.innerHTML = html;
+    offen.forEach(function (g) { var d = liste.querySelector('.vt-gruppe[data-gruppe="' + g + '"]'); if (d) { d.open = true; } });
   }
 
   function antwortVorlesetext(frage) {
@@ -1121,6 +1155,13 @@
   document.addEventListener("click", function (e) {
     var knopf = e.target.closest("[data-vorlesen]");
     if (knopf) { vorlesen(vertiefungen[knopf.dataset.vorlesen].text); }
+    var gelesenKnopf = e.target.closest("[data-gelesen]");
+    if (gelesenKnopf) {
+      var id = gelesenKnopf.dataset.gelesen;
+      if (fortschritt.vertiefungGelesen[id]) { delete fortschritt.vertiefungGelesen[id]; } else { fortschritt.vertiefungGelesen[id] = tagPlus(0); }
+      speichereSicher(fortschritt);
+      renderVertiefungen();
+    }
   });
   document.getElementById("wiederherstellen-btn").addEventListener("click", function () {
     if (!window.confirm("Alle gelöschten Fragen wiederherstellen?")) { return; }
