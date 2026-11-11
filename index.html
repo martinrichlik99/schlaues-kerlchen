@@ -154,7 +154,6 @@
   .frage-text { font-size: 20px; font-weight: 700; line-height: 1.4; margin-bottom: 18px; white-space: pre-line; }
   .frage-kategorie { font-size: 12px; color: #b7aad6; margin: -12px 0 18px; }
   .loeschen-btn { align-self: center; margin-top: 14px; background: none; border: none; color: #8677a8; font-size: 12px; padding: 10px; cursor: pointer; }
-  .frage-sterne { font-size: 16px; letter-spacing: 2px; margin-bottom: 6px; min-height: 20px; }
   .frage-daumen { font-size: 16px; letter-spacing: 2px; margin-bottom: 6px; min-height: 20px; }
   .antwort-kurz { font-size: 18px; font-weight: 800; color: #ff9d73; margin-bottom: 10px; }
   .erklaerung-text { font-size: 15px; line-height: 1.55; color: #ddd4f5; }
@@ -292,7 +291,6 @@
       <div class="leiter" id="leiter-anzeige"></div>
     </div>
     <div class="karte">
-      <div class="frage-sterne" id="frage-sterne"></div>
       <div class="frage-daumen" id="frage-daumen"></div>
       <div class="frage-text" id="frage-text"></div>
       <div class="frage-kategorie" id="frage-kategorie"></div>
@@ -518,7 +516,8 @@
     if (!s || typeof s !== "object") { return { gewusstCount: 0, nichtGewusstCount: 0, ort: "kategorie" }; }
     return {
       gewusstCount: typeof s.gewusstCount === "number" ? s.gewusstCount : 0,
-      nichtGewusstCount: typeof s.nichtGewusstCount === "number" ? s.nichtGewusstCount : 0,
+      // Vor der Daumen-Leiter zählte 👎 nur hoch; wer schon 👍 hat, hat die alten 👎 abgebaut.
+      nichtGewusstCount: typeof s.nichtGewusstCount === "number" && !(s.gewusstCount > 0) ? s.nichtGewusstCount : 0,
       ort: s.ort === "nichtGewusst" ? "nichtGewusst" : "kategorie"
     };
   }
@@ -903,8 +902,7 @@
     document.getElementById("leiter-anzeige").textContent = "💰 " + euro(LEITER[stufe]) + " · " + stufe + "/" + (LEITER.length - 1);
     document.getElementById("fortschritt-fuellung").style.width = Math.round((quizIndex / quizFragen.length) * 100) + "%";
     var fragenStatus = holeFragenStatus(frage.id);
-    document.getElementById("frage-sterne").textContent = fragenStatus.gewusstCount > 0 ? "⭐".repeat(fragenStatus.gewusstCount) : "";
-    document.getElementById("frage-daumen").textContent = fragenStatus.nichtGewusstCount > 0 ? "👎".repeat(fragenStatus.nichtGewusstCount) : "";
+    document.getElementById("frage-daumen").textContent = "👎".repeat(fragenStatus.nichtGewusstCount) + "👍".repeat(fragenStatus.gewusstCount);
     aktuellerFrageText = frage.frage;
     document.getElementById("frage-text").innerHTML = esc(aktuellerFrageText);
     var kat = KATEGORIEN.find(function (k) { return k.name === frage.kategorie; });
@@ -1031,8 +1029,7 @@
     if (warGewusst) {
       zaehler.gewusst += 1;
       quizGewusst += 1;
-      status.gewusstCount += 1;
-      if (status.gewusstCount < GEMEISTERT_AB) { status.ort = "kategorie"; }
+      if (status.nichtGewusstCount > 0) { status.nichtGewusstCount -= 1; } else { status.gewusstCount += 1; }
       status.faelligAb = tagPlus(WIEDERHOLUNG_TAGE[Math.min(status.gewusstCount, WIEDERHOLUNG_TAGE.length - 1)]);
       leiter.stufe = (leiter.stufe || 0) + 1;
       leiter.best = Math.max(leiter.best || 0, leiter.stufe);
@@ -1043,12 +1040,11 @@
       }
     } else {
       zaehler.nichtGewusst += 1;
-      status.nichtGewusstCount += 1;
-      if (status.gewusstCount > 0) { status.gewusstCount -= 1; }
-      if (status.gewusstCount === 0) { status.ort = "nichtGewusst"; }
+      if (status.gewusstCount > 0) { status.gewusstCount -= 1; } else { status.nichtGewusstCount += 1; }
       status.faelligAb = tagPlus(1);
       leiter.stufe = leiter.stufe >= 10 ? 10 : leiter.stufe >= 5 ? 5 : 0;
     }
+    status.ort = status.nichtGewusstCount > 0 ? "nichtGewusst" : "kategorie";
     setzeFragenStatus(frage.id, status);
 
     var heute = fortschritt.heute;
